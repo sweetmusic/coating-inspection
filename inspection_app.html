@@ -681,9 +681,9 @@ function openExportModal(){
 }
 function doExcel(){
   const wb=XLSX.utils.book_new();
-  const cur=calcCurrentScore();
-  const mx=calcMaxScore();
-  const norm=calcNormalizedScore();
+  const cur=curScore();
+  const mx=maxScore();
+  const norm=normScore();
   const gr=grade(norm);
   const date=S.date.replace(/-/g,'');
   const insp=S.inspector;
