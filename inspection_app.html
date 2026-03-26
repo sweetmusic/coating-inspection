@@ -681,70 +681,133 @@ function openExportModal(){
 }
 function doExcel(){
   const wb=XLSX.utils.book_new();
-  const cur=curScore(),mx=maxScore(),norm=normScore(),gr=grade(norm);
+  const cur=calcCurrentScore();
+  const mx=calcMaxScore();
+  const norm=calcNormalizedScore();
+  const gr=grade(norm);
   const date=S.date.replace(/-/g,'');
   const insp=S.inspector;
-  // 시트1: 점검결과
-  const r1=[
-    ['(운반선 스몰도장) 사외 의장품 도장 협력사 종합평가_품질점검 체크시트','','','','','','',''],
-    ['점검유형',S.type==='정기'?'☑ 정기 기본품질점검  □ 상/하반기 종합평가':'□ 정기 기본품질점검  ☑ 상/하반기 종합평가','','','점검일자',S.date,'점검자',insp],
-    ['협력사',S.company.name,'','','원점수',cur+'/'+mx+'점','환산점수(100점)',norm+'점'],
-    ['평가등급',gr?gr.grade+'등급 ('+gr.label+')':'-','','','','','',''],
-    [],
-    ['No.','점검항목(대분류)','세부항목번호','평가항목(선택지 전체)','배점','선택','비고'],
-  ];
+  const coNm=S.company.name;
+
+  /* ══ 시트1: 점검결과 ══════════════════════════════════ */
+  const r1=[];
+
+  // 1행: 타이틀
+  r1.push(['(운반선) 사외 의장품 도장 협력사 종합평가_품질점검 체크시트','','','','','','']);
+
+  // 2행: 점검유형|값|점검일자|값|점검자(E~F병합라벨)|값(G)
+  r1.push([
+    '점검유형',
+    S.type==='정기'?'□ 정기 기본품질점검  ☑ 상/하반기 종합평가':
+                   '☑ 정기 기본품질점검  □ 상/하반기 종합평가',
+    '점검일자', S.date,
+    '점검자', '', insp
+  ]);
+
+  // 3행: 협력사|값|원점수|값|환산점수(E~F병합라벨)|값(G)
+  r1.push([
+    '협력사', coNm,
+    '원점수', cur+'/'+mx+'점',
+    '환산점수(100점)', '', norm+'점'
+  ]);
+
+  // 4행: 평가등급|값|빈칸들
+  r1.push([
+    '평가등급',
+    gr?gr.grade+'등급 ('+gr.label+')':'-',
+    '','','','',''
+  ]);
+
+  // 5행: 빈 구분
+  r1.push([]);
+
+  // 6행: 헤더
+  r1.push(['대분류','중분류(점검항목)','세부번호','평가항목','배점','선택','비고']);
+
+  // 데이터: 모든 선택지를 행으로, 선택된 항목에 ✓
   CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
     if(s.id==='1-1-1'&&S.type==='정기') return;
     const a=S.ans[s.id];
     const selIdx=(a&&a.optionIdx>=0)?a.optionIdx:-1;
-    // 모든 선택지를 행으로 출력
     s.options.forEach((opt,oi)=>{
       const isSel=(oi===selIdx);
       const isFirst=(oi===0);
       r1.push([
-        isFirst?(m.id+'. '+m.name):'',   // 대분류 (첫 선택지에만)
-        isFirst?it.name:'',               // 중분류 (첫 선택지에만)
-        isFirst?s.id:'',                  // 세부번호 (첫 선택지에만)
-        opt.text,                         // 평가항목
-        opt.score,                        // 배점
-        isSel?'✓':'',                    // 선택여부
-        (isSel&&a?.memo)?a.memo:''       // 비고 (선택된 행에만)
+        isFirst?m.id+'. '+m.name:'',
+        isFirst?it.name:'',
+        isFirst?s.id:'',
+        opt.text,
+        opt.score,
+        isSel?'✓':'',
+        (isSel&&a?.memo)?a.memo:''
       ]);
     });
   })));
-  r1.push(['합계','','','','',cur+'점 / '+mx+'점','환산: '+norm+'점/100점']);
+
+  // 합계행
+  r1.push(['합  계','','',''  ,mx,cur+'점','']);
+
   const ws1=XLSX.utils.aoa_to_sheet(r1);
-  ws1['!cols']=[{wch:20},{wch:36},{wch:12},{wch:48},{wch:8},{wch:6},{wch:28}];
+  ws1['!cols']=[{wch:20},{wch:44},{wch:12},{wch:48},{wch:8},{wch:6},{wch:30}];
+
+  // 2~3행 E~F 병합 (E=col5, F=col6, 0-indexed row 1~2)
+  if(!ws1['!merges']) ws1['!merges']=[];
+  ws1['!merges'].push(
+    {s:{r:1,c:4},e:{r:1,c:5}},  // 2행 E~F
+    {s:{r:2,c:4},e:{r:2,c:5}}   // 3행 E~F
+  );
+
   XLSX.utils.book_append_sheet(wb,ws1,'점검결과');
-  // 시트2: 지적사항
-  const r2=[['지적사항 요약'],[S.company.name+'  ·  '+S.date+'  ·  '+S.type+'  ·  점검자: '+insp],[],[' 세부번호','대분류','선택된 평가항목','취득점수','만점','비고']];
-  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
-    if(s.id==='1-1-1'&&S.type==='정기') return;
-    const a=S.ans[s.id]; if(!a||a.optionIdx<0) return;
-    const mxSc=Math.max(...s.options.map(o=>o.score));
-    if(a.score<mxSc) r2.push([s.id,m.name,s.options[a.optionIdx].text,a.score,mxSc,a.memo||'']);
-  })));
-  if(r2.length===4) r2.push(['','','지적사항 없음','','','']);
-  const ws2=XLSX.utils.aoa_to_sheet(r2);
-  ws2['!cols']=[{wch:12},{wch:18},{wch:50},{wch:10},{wch:8},{wch:30}];
-  XLSX.utils.book_append_sheet(wb,ws2,'지적사항요약');
-  // 시트3: 사진안내
-  const r3=[['점검 사진 첨부 안내'],[S.company.name+'  ·  '+S.date],[],
-    ['※ 점검 현장에서 촬영한 사진은 메일 발송 시 갤러리에서 직접 첨부해 주세요.'],
-    ['※ 사진 파일명에 항목번호를 포함하면 관리가 편합니다. (예: 2-2-1_DAILY_REPORT.jpg)'],
-    [],['NG 항목 목록 (사진 첨부 권장)'],
-    ['세부번호','항목내용','비고']
+
+  /* ══ 시트2: 지적사항요약 ══════════════════════════════ */
+  const r2=[
+    ['지적사항 요약','','','','',''],
+    [coNm+' · '+S.date+' · '+S.type+' · 점검자: '+insp+' · 환산 '+norm+'점 / '+(gr?gr.grade+'등급('+gr.label+')':'-'),'','','','',''],
+    [],
+    ['세부번호','대분류','선택된 평가항목','취득점수','만점','비고']
   ];
   CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
     if(s.id==='1-1-1'&&S.type==='정기') return;
     const a=S.ans[s.id]; if(!a||a.optionIdx<0) return;
     const mxSc=Math.max(...s.options.map(o=>o.score));
-    if(a.score<mxSc) r3.push([s.id,s.options[a.optionIdx].text,a.memo||'']);
+    if(a.score<mxSc){
+      r2.push([s.id,m.name,s.options[a.optionIdx].text,a.score,mxSc,a.memo||'']);
+    }
+  })));
+  if(r2.length===4) r2.push(['','','지적사항 없음','','','']);
+  const ws2=XLSX.utils.aoa_to_sheet(r2);
+  ws2['!cols']=[{wch:12},{wch:18},{wch:50},{wch:8},{wch:8},{wch:30}];
+  XLSX.utils.book_append_sheet(wb,ws2,'지적사항요약');
+
+  /* ══ 시트3: 사진첨부 ══════════════════════════════════ */
+  // 헤더
+  const r3=[
+    ['점검 사진 첨부','',''],
+    ['※ NG 항목 사진을 아래 공란에 직접 삽입해 주세요.','',''],
+    ['세부번호','항목내용','비고']
+  ];
+  // NG 항목별 데이터행 + 사진공란행
+  const photoRows=[];
+  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
+    if(s.id==='1-1-1'&&S.type==='정기') return;
+    const a=S.ans[s.id]; if(!a||a.optionIdx<0) return;
+    const mxSc=Math.max(...s.options.map(o=>o.score));
+    if(a.score<mxSc){
+      r3.push([s.id, s.options[a.optionIdx].text, a.memo||'']); // NG 데이터행
+      r3.push(['','','']);                                        // 사진 공란행
+      photoRows.push(r3.length-1); // 공란행 인덱스 기록 (높이 조정용)
+    }
   })));
   const ws3=XLSX.utils.aoa_to_sheet(r3);
-  ws3['!cols']=[{wch:12},{wch:52},{wch:30}];
-  XLSX.utils.book_append_sheet(wb,ws3,'사진첨부안내');
-  XLSX.writeFile(wb,'점검결과_'+S.company.name+'_'+date+'_'+S.type+'.xlsx');
+  ws3['!cols']=[{wch:12},{wch:50},{wch:30}];
+  // 공란행 높이 설정 (SheetJS는 !rows로 행 높이 지정)
+  ws3['!rows']=[];
+  r3.forEach((_,i)=>{
+    ws3['!rows'][i]=photoRows.includes(i)?{hpt:75}:{hpt:14};
+  });
+  XLSX.utils.book_append_sheet(wb,ws3,'사진첨부');
+
+  XLSX.writeFile(wb,'점검결과_'+coNm+'_'+date+'_'+S.type+'.xlsx');
   clearDraft();
 }
 
