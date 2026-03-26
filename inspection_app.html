@@ -492,21 +492,7 @@ function renderMajor(idx) {
       subEl.innerHTML = html;
 
       /* 사진 영역 */
-      if (sub.photo) {
-        const pa = document.createElement('div'); pa.className = 'photo-area'; pa.id = 'pa-' + sub.id;
-        if (!S.answers[sub.id]) pa.classList.add('hidden');
-        pa.innerHTML = `<div class="photo-area-header">
-          <div class="photo-area-label">📷 사진 첨부 <span class="photo-optional">(선택)</span></div>
-          <label class="photo-add-btn" for="pi-${sub.id}">+ 추가</label>
-        </div>
-        <input type="file" accept="image/*" capture="environment" class="photo-input" id="pi-${sub.id}" multiple onchange="addPhotos(event,'${sub.id}')">
-        <div class="photo-previews" id="pp-${sub.id}"></div>`;
-        subEl.appendChild(pa);
-        /* 저장된 사진 복원 */
-        if (S.answers[sub.id]?.photos?.length) {
-          S.answers[sub.id].photos.forEach(d => appendThumb(sub.id, d));
-        }
-      }
+      
 
       /* 비고 */
       const ma = document.createElement('div'); ma.className = 'memo-area';
@@ -550,55 +536,9 @@ function selOpt(subId, oi, score, maxSc) {
 }
 
 /* ── 사진 ── */
-function addPhotos(ev, subId) {
-  Array.from(ev.target.files).forEach(f => {
-    const fr = new FileReader();
-    fr.onload = e => {  };
-    fr.readAsDataURL(f);
-  });
-  ev.target.value = '';
-}
 
-function delPhoto(subId, idx, el) {
-  if (S.answers[subId]?.photos) S.answers[subId].photos.splice(idx,1);
-  el.remove();
-  const pp = document.getElementById('pp-' + subId);
-  if (pp) Array.from(pp.querySelectorAll('.photo-del')).forEach((b,i) => b.onclick = () => delPhoto(subId,i,b.parentElement));
-}
 
-/* ── 진행률 ── */
-function updateProgress() {
-  /* 유형별 유효 항목만 카운트 */
-  const allSubs = CFG.checklist.flatMap(m=>m.items.flatMap(i=>i.subs))
-    .filter(s => !(s.id==='1-1-1' && S.type==='정기'));
-  const answered = allSubs.filter(s => S.answers[s.id]?.optionIdx >= 0).length;
-  const total = allSubs.length;
-  const pct = total > 0 ? Math.round(answered/total*100) : 0;
-  document.getElementById('prog-label').textContent = answered + ' / ' + total + ' 항목 완료';
-  document.getElementById('prog-pct').textContent = pct + '%';
-  document.getElementById('prog-fill').style.width = pct + '%';
-  const cur = calcCurrentScore();
-  const max = calcMaxScore();
-  const normalized = calcNormalizedScore();
-  document.getElementById('score-display').textContent = cur + '/' + max + '점 (환산 ' + normalized + '점)';
-  const gr = calcGrade(normalized);
-  const gel = document.getElementById('grade-display');
-  gel.textContent = gr ? gr.grade + '등급 · ' + gr.label : '입력 중';
-  gel.className = 'score-chip grade ' + (gr ? 'grade-' + gr.grade : 'grade-empty');
-}
-function updateTabs() {
-  CFG.checklist.forEach((major,i) => {
-    const tab = document.getElementById('tab-' + i); if (!tab) return;
-    const subs = major.items.flatMap(it=>it.subs);
-    const done = subs.filter(s => S.answers[s.id]?.optionIdx >= 0);
-    const hasNg = subs.some(s => {
-      const a = S.answers[s.id]; if (!a||a.optionIdx<0) return false;
-      return a.score < Math.max(...s.options.map(o=>o.score));
-    });
-    tab.classList.toggle('has-ng', hasNg);
-    tab.classList.toggle('done', done.length===subs.length);
-  });
-}
+
 function prevMajor() { if(S.majorIdx>0) renderMajor(S.majorIdx-1); }
 function nextMajor() {
   if (S.majorIdx < CFG.checklist.length-1) renderMajor(S.majorIdx+1);
