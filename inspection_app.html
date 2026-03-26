@@ -139,6 +139,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
 .missing-item:last-child{border-bottom:none;}
 .missing-dot{width:7px;height:7px;border-radius:50%;background:var(--mid);flex-shrink:0;}
 .missing-text{font-size:12px;color:var(--text-sub);}
+.missing-arrow{font-size:13px;color:var(--mid);font-weight:700;margin-left:auto;}
+.missing-clickable{cursor:pointer;transition:background .15s;}
+.missing-clickable:active{background:var(--mid-bg);}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:flex;align-items:flex-end;justify-content:center;}
 .modal-sheet{background:var(--card);border-radius:20px 20px 0 0;padding:20px 20px 34px;width:100%;max-width:480px;animation:slideUp .25s ease;}
 @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
@@ -192,8 +195,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text
         </div>
       </div>
       <div class="field-group">
-        <div class="field-label">점검자</div>
-        <div class="inspector-chip">👤 <span id="inspector-name">-</span></div>
+        <div class="field-label">점검자 <span class="required">*</span></div>
+        <input type="text" id="inspector-name" class="field-input" placeholder="점검자 이름을 입력하세요" autocomplete="off">
       </div>
     </div>
     <div class="bottom-nav">
@@ -358,7 +361,7 @@ function initApp() {
   document.getElementById('inp-date').value = todayStr();
   document.getElementById('info-version').textContent = CFG.meta?.version || '';
   document.getElementById('info-updated').textContent = '업데이트: ' + (CFG.meta?.updated_at||'').substring(0,16);
-  document.getElementById('inspector-name').textContent = CFG.meta?.inspector || '(설정 필요)';
+  document.getElementById('inspector-name').value = CFG.meta?.inspector || '';
   showScreen('screen-info');
 }
 
@@ -378,16 +381,21 @@ function setType(btn) {
 function startInspection() {
   const ci = document.getElementById('sel-company').value;
   const dt = document.getElementById('inp-date').value;
-  if (!ci) { alert('협력사를 선택해 주세요.'); return; }
-  if (!dt) { alert('점검일자를 입력해 주세요.'); return; }
+  const insp = document.getElementById('inspector-name').value.trim();
+  if (!ci)   { alert('협력사를 선택해 주세요.'); return; }
+  if (!dt)   { alert('점검일자를 입력해 주세요.'); return; }
+  if (!insp) { alert('점검자 이름을 입력해 주세요.'); return; }
   S.company = CFG.companies[parseInt(ci)];
-  S.date = dt; S.majorIdx = 0; S.answers = {};
+  S.date = dt; S.inspector = insp; S.majorIdx = 0; S.answers = {};
   buildTabs();
   renderMajor(0);
   showScreen('screen-check');
 }
 function backToInfo() {
-  if (Object.keys(S.answers).length > 0 && !confirm('작성 중인 내용이 있습니다. 처음으로 돌아갈까요?')) return;
+  if (Object.keys(S.answers).length > 0) {
+    if (!window.confirm('작성 중인 내용이 있습니다.\n처음으로 돌아갈까요?')) return;
+  }
+  S.answers = {}; S.company = null; S.majorIdx = 0;
   showScreen('screen-info');
 }
 
@@ -425,6 +433,8 @@ function renderMajor(idx) {
     sec.innerHTML = `<div class="mid-header"><span class="mid-num">${item.id}</span><span class="mid-name">${item.name}</span></div>`;
     item.subs.forEach(sub => {
       const subEl = document.createElement('div'); subEl.className = 'sub-item'; subEl.id = 'sub-' + sub.id;
+      /* 정기점검 시 1-1-1 항목 숨김 */
+      if (sub.id === '1-1-1' && S.type === '정기') { sec.appendChild(subEl); return; }
       const maxSc = Math.max(...sub.options.map(o => o.score));
       let html = `<div class="sub-num">${sub.id}</div><div class="sub-options">`;
       sub.options.forEach((opt,oi) => {
@@ -521,18 +531,20 @@ function delPhoto(subId, idx, el) {
 
 /* ── 진행률 ── */
 function updateProgress() {
-  const allSubs = CFG.checklist.flatMap(m=>m.items.flatMap(i=>i.subs));
+  /* 유형별 유효 항목만 카운트 */
+  const allSubs = CFG.checklist.flatMap(m=>m.items.flatMap(i=>i.subs))
+    .filter(s => !(s.id==='1-1-1' && S.type==='정기'));
   const answered = allSubs.filter(s => S.answers[s.id]?.optionIdx >= 0).length;
   const total = allSubs.length;
   const pct = total > 0 ? Math.round(answered/total*100) : 0;
   document.getElementById('prog-label').textContent = answered + ' / ' + total + ' 항목 완료';
   document.getElementById('prog-pct').textContent = pct + '%';
   document.getElementById('prog-fill').style.width = pct + '%';
-  const cur = Object.values(S.answers).reduce((a,v)=>a+(v.score||0),0);
-  const max = CFG.max_score || 100;
-  const pctSc = max > 0 ? Math.round(cur/max*100) : 0;
-  document.getElementById('score-display').textContent = cur + ' / ' + max + '점';
-  const gr = calcGrade(pctSc);
+  const cur = calcCurrentScore();
+  const max = calcMaxScore();
+  const normalized = calcNormalizedScore();
+  document.getElementById('score-display').textContent = cur + '/' + max + '점 (환산 ' + normalized + '점)';
+  const gr = calcGrade(normalized);
   const gel = document.getElementById('grade-display');
   gel.textContent = gr ? gr.grade + '등급 · ' + gr.label : '입력 중';
   gel.className = 'score-chip grade ' + (gr ? 'grade-' + gr.grade : 'grade-empty');
@@ -559,16 +571,16 @@ function nextMajor() {
 /* ── 화면3 결과 ── */
 function buildResult() {
   const cont = document.getElementById('result-content'); cont.innerHTML = '';
-  const cur = Object.values(S.answers).reduce((a,v)=>a+(v.score||0),0);
-  const max = CFG.max_score||100;
-  const pct = max>0 ? Math.round(cur/max*100) : 0;
-  const gr = calcGrade(pct);
+  const cur = calcCurrentScore();
+  const max = calcMaxScore();
+  const normalized = calcNormalizedScore();
+  const gr = calcGrade(normalized);
   document.getElementById('result-date').textContent = S.date.replace(/-/g,'.');
 
   const hero = document.createElement('div'); hero.className = 'result-hero';
   hero.innerHTML = `<div class="result-company">${S.company.name} · ${S.type}</div>
-    <div class="result-score-big">${cur}</div>
-    <div class="result-max">/ ${max}점 (${pct}%)</div>
+    <div class="result-score-big">${normalized}</div>
+    <div class="result-max">/ 100점 (원점수 ${cur}/${max}점)</div>
     <div class="result-grade-badge ${gr?'grade-'+gr.grade:''}" style="${gr?'':'background:rgba(255,255,255,.1)'}">
       ${gr ? gr.grade+'등급 · '+gr.label : '등급 산출 불가'}
     </div>
@@ -611,15 +623,73 @@ function buildResult() {
 
   /* 미입력 */
   const miss=[];
-  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{if(!S.answers[s.id]||S.answers[s.id].optionIdx<0)miss.push(s.id);})));
+  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
+    /* 정기점검 시 1-1-1 제외 */
+    if(s.id==='1-1-1'&&S.type==='정기') return;
+    if(!S.answers[s.id]||S.answers[s.id].optionIdx<0) miss.push(s.id);
+  })));
   if(miss.length>0){
     const sec3=document.createElement('div'); sec3.className='result-section fade-in';
     sec3.innerHTML=`<div class="result-section-title">❓ 미입력 항목 (${miss.length}건)</div>`;
-    miss.forEach(id=>{const r=document.createElement('div');r.className='missing-item';r.innerHTML=`<div class="missing-dot"></div><div class="missing-text">${id}</div>`;sec3.appendChild(r);});
+    miss.forEach(id=>{
+      // 해당 subId가 속한 대분류 인덱스 찾기
+      let majorIdx = 0;
+      CFG.checklist.forEach((m,mi)=>m.items.forEach(it=>it.subs.forEach(s=>{if(s.id===id)majorIdx=mi;})));
+      const r=document.createElement('div');
+      r.className='missing-item missing-clickable';
+      r.title='클릭하여 해당 항목으로 이동';
+      r.innerHTML=`<div class="missing-dot"></div><div class="missing-text">${id}</div><div class="missing-arrow">→</div>`;
+      r.onclick=()=>{
+        showScreen('screen-check');
+        renderMajor(majorIdx);
+        /* 렌더 완료 후 해당 항목으로 스크롤 + 강조 */
+        setTimeout(()=>{
+          const el=document.getElementById('sub-'+id);
+          const cont=document.getElementById('check-content');
+          if(el&&cont){
+            const top=el.offsetTop - cont.offsetTop - 60;
+            cont.scrollTo({top:top,behavior:'smooth'});
+            el.style.outline='2.5px solid var(--mid)';
+            el.style.borderRadius='8px';
+            el.style.transition='outline 0.3s';
+            setTimeout(()=>{el.style.outline='none';},2500);
+          }
+        },300);
+      };
+      sec3.appendChild(r);
+    });
     cont.appendChild(sec3);
   }
   const sp=document.createElement('div'); sp.style.height='16px'; cont.appendChild(sp);
   showScreen('screen-result');
+}
+
+/* ── 유효 만점 계산 (점검유형 반영) ── */
+function calcMaxScore() {
+  let max = 0;
+  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
+    /* 정기점검이면 1-1-1 제외 */
+    if (s.id === '1-1-1' && S.type === '정기') return;
+    max += Math.max(...s.options.map(o=>o.score));
+  })));
+  return max || CFG.max_score || 109;
+}
+
+/* ── 현재 취득 점수 계산 (점검유형 반영) ── */
+function calcCurrentScore() {
+  let cur = 0;
+  Object.entries(S.answers).forEach(([id, v]) => {
+    if (id === '1-1-1' && S.type === '정기') return;
+    cur += v.score || 0;
+  });
+  return cur;
+}
+
+/* ── 100점 환산 점수 ── */
+function calcNormalizedScore() {
+  const cur = calcCurrentScore();
+  const max = calcMaxScore();
+  return max > 0 ? Math.round(cur / max * 100) : 0;
 }
 
 /* ── 등급 계산 ── */
@@ -630,14 +700,16 @@ function calcGrade(pct) {
 /* ── Export 모달 ── */
 function showModal(id) {
   if(id==='modal-export'){
-    const cur=Object.values(S.answers).reduce((a,v)=>a+(v.score||0),0);
-    const max=CFG.max_score||100;
-    const pct=max>0?Math.round(cur/max*100):0;
-    const gr=calcGrade(pct);
-    const miss=CFG.checklist.flatMap(m=>m.items.flatMap(i=>i.subs)).filter(s=>!S.answers[s.id]||S.answers[s.id].optionIdx<0).length;
+    const cur=calcCurrentScore();
+    const max=calcMaxScore();
+    const normalized=calcNormalizedScore();
+    const gr=calcGrade(normalized);
+    const miss=CFG.checklist.flatMap(m=>m.items.flatMap(i=>i.subs))
+      .filter(s=>!(s.id==='1-1-1'&&S.type==='정기'))
+      .filter(s=>!S.answers[s.id]||S.answers[s.id].optionIdx<0).length;
     document.getElementById('export-desc').innerHTML=
       `<strong>${S.company.name}</strong> · ${S.date} · ${S.type}<br>` +
-      `총점: <strong>${cur}/${max}점</strong> (${pct}%) <strong>${gr?gr.grade+'등급':'-'}</strong>` +
+      `원점수: <strong>${cur}/${max}점</strong> → 환산 <strong>${normalized}점</strong> <strong>${gr?gr.grade+'등급':'-'}</strong>` +
       (miss>0?`<br>⚠ 미입력 ${miss}항목 있음`:'');
   }
   document.getElementById(id).classList.remove('hidden');
@@ -646,16 +718,18 @@ function showModal(id) {
 /* ── Excel 내보내기 ── */
 function exportExcel() {
   const wb = XLSX.utils.book_new();
-  const cur=Object.values(S.answers).reduce((a,v)=>a+(v.score||0),0);
-  const max=CFG.max_score||100;
-  const pct=max>0?Math.round(cur/max*100):0;
+  const cur=calcCurrentScore();
+  const max=calcMaxScore();
+  const normalized=calcNormalizedScore();
+  const pct=normalized;
   const gr=calcGrade(pct);
   const date=S.date.replace(/-/g,'');
 
   /* 시트1: 점검결과 */
   const r1=[
     ['(운반선 스몰도장) 사외 의장품 도장 협력사 종합평가_품질점검 체크시트'],
-    [`점검일자: ${S.date}`, '', `점검자: ${CFG.meta?.inspector||''}`, '', `협력사: ${S.company.name}`],
+    [`점검일자: ${S.date}`, '', `점검자: ${S.inspector||CFG.meta?.inspector||''}`, '', `협력사: ${S.company.name}`],
+    [`점검유형: ${S.type}`, '', `원점수: ${cur}/${max}점`, '', `환산점수(100점): ${normalized}점`],
     [`점검유형: ${S.type}`, '', `총점: ${cur}/${max}점 (${pct}%)`, '', `평가등급: ${gr?gr.grade+'등급('+gr.label+')':'-'}`],
     [],
     ['No.','점검항목','세부번호','평가항목(선택)','배점','결과','비고'],
@@ -686,9 +760,10 @@ function exportExcel() {
 
 /* ── 메일 발송 ── */
 function openMailto() {
-  const cur=Object.values(S.answers).reduce((a,v)=>a+(v.score||0),0);
-  const max=CFG.max_score||100;
-  const pct=max>0?Math.round(cur/max*100):0;
+  const cur=calcCurrentScore();
+  const max=calcMaxScore();
+  const normalized=calcNormalizedScore();
+  const pct=normalized;
   const gr=calcGrade(pct);
   const ngLines=[];
   CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
@@ -703,7 +778,7 @@ function openMailto() {
   });
   const rd=new Date(S.date); rd.setDate(rd.getDate()+(CFG.meta?.reply_days||7));
   const rdStr=rd.toISOString().substring(0,10).replace(/-/g,'.');
-  const insp=CFG.meta?.inspector||'';
+  const insp=S.inspector||CFG.meta?.inspector||'';
   const subj=encodeURIComponent(`[도장품질점검] ${S.company.name}_${S.date.replace(/-/g,'.')}_${S.type}_${cur}점(${gr?gr.grade+'등급':'-'})`);
   const body=encodeURIComponent(
 `안녕하세요. 삼성중공업 도장QM ${insp}입니다.
@@ -716,7 +791,8 @@ function openMailto() {
 ■ 점검자   : ${insp}
 
 ━━ 종합 결과 ━━━━━━━━━━━━━━━━
-  총점: ${cur} / ${max}점 (${pct}%)
+  원점수: ${cur} / ${max}점
+  환산점수(100점 기준): ${normalized}점 (${pct}%)
   등급: ${gr?gr.grade+'등급 · '+gr.label:'-'}
 
 ━━ 대분류별 점수 ━━━━━━━━━━━━━━
