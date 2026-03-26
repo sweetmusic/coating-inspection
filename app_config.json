@@ -1,0 +1,1079 @@
+{
+  "system": {
+    "점검자명": "홍길동",
+    "발신 Gmail 주소": "your.gmail@gmail.com",
+    "Gmail 앱 비밀번호": "xxxx xxxx xxxx xxxx",
+    "참조 메일(사내)": "your.name@samsung.com",
+    "회신기한(일)": "7",
+    "DB 저장 폴더": "C:/도장점검/DB/",
+    "수신 폴더": "C:/도장점검/incoming/",
+    "완료 폴더": "C:/도장점검/processed/",
+    "앱 설정 Gmail 레이블": "APP_CONFIG",
+    "버전": "v1.0"
+  },
+  "companies": [
+    {
+      "id": "C001",
+      "name": "OO도장(주)",
+      "manager": "홍길동",
+      "phone": "010-1234-5678",
+      "email": "hong@oo.com"
+    },
+    {
+      "id": "C002",
+      "name": "XX철강도장",
+      "manager": "김철수",
+      "phone": "010-2345-6789",
+      "email": "kim@xx.com"
+    },
+    {
+      "id": "C003",
+      "name": "△△산업",
+      "manager": "이영희",
+      "phone": "010-3456-7890",
+      "email": "lee@dd.com"
+    },
+    {
+      "id": "C004",
+      "name": "◇◇도장",
+      "manager": "박민준",
+      "phone": "010-4567-8901",
+      "email": "park@cc.com"
+    },
+    {
+      "id": "C005",
+      "name": "□□코팅",
+      "manager": "최수현",
+      "phone": "010-5678-9012",
+      "email": "choi@ee.com"
+    },
+    {
+      "id": "C006",
+      "name": "○○표면처리",
+      "manager": "정다은",
+      "phone": "010-6789-0123",
+      "email": "jung@ff.com"
+    },
+    {
+      "id": "C007",
+      "name": "★★산업",
+      "manager": "강지훈",
+      "phone": "010-7890-1234",
+      "email": "kang@gg.com"
+    },
+    {
+      "id": "C008",
+      "name": "▲▲도장",
+      "manager": "윤서준",
+      "phone": "010-8901-2345",
+      "email": "yoon@hh.com"
+    },
+    {
+      "id": "C009",
+      "name": "◆◆코팅",
+      "manager": "임지수",
+      "phone": "010-9012-3456",
+      "email": "lim@ii.com"
+    },
+    {
+      "id": "C010",
+      "name": "●●산업",
+      "manager": "한예린",
+      "phone": "010-0123-4567",
+      "email": "han@jj.com"
+    },
+    {
+      "id": "C011",
+      "name": "협력사11",
+      "manager": "담당자11",
+      "phone": "010-1111-1111",
+      "email": "co11@sample.com"
+    },
+    {
+      "id": "C012",
+      "name": "협력사12",
+      "manager": "담당자12",
+      "phone": "010-2222-2222",
+      "email": "co12@sample.com"
+    },
+    {
+      "id": "C013",
+      "name": "협력사13",
+      "manager": "담당자13",
+      "phone": "010-3333-3333",
+      "email": "co13@sample.com"
+    },
+    {
+      "id": "C014",
+      "name": "협력사14",
+      "manager": "담당자14",
+      "phone": "010-4444-4444",
+      "email": "co14@sample.com"
+    }
+  ],
+  "grades": [
+    {
+      "grade": "A",
+      "label": "우수",
+      "min": 90,
+      "max": 100,
+      "note": "조치사항 없음"
+    },
+    {
+      "grade": "B",
+      "label": "보통",
+      "min": 70,
+      "max": 89,
+      "note": "경미한 사항 개선 요청"
+    },
+    {
+      "grade": "C",
+      "label": "나쁨",
+      "min": 0,
+      "max": 69,
+      "note": "주요 부적합 사항 즉시 조치 요청"
+    }
+  ],
+  "checklist": [
+    {
+      "id": "1",
+      "name": "품질조직",
+      "items": [
+        {
+          "id": "1-1",
+          "name": "품질조직상 조직편성 / 배치 상태 - 품질조직 독립성 보장 및 품질전담인원 배치 유무",
+          "subs": [
+            {
+              "id": "1-1-1",
+              "options": [
+                {
+                  "text": "품질관리자 전담 有",
+                  "score": 5
+                },
+                {
+                  "text": "품질/생산 겸직",
+                  "score": 3
+                }
+              ],
+              "photo": false
+            }
+          ]
+        },
+        {
+          "id": "1-2",
+          "name": "도장 자격보유 및 활동 - 품질 관리 인증 명함 및 전문 도장 자격 보유 여부",
+          "subs": [
+            {
+              "id": "1-2-1",
+              "options": [
+                {
+                  "text": "도장자격 보유",
+                  "score": 3
+                },
+                {
+                  "text": "도장경력 5년↑",
+                  "score": 2
+                },
+                {
+                  "text": "도장경력 5년↓",
+                  "score": 1
+                }
+              ],
+              "photo": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "품질문서관리",
+      "items": [
+        {
+          "id": "2-1",
+          "name": "문서(도면, Spec, 절차서) 개정/폐기 관리 현황",
+          "subs": [
+            {
+              "id": "2-1-1",
+              "options": [
+                {
+                  "text": "문서 관리 대장 작성/개정/폐기 이력",
+                  "score": 2
+                },
+                {
+                  "text": "문서 관리 대장 미작성",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "2-1-2",
+              "options": [
+                {
+                  "text": "문서 최신본 보유 및 관리 양호",
+                  "score": 3
+                },
+                {
+                  "text": "최신본 사용중이나 이전 문서 미폐기",
+                  "score": 1
+                },
+                {
+                  "text": "문서 최신본 미보유",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "2-2",
+          "name": "DAILY REPORT 관리 현황 - 호선별 품목별 매일 기록/보관 도장조건기록 포함",
+          "subs": [
+            {
+              "id": "2-2-1",
+              "options": [
+                {
+                  "text": "호선별·품목별 DAILY REPORT 작성",
+                  "score": 5
+                },
+                {
+                  "text": "작성 중이나 일부 기록 누락(Batch No. 싸인 등)",
+                  "score": 4
+                },
+                {
+                  "text": "최근 작성 누락 or 일부 호선/품목의 REPORT 미작성",
+                  "score": 2
+                },
+                {
+                  "text": "DAILY REPORT 미작성",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "2-3",
+          "name": "작업자 교육 및 유지 관리 / 정기적 교육실시 및 기록 상태",
+          "subs": [
+            {
+              "id": "2-3-1",
+              "options": [
+                {
+                  "text": "도장 교육 연간 계획서 작성",
+                  "score": 2
+                },
+                {
+                  "text": "도장 교육 연간 계획서 미작성",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "2-3-2",
+              "options": [
+                {
+                  "text": "월간 교육 실시 및 기관관리 양호",
+                  "score": 3
+                },
+                {
+                  "text": "교육 미실시(1개월)",
+                  "score": 2
+                },
+                {
+                  "text": "교육 미실시(1개월 이상)",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "2-4",
+          "name": "검사 장비 / 검교정 성적서 관리 상태",
+          "subs": [
+            {
+              "id": "2-4-1",
+              "options": [
+                {
+                  "text": "각 줄 도장 검사 장비 LIST 작성 및 검교정 및 기록 관리",
+                  "score": 2
+                },
+                {
+                  "text": "검사 장비 LIST 등 서류 미작성",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "2-4-2",
+              "options": [
+                {
+                  "text": "각 줄 도장 검사 장비 기한 내 검교정 완료",
+                  "score": 2
+                },
+                {
+                  "text": "도장 검사 장비 검교정 미실시 1건",
+                  "score": 2
+                },
+                {
+                  "text": "도장 검사 장비 검교정 미실시 1건 이상",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "2-5",
+          "name": "자주점검 CHECK SHEET 작업단계별 활용 및 관리",
+          "subs": [
+            {
+              "id": "2-5-1",
+              "options": [
+                {
+                  "text": "검사 ITEM 별 자주점검 CHECK SHEET 작성 양호",
+                  "score": 3
+                },
+                {
+                  "text": "일부 점검 항목/ITEM CHECK SHEET 작성 누락",
+                  "score": 1
+                },
+                {
+                  "text": "자주점검 CHECK SHEET 미작성",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "2-5-2",
+              "options": [
+                {
+                  "text": "자주점검 CHECK SHEET에 준한 작업 실시",
+                  "score": 2
+                },
+                {
+                  "text": "일부 현장 작업이 자주점검 CHECK SHEET 내용과 상이",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "2-6",
+          "name": "작업장 도장조건 기록 관리",
+          "subs": [
+            {
+              "id": "2-6-1",
+              "options": [
+                {
+                  "text": "3회 이상 기록",
+                  "score": 3
+                },
+                {
+                  "text": "2회 기록",
+                  "score": 2
+                },
+                {
+                  "text": "1회 기록",
+                  "score": 1
+                },
+                {
+                  "text": "미기록",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "작업환경관리",
+      "items": [
+        {
+          "id": "3-1",
+          "name": "품질게시판 제작 및 활용 - 작업절차, 각종 표준 등 품질관련내용 부착(반기별 교체)",
+          "subs": [
+            {
+              "id": "3-1-1",
+              "options": [
+                {
+                  "text": "반기별 교체",
+                  "score": 3
+                },
+                {
+                  "text": "반기 초과",
+                  "score": 2
+                },
+                {
+                  "text": "품질내용 無",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "3-2",
+          "name": "도료관리 상태(도료창고/작업장) - 경리정돈상태 및 도료사용기간 경과 유무",
+          "subs": [
+            {
+              "id": "3-2-1",
+              "options": [
+                {
+                  "text": "지정 구역 도료 보관 및 도료사별 도료 정리 실시",
+                  "score": 2
+                },
+                {
+                  "text": "임의 장소 도료 보관 및 도료사별 도료 정리 상태 미흡",
+                  "score": 1
+                }
+              ],
+              "photo": false
+            },
+            {
+              "id": "3-2-2",
+              "options": [
+                {
+                  "text": "도료 사용 기간 경과 도료 無",
+                  "score": 2
+                },
+                {
+                  "text": "도료 사용 기간 경과 도료 보관",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "3-2-3",
+              "options": [
+                {
+                  "text": "동/하절기 도료 구분관리 실시",
+                  "score": 2
+                },
+                {
+                  "text": "동/하절기 도료 구분관리 미실시",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "3-2-4",
+              "options": [
+                {
+                  "text": "T/UP을 도료 관리 양호",
+                  "score": 2
+                },
+                {
+                  "text": "T/UP을 도료관련 관리 불량",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "3-2-5",
+              "options": [
+                {
+                  "text": "도료 불출 대장 기록 관리",
+                  "score": 1
+                },
+                {
+                  "text": "도료 불출 대장 기록 미실시",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "3-2-6",
+              "options": [
+                {
+                  "text": "MSDS & TDS 보관 및 활용",
+                  "score": 1
+                },
+                {
+                  "text": "MSDS & TDS 미보관",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "3-3",
+          "name": "공장 내 정리정돈 및 청결상태",
+          "subs": [
+            {
+              "id": "3-3-1",
+              "options": [
+                {
+                  "text": "완성물/각 줄 도표면 및 자재 정리 양호",
+                  "score": 2
+                },
+                {
+                  "text": "정리 정돈 미흡하여 개선 요구됨",
+                  "score": 1
+                }
+              ],
+              "photo": false
+            },
+            {
+              "id": "3-3-2",
+              "options": [
+                {
+                  "text": "공장 시설 상태 및 유지 보수 상태 양호",
+                  "score": 2
+                },
+                {
+                  "text": "시설 보완 필요(벗겨유입, 창문파손 등)",
+                  "score": 1
+                }
+              ],
+              "photo": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "표면처리 품질관리",
+      "items": [
+        {
+          "id": "4-1",
+          "name": "표면처리 상태 Spec 명시 표면처리 규정 /SSQS 규정 만족 유무",
+          "subs": [
+            {
+              "id": "4-1-1",
+              "options": [
+                {
+                  "text": "호선별/ITEM 별 표면처리 규정 만족",
+                  "score": 2
+                },
+                {
+                  "text": "요구되는 표면처리 Grade 불만족",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "4-1-2",
+              "options": [
+                {
+                  "text": "도장 작업 전 BLOW HOLE 수정 완료",
+                  "score": 2
+                },
+                {
+                  "text": "BLOW HOLE 수정 미흡상태 도장 진행",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "4-1-3",
+              "options": [
+                {
+                  "text": "도장 작업 전 NOTCH 수정 완료",
+                  "score": 2
+                },
+                {
+                  "text": "도장 작업 전 NOTCH 수정 미완료",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "4-1-4",
+              "options": [
+                {
+                  "text": "도장 작업 전 SPATTER 수정 완료",
+                  "score": 2
+                },
+                {
+                  "text": "도장 작업 전 SPATTER 수정 미완료",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "도장품질관리",
+      "items": [
+        {
+          "id": "5-1",
+          "name": "작업장내 도장조건 RH 85% 이하/DP&ST 3℃이상 (도장작업 시 직접측정)",
+          "subs": [
+            {
+              "id": "5-1-1",
+              "options": [
+                {
+                  "text": "도장 작업 中 조건 만족 (RH 85% 이하/DP&ST 3℃이상)",
+                  "score": 5
+                },
+                {
+                  "text": "도장 조건 불만족 상태 도장 작업 실시",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "5-2",
+          "name": "규정된 도료 사용법 준수",
+          "subs": [
+            {
+              "id": "5-2-1",
+              "options": [
+                {
+                  "text": "도료 혼합 비율 준수",
+                  "score": 2
+                },
+                {
+                  "text": "도료 혼합 비율 미준수",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-2-2",
+              "options": [
+                {
+                  "text": "규정 신나 사용 준수",
+                  "score": 2
+                },
+                {
+                  "text": "규정 신나 미사용",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "5-3",
+          "name": "Stripe coat 실시 - 취약부위(구멍, 모서리, 용접선 등) 시공 상태",
+          "subs": [
+            {
+              "id": "5-3-1",
+              "options": [
+                {
+                  "text": "각 줄 HOLE T/UP 실시 完",
+                  "score": 1
+                },
+                {
+                  "text": "일부 HOLE T/UP 적용 미완",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-3-2",
+              "options": [
+                {
+                  "text": "용접선 T/UP 실시 完",
+                  "score": 1
+                },
+                {
+                  "text": "용접선 T/UP 적용 누락",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-3-3",
+              "options": [
+                {
+                  "text": "모서리 및 코너부 T/UP 실시 完",
+                  "score": 1
+                },
+                {
+                  "text": "모서리 및 코너부 T/UP 적용 미완",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-3-4",
+              "options": [
+                {
+                  "text": "평면 HOLIDAY T/UP 적용 완료",
+                  "score": 1
+                },
+                {
+                  "text": "평면 HOLIDAY T/UP 적용 미완",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "5-4",
+          "name": "도장작업前 Cleaning 상태 이물질 (Oil, Dust, 슬기 등) 제거상태",
+          "subs": [
+            {
+              "id": "5-4-1",
+              "options": [
+                {
+                  "text": "도장 전 OIL 제거 완료",
+                  "score": 2
+                },
+                {
+                  "text": "도장 전 OIL 제거 미흡",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-4-2",
+              "options": [
+                {
+                  "text": "도장 전 슬기 제거 완료",
+                  "score": 2
+                },
+                {
+                  "text": "도장 전 슬기 제거 미흡",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-4-3",
+              "options": [
+                {
+                  "text": "도장 전 DUST 크리닝 완료",
+                  "score": 2
+                },
+                {
+                  "text": "도장 전 DUST 제거 미흡",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-4-4",
+              "options": [
+                {
+                  "text": "도장 전 Foreign material 제거 완료",
+                  "score": 2
+                },
+                {
+                  "text": "도장 전 Foreign material 수정 미흡",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-4-5",
+              "options": [
+                {
+                  "text": "근접 도장 줄면 타도료 오염 방지 실시 완료(방진막, 커버링)",
+                  "score": 2
+                },
+                {
+                  "text": "도장 오염 방지 활동 미실시",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "5-5",
+          "name": "도장면 결함 여부 (도장누락, 녹발생, 핀홀, 박리, 뱉색 등)",
+          "subs": [
+            {
+              "id": "5-5-1",
+              "options": [
+                {
+                  "text": "도장품 도장 누락 無",
+                  "score": 2
+                },
+                {
+                  "text": "도장품 일부 구역 도장 누락",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-5-2",
+              "options": [
+                {
+                  "text": "도장품 녹발생 無",
+                  "score": 2
+                },
+                {
+                  "text": "도장품 녹발생으로 인하여 재작업 필요",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-5-3",
+              "options": [
+                {
+                  "text": "도장면 핀홀 발생 無",
+                  "score": 2
+                },
+                {
+                  "text": "도장면 핀홀 발생 有",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-5-4",
+              "options": [
+                {
+                  "text": "도장면 박리 발생 無",
+                  "score": 2
+                },
+                {
+                  "text": "도장품 부착 불량에 의한 박리 발생",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-5-5",
+              "options": [
+                {
+                  "text": "그 외 기타 도장 결함 발생 無",
+                  "score": 2
+                },
+                {
+                  "text": "그 외 기타 도장 결함으로 수정 작업 필요",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "5-6",
+          "name": "규정도막 준수 (호선별 Spec에 명시된 건조도막두께)",
+          "subs": [
+            {
+              "id": "5-6-1",
+              "options": [
+                {
+                  "text": "사양서에 명시된 도막 범위 만족",
+                  "score": 2
+                },
+                {
+                  "text": "사양서에 명시된 도막 미달",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-6-2",
+              "options": [
+                {
+                  "text": "도료별 TDS 명시된 건조도막 범위 만족",
+                  "score": 1
+                },
+                {
+                  "text": "도료별 TDS에 명시된 과도막 범위 초과",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "5-7",
+          "name": "완성품 관리상태  보호커버, 건조 및 데미지 발생 유무, 스티커 부착",
+          "subs": [
+            {
+              "id": "5-7-1",
+              "options": [
+                {
+                  "text": "완성품 운반 중 발생한 데미지 수정 완료",
+                  "score": 1
+                },
+                {
+                  "text": "운반 데미지 수정 미실시",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-7-2",
+              "options": [
+                {
+                  "text": "완성품 조립 중 발생한 데미지 수정 완료",
+                  "score": 1
+                },
+                {
+                  "text": "조립 중 발생 데미지 수정 필요",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-7-3",
+              "options": [
+                {
+                  "text": "완성품 보호 커버링 실시 완료",
+                  "score": 1
+                },
+                {
+                  "text": "완성품 커버링 불량으로 오염",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            },
+            {
+              "id": "5-7-4",
+              "options": [
+                {
+                  "text": "완성품 자체검검 완료 후 자주 검사 스티커 부착",
+                  "score": 1
+                },
+                {
+                  "text": "자주 검사 스티커 미부착",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "안전관리",
+      "items": [
+        {
+          "id": "6-1",
+          "name": "작업자 안전장비 착용상태",
+          "subs": [
+            {
+              "id": "6-1-1",
+              "options": [
+                {
+                  "text": "안전보호구 착용 100%",
+                  "score": 3
+                },
+                {
+                  "text": "보호구 미착용 인원 1名",
+                  "score": 2
+                },
+                {
+                  "text": "보호구 미착용 인원 2名",
+                  "score": 1
+                },
+                {
+                  "text": "보호구 미착용 인원 2名 이상",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        },
+        {
+          "id": "6-2",
+          "name": "소화기 점검",
+          "subs": [
+            {
+              "id": "6-2-1",
+              "options": [
+                {
+                  "text": "월별 소화기 점검 실시",
+                  "score": 1
+                },
+                {
+                  "text": "소화기 월간 점검 누락",
+                  "score": 0
+                }
+              ],
+              "photo": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "기타 외 가/감점",
+      "items": [
+        {
+          "id": "7-1",
+          "name": "Traceability는 유지 및 점검",
+          "subs": [
+            {
+              "id": "7-1-1",
+              "options": [
+                {
+                  "text": "공정중 Tag No, 편칭, 스티커 부착, 마스킹 점검 및 관리되고 있는가",
+                  "score": 5
+                }
+              ],
+              "photo": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "max_score": 109,
+  "meta": {
+    "version": "v1.0",
+    "updated_at": "2026-03-26 00:19:03",
+    "inspector": "홍길동",
+    "reply_days": 7,
+    "cc_email": "your.name@samsung.com"
+  }
+}
