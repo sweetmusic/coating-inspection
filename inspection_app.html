@@ -691,18 +691,30 @@ function doExcel(){
     ['협력사',S.company.name,'','','원점수',cur+'/'+mx+'점','환산점수(100점)',norm+'점'],
     ['평가등급',gr?gr.grade+'등급 ('+gr.label+')':'-','','','','','',''],
     [],
-    ['No.','점검항목(대분류)','세부항목번호','평가항목','배점(만점)','취득점수','OK/NG','비고'],
+    ['No.','점검항목(대분류)','세부항목번호','평가항목(선택지 전체)','배점','선택','비고'],
   ];
   CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
     if(s.id==='1-1-1'&&S.type==='정기') return;
     const a=S.ans[s.id];
-    const sel=(a&&a.optionIdx>=0)?s.options[a.optionIdx]:null;
-    const mxSc=Math.max(...s.options.map(o=>o.score));
-    r1.push([m.id+'. '+m.name,it.name,s.id,sel?sel.text:'(미선택)',mxSc,sel?sel.score:'',sel?(sel.score===mxSc?'OK':'NG'):'',a?.memo||'']);
+    const selIdx=(a&&a.optionIdx>=0)?a.optionIdx:-1;
+    // 모든 선택지를 행으로 출력
+    s.options.forEach((opt,oi)=>{
+      const isSel=(oi===selIdx);
+      const isFirst=(oi===0);
+      r1.push([
+        isFirst?(m.id+'. '+m.name):'',   // 대분류 (첫 선택지에만)
+        isFirst?it.name:'',               // 중분류 (첫 선택지에만)
+        isFirst?s.id:'',                  // 세부번호 (첫 선택지에만)
+        opt.text,                         // 평가항목
+        opt.score,                        // 배점
+        isSel?'✓':'',                    // 선택여부
+        (isSel&&a?.memo)?a.memo:''       // 비고 (선택된 행에만)
+      ]);
+    });
   })));
-  r1.push(['합계','','','',mx,cur,gr?gr.grade+'등급':'-','환산: '+norm+'점/100점']);
+  r1.push(['합계','','','','',cur+'점 / '+mx+'점','환산: '+norm+'점/100점']);
   const ws1=XLSX.utils.aoa_to_sheet(r1);
-  ws1['!cols']=[{wch:20},{wch:36},{wch:12},{wch:42},{wch:10},{wch:10},{wch:8},{wch:28}];
+  ws1['!cols']=[{wch:20},{wch:36},{wch:12},{wch:48},{wch:8},{wch:6},{wch:28}];
   XLSX.utils.book_append_sheet(wb,ws1,'점검결과');
   // 시트2: 지적사항
   const r2=[['지적사항 요약'],[S.company.name+'  ·  '+S.date+'  ·  '+S.type+'  ·  점검자: '+insp],[],[' 세부번호','대분류','선택된 평가항목','취득점수','만점','비고']];
