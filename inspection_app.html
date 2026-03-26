@@ -430,8 +430,7 @@ function startCheck(){
 }
 function goBack(){
   if(Object.keys(S.ans).length>0){
-    if(!window.confirm('작성 중인 내용이 있습니다.
-처음으로 돌아갈까요?')) return;
+    if(!window.confirm('작성 중인 내용이 있습니다.\n처음으로 돌아갈까요?')) return;
   }
   clearDraft();
   S={company:null,date:'',type:'정기',inspector:'',majIdx:0,ans:{}};
@@ -760,40 +759,22 @@ function doMail(){
   });
   const subj=encodeURIComponent('[도장품질점검] '+S.company.name+'_'+S.date.replace(/-/g,'.')+'_'+S.type+'_'+norm+'점('+(gr?gr.grade+'등급':'-')+')');
   const body=encodeURIComponent(
-'안녕하세요. 삼성중공업 도장QM '+insp+'입니다.
-
-금일 실시한 도장 품질점검 결과를 송부드립니다.
-
-'
-+'■ 점검일자 : '+S.date+'
-■ 점검유형 : '+S.type+'
-■ 협력사   : '+S.company.name+'
-■ 점검자   : '+insp+'
-
-'
-+'━━ 종합 결과 ━━━━━━━━━━━━━━━━
-'
-+'  원점수: '+cur+' / '+mx+'점
-  환산점수(100점 기준): '+norm+'점
-  등급: '+(gr?gr.grade+'등급 · '+gr.label:'-')+'
-
-'
-+'━━ 대분류별 점수 ━━━━━━━━━━━━━
-'+majLines.join('
-')+'
-'
-+(ngLines.length>0?'
-━━ 주요 지적사항 ('+ngLines.length+'건) ━━━━━━━
-'+ngLines.join('
-')+'
-':'
-')
-+'
-조치 완료 후 '+rdStr+'까지 회신 부탁드립니다.
-상세 점검결과는 첨부 파일을 확인해 주시기 바랍니다.
-
-감사합니다.
-삼성중공업 도장QM '+insp
+    '안녕하세요. 삼성중공업 도장QM '+insp+'입니다.\n\n'
+    +'금일 실시한 도장 품질점검 결과를 송부드립니다.\n\n'
+    +'■ 점검일자 : '+S.date+'\n'
+    +'■ 점검유형 : '+S.type+'\n'
+    +'■ 협력사   : '+S.company.name+'\n'
+    +'■ 점검자   : '+insp+'\n\n'
+    +'━━ 종합 결과 ━━━━━━━━━━━━━━━━\n'
+    +'  원점수: '+cur+' / '+mx+'점\n'
+    +'  환산점수(100점 기준): '+norm+'점\n'
+    +'  등급: '+(gr?gr.grade+'등급 · '+gr.label:'-')+'\n\n'
+    +'━━ 대분류별 점수 ━━━━━━━━━━━━━\n'
+    +majLines.join('\n')+'\n'
+    +(ngLines.length>0?'\n━━ 주요 지적사항 ('+ngLines.length+'건) ━━━━━━━\n'+ngLines.join('\n')+'\n':'')
+    +'\n조치 완료 후 '+rdStr+'까지 회신 부탁드립니다.\n'
+    +'상세 점검결과는 첨부 파일을 확인해 주시기 바랍니다.\n\n'
+    +'감사합니다.\n삼성중공업 도장QM '+insp
   );
   window.location.href='mailto:?subject='+subj+'&body='+body;
   closeModal('modal-exp');
@@ -823,26 +804,17 @@ function checkDraft(){
     const d=JSON.parse(raw); if(!d.company||!d.date) return;
     const diff=Math.floor((Date.now()-new Date(d.savedAt))/60000);
     const ts=diff<60?diff+'분 전':Math.floor(diff/60)+'시간 '+diff%60+'분 전';
-    const msg='📋 저장된 점검 작업이 있습니다.
-
-협력사: '+d.company.name+'
-점검일: '+d.date+'
-점검자: '+(d.inspector||'-')+'
-저장: '+ts+'
-
-이어서 작업하시겠습니까?';
+    const msg='저장된 점검 작업이 있습니다.\n\n협력사: '+d.company.name+'\n점검일: '+d.date+'\n점검자: '+(d.inspector||'-')+'\n저장: '+ts+'\n\n이어서 작업하시겠습니까?';
     if(window.confirm(msg)){
       S.company=d.company; S.date=d.date; S.type=d.type;
       S.inspector=d.inspector; S.majIdx=d.majIdx||0; S.ans=d.ans||{};
-      // 기본정보 화면 복원
       const sel=document.getElementById('sel-co');
       CFG.companies.forEach((co,i)=>{ if(co.id===d.company.id) sel.value=i; });
       document.getElementById('inp-date').value=d.date;
       document.getElementById('inp-insp').value=d.inspector||'';
       document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('on',b.dataset.t===d.type));
       S.type=d.type;
-      if(window.confirm('기본정보 화면에서 시작할까요?
-(아니오: 점검 화면으로 바로 이동)')){
+      if(window.confirm('기본정보 화면에서 시작할까요?\n(아니오: 점검 화면으로 바로 이동)')){
         showScreen('sc-info');
       }else{
         buildTabs(); renderMaj(S.majIdx); showScreen('sc-check');
