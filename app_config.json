@@ -2,113 +2,112 @@
   "system": {
     "점검자명": "홍길동",
     "발신 Gmail 주소": "your.gmail@gmail.com",
-    "Gmail 앱 비밀번호": "xxxx xxxx xxxx xxxx",
     "참조 메일(사내)": "your.name@samsung.com",
     "회신기한(일)": "7",
     "DB 저장 폴더": "C:/도장점검/DB/",
     "수신 폴더": "C:/도장점검/incoming/",
     "완료 폴더": "C:/도장점검/processed/",
-    "앱 설정 Gmail 레이블": "APP_CONFIG",
-    "버전": "v1.0"
+    "버전": "v1.0",
+    "GitHub Pages URL": "https://[계정명].github.io/[저장소명]/app_config.json"
   },
   "companies": [
     {
       "id": "C001",
       "name": "OO도장(주)",
       "manager": "홍길동",
-      "phone": "010-1234-5678",
-      "email": "hong@oo.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C002",
       "name": "XX철강도장",
       "manager": "김철수",
-      "phone": "010-2345-6789",
-      "email": "kim@xx.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C003",
       "name": "△△산업",
       "manager": "이영희",
-      "phone": "010-3456-7890",
-      "email": "lee@dd.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C004",
       "name": "◇◇도장",
       "manager": "박민준",
-      "phone": "010-4567-8901",
-      "email": "park@cc.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C005",
       "name": "□□코팅",
       "manager": "최수현",
-      "phone": "010-5678-9012",
-      "email": "choi@ee.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C006",
       "name": "○○표면처리",
       "manager": "정다은",
-      "phone": "010-6789-0123",
-      "email": "jung@ff.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C007",
       "name": "★★산업",
       "manager": "강지훈",
-      "phone": "010-7890-1234",
-      "email": "kang@gg.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C008",
       "name": "▲▲도장",
       "manager": "윤서준",
-      "phone": "010-8901-2345",
-      "email": "yoon@hh.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C009",
       "name": "◆◆코팅",
       "manager": "임지수",
-      "phone": "010-9012-3456",
-      "email": "lim@ii.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C010",
       "name": "●●산업",
       "manager": "한예린",
-      "phone": "010-0123-4567",
-      "email": "han@jj.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C011",
       "name": "협력사11",
       "manager": "담당자11",
-      "phone": "010-1111-1111",
-      "email": "co11@sample.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C012",
       "name": "협력사12",
       "manager": "담당자12",
-      "phone": "010-2222-2222",
-      "email": "co12@sample.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C013",
       "name": "협력사13",
       "manager": "담당자13",
-      "phone": "010-3333-3333",
-      "email": "co13@sample.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     },
     {
       "id": "C014",
       "name": "협력사14",
       "manager": "담당자14",
-      "phone": "010-4444-4444",
-      "email": "co14@sample.com"
+      "phone": "별도파일관리",
+      "email": "별도파일관리"
     }
   ],
   "grades": [
@@ -161,7 +160,7 @@
         },
         {
           "id": "1-2",
-          "name": "도장 자격보유 및 활동 - 품질 관리 인증 명함 및 전문 도장 자격 보유 여부",
+          "name": "도장 자격 보유 및 활동",
           "subs": [
             {
               "id": "1-2-1",
@@ -229,7 +228,7 @@
         },
         {
           "id": "2-2",
-          "name": "DAILY REPORT 관리 현황 - 호선별 품목별 매일 기록/보관 도장조건기록 포함",
+          "name": "DAILY REPORT 관리 현황",
           "subs": [
             {
               "id": "2-2-1",
@@ -405,7 +404,7 @@
       "items": [
         {
           "id": "3-1",
-          "name": "품질게시판 제작 및 활용 - 작업절차, 각종 표준 등 품질관련내용 부착(반기별 교체)",
+          "name": "품질게시판 제작 및 활용",
           "subs": [
             {
               "id": "3-1-1",
@@ -429,7 +428,7 @@
         },
         {
           "id": "3-2",
-          "name": "도료관리 상태(도료창고/작업장) - 경리정돈상태 및 도료사용기간 경과 유무",
+          "name": "도료관리 상태(도료창고/작업장)",
           "subs": [
             {
               "id": "3-2-1",
@@ -559,7 +558,7 @@
       "items": [
         {
           "id": "4-1",
-          "name": "표면처리 상태 Spec 명시 표면처리 규정 /SSQS 규정 만족 유무",
+          "name": "표면처리 상태 Spec 및 규정 준수 여부",
           "subs": [
             {
               "id": "4-1-1",
@@ -627,7 +626,7 @@
       "items": [
         {
           "id": "5-1",
-          "name": "작업장내 도장조건 RH 85% 이하/DP&ST 3℃이상 (도장작업 시 직접측정)",
+          "name": "작업장내 도장조건 (도장작업 시 직접측정)",
           "subs": [
             {
               "id": "5-1-1",
@@ -681,7 +680,7 @@
         },
         {
           "id": "5-3",
-          "name": "Stripe coat 실시 - 취약부위(구멍, 모서리, 용접선 등) 시공 상태",
+          "name": "취약부위 Stripe coat 실시 상태",
           "subs": [
             {
               "id": "5-3-1",
@@ -743,7 +742,7 @@
         },
         {
           "id": "5-4",
-          "name": "도장작업前 Cleaning 상태 이물질 (Oil, Dust, 슬기 등) 제거상태",
+          "name": "도장작업前 Cleaning 및 이물질 (Oil, Dust 등) 제거 상태",
           "subs": [
             {
               "id": "5-4-1",
@@ -819,7 +818,7 @@
         },
         {
           "id": "5-5",
-          "name": "도장면 결함 여부 (도장누락, 녹발생, 핀홀, 박리, 뱉색 등)",
+          "name": "도장면 결함 여부 (도장누락, 녹발생, 핀홀, 박리, 변색 등)",
           "subs": [
             {
               "id": "5-5-1",
@@ -929,7 +928,7 @@
         },
         {
           "id": "5-7",
-          "name": "완성품 관리상태  보호커버, 건조 및 데미지 발생 유무, 스티커 부착",
+          "name": "완성품 관리상태",
           "subs": [
             {
               "id": "5-7-1",
@@ -1071,9 +1070,13 @@
   "max_score": 109,
   "meta": {
     "version": "v1.0",
-    "updated_at": "2026-03-26 00:19:03",
+    "updated_at": "2026-03-26 00:48:40",
     "inspector": "홍길동",
     "reply_days": 7,
-    "cc_email": "your.name@samsung.com"
+    "cc_email": "your.name@samsung.com",
+    "db_folder": "C:/도장점검/DB/",
+    "incoming_folder": "C:/도장점검/incoming/",
+    "processed_folder": "C:/도장점검/processed/",
+    "github_url": "https://[계정명].github.io/[저장소명]/app_config.json"
   }
 }
