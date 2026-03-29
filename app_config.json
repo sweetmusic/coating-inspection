@@ -1,110 +1,11 @@
 {
-  "system": {
-    "점검자명": "홍길동",
-    "회신기한(일)": "7",
-    "버전": "v1.0",
-    "GitHub Pages URL": "https://[계정명].github.io/[저장소명]/app_config.json"
+  "meta": {
+    "version": "v1.0",
+    "updated_at": "2026-03-29 17:16:25",
+    "inspector": "",
+    "reply_days": 7,
+    "github_url": "https://sweetmusic.github.io/coating-inspection/app_config.json"
   },
-  "companies": [
-    {
-      "id": "C001",
-      "name": "OO도장(주)",
-      "manager": "홍길동",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C002",
-      "name": "XX철강도장",
-      "manager": "김철수",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C003",
-      "name": "△△산업",
-      "manager": "이영희",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C004",
-      "name": "◇◇도장",
-      "manager": "박민준",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C005",
-      "name": "□□코팅",
-      "manager": "최수현",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C006",
-      "name": "○○표면처리",
-      "manager": "정다은",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C007",
-      "name": "★★산업",
-      "manager": "강지훈",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C008",
-      "name": "▲▲도장",
-      "manager": "윤서준",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C009",
-      "name": "◆◆코팅",
-      "manager": "임지수",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C010",
-      "name": "●●산업",
-      "manager": "한예린",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C011",
-      "name": "협력사11",
-      "manager": "담당자11",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C012",
-      "name": "협력사12",
-      "manager": "담당자12",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C013",
-      "name": "협력사13",
-      "manager": "담당자13",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    },
-    {
-      "id": "C014",
-      "name": "협력사14",
-      "manager": "담당자14",
-      "phone": "별도파일관리",
-      "email": "별도파일관리"
-    }
-  ],
   "grades": [
     {
       "grade": "A",
@@ -115,17 +16,106 @@
     },
     {
       "grade": "B",
-      "label": "보통",
-      "min": 70,
+      "label": "양호",
+      "min": 80,
       "max": 89,
       "note": "경미한 사항 개선 요청"
     },
     {
       "grade": "C",
-      "label": "나쁨",
-      "min": 0,
+      "label": "개선보완필요",
+      "min": 70,
+      "max": 79,
+      "note": "주요 부적합 사항 즉시 조치 요청"
+    },
+    {
+      "grade": "D",
+      "label": "시정조치실시",
+      "min": 50,
       "max": 69,
       "note": "주요 부적합 사항 즉시 조치 요청"
+    }
+  ],
+  "companies": [
+    {
+      "id": "C001",
+      "name": "삼녹㈜",
+      "active": true
+    },
+    {
+      "id": "C002",
+      "name": "해양패밀리",
+      "active": true
+    },
+    {
+      "id": "C003",
+      "name": "명진TSR",
+      "active": true
+    },
+    {
+      "id": "C004",
+      "name": "신우C&C",
+      "active": true
+    },
+    {
+      "id": "C005",
+      "name": "경민실업",
+      "active": true
+    },
+    {
+      "id": "C006",
+      "name": "광림마린테크",
+      "active": true
+    },
+    {
+      "id": "C007",
+      "name": "경민산업",
+      "active": true
+    },
+    {
+      "id": "C008",
+      "name": "한국미부",
+      "active": true
+    },
+    {
+      "id": "C009",
+      "name": "고려산기",
+      "active": true
+    },
+    {
+      "id": "C010",
+      "name": "큐티엠",
+      "active": true
+    },
+    {
+      "id": "C011",
+      "name": "신화기업",
+      "active": true
+    },
+    {
+      "id": "C012",
+      "name": "청룡산업",
+      "active": true
+    },
+    {
+      "id": "C013",
+      "name": "광성",
+      "active": true
+    },
+    {
+      "id": "C014",
+      "name": "동은정공",
+      "active": true
+    },
+    {
+      "id": "C015",
+      "name": "DS동산",
+      "active": true
+    },
+    {
+      "id": "C016",
+      "name": "세양기업",
+      "active": true
     }
   ],
   "checklist": [
@@ -1011,12 +1001,5 @@
       ]
     }
   ],
-  "max_score": 109,
-  "meta": {
-    "version": "v1.0",
-    "updated_at": "2026-03-26 00:48:40",
-    "inspector": "홍길동",
-    "reply_days": 7,
-    "github_url": "https://[계정명].github.io/[저장소명]/app_config.json"
-  }
+  "max_score": 109
 }
