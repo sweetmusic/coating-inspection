@@ -253,16 +253,61 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 .kakao-banner{background:var(--accent);color:var(--navy);padding:12px 40px 12px 16px;font-size:12px;font-weight:600;line-height:1.5;position:relative;flex-shrink:0;}
 .kakao-close{position:absolute;top:8px;right:12px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--navy);}
 
-/* ─── 신규: HTML 보고서 인쇄 스타일 ────────────────── */
+/* ─── 보고서 화면 (앱 안에서 직접 렌더링 · iframe/새탭 사용 안 함) ─── */
+#report-overlay{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;background:#fff;display:flex;flex-direction:column;}
+.rp-bar{display:flex;gap:6px;align-items:center;padding:10px 12px;background:var(--navy);flex-shrink:0;}
+.rp-bar-title{flex:1;min-width:0;color:#fff;font-size:11.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.rp-btn{padding:9px 12px;border:none;border-radius:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0;}
+.rp-btn-print{background:var(--accent2);color:var(--navy);}
+.rp-btn-close{background:#f0f4f8;color:var(--text);}
+#report-view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#fff;color:#1a2a3a;font-size:12px;user-select:text;padding-bottom:40px;}
+
+#report-view .rp-cover{background:#0f2744;color:#fff;padding:22px 18px;}
+#report-view .rp-cover-label{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:6px;}
+#report-view .rp-cover-title{font-size:19px;font-weight:700;line-height:1.3;margin-bottom:16px;}
+#report-view .rp-cover-meta{display:flex;gap:18px;flex-wrap:wrap;}
+#report-view .rp-cover-meta div{font-size:11.5px;}
+#report-view .rp-cover-meta b{color:#f5c842;}
+#report-view .rp-cover-meta span{color:rgba(255,255,255,.7);}
+#report-view .rp-main{padding:0 14px;}
+#report-view .rp-score-box{display:flex;align-items:center;gap:20px;background:#f0f4f8;border-radius:12px;padding:16px 18px;margin:16px 0;flex-wrap:wrap;}
+#report-view .rp-score-num{font-size:44px;font-weight:700;color:#0f2744;line-height:1;font-family:"JetBrains Mono",monospace;}
+#report-view .rp-score-sub{font-size:11.5px;color:#5a7a9a;margin-top:4px;}
+#report-view .rp-grade{display:inline-block;padding:7px 18px;border-radius:20px;font-size:15px;font-weight:700;color:#fff;}
+#report-view .rp-g-A{background:#1e8449;}
+#report-view .rp-g-B{background:#d68910;}
+#report-view .rp-g-C{background:#c0392b;}
+#report-view .rp-g-none{background:#718096;}
+#report-view h2{font-size:13.5px;font-weight:700;color:#0f2744;border-bottom:2px solid #0f2744;padding-bottom:5px;margin:18px 0 10px;}
+#report-view h3{font-size:12px;font-weight:700;color:#0f2744;margin:12px 0 5px;}
+#report-view table{width:100%;border-collapse:collapse;font-size:10.5px;table-layout:fixed;}
+#report-view th{background:#0f2744;color:#fff;padding:6px 7px;text-align:left;font-weight:600;}
+#report-view td{padding:6px 7px;border-bottom:1px solid #e2e8f0;vertical-align:top;word-break:break-word;}
+#report-view tbody tr:nth-child(even) td{background:#f8fafc;}
+#report-view .rp-bar-wrap{width:100%;max-width:64px;height:6px;background:#e2e8f0;border-radius:4px;overflow:hidden;display:block;margin-bottom:3px;}
+#report-view .rp-bar-fill{height:100%;border-radius:4px;}
+#report-view .rp-tag{display:inline-block;background:#fdecea;color:#e74c3c;border:1px solid rgba(231,76,60,.25);padding:1px 5px;border-radius:4px;font-size:9.5px;font-weight:700;font-family:"JetBrains Mono",monospace;}
+#report-view .rp-tag-ok{background:#eafaf1;color:#1e8449;border-color:rgba(30,132,73,.25);}
+#report-view .rp-ok{color:#1e8449;}
+#report-view .rp-ng{color:#c0392b;}
+#report-view .rp-photos{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+#report-view .rp-photo{border:1px solid #d1dce8;border-radius:8px;overflow:hidden;}
+#report-view .rp-photo img{width:100%;height:150px;object-fit:cover;display:block;}
+#report-view .rp-photo-cap{padding:6px 8px;font-size:10.5px;color:#5a7a9a;}
+#report-view .rp-note{font-size:11px;color:#5a7a9a;padding:10px 0;}
+#report-view .rp-footer{margin-top:24px;font-size:9.5px;color:#9aa8b4;text-align:center;border-top:1px solid #e2e8f0;padding-top:10px;}
+
+@page{size:A4;margin:12mm 10mm;}
 @media print{
-  body *{visibility:hidden;}
-  #print-report,#print-report *{visibility:visible;}
-  #print-report{
-    position:fixed;inset:0;
-    background:#fff;
-    padding:0;margin:0;
-    width:210mm;min-height:297mm;
-  }
+  html,body{height:auto!important;overflow:visible!important;}
+  #app{display:none!important;}
+  .overlay{display:none!important;}
+  #report-overlay{position:static!important;display:block!important;}
+  #report-overlay.hidden{display:none!important;}
+  .rp-bar{display:none!important;}
+  #report-view{overflow:visible!important;height:auto!important;padding-bottom:0!important;}
+  body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  #report-view .rp-pagebreak{page-break-before:always;}
 }
 </style>
 </head>
@@ -425,14 +470,12 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<!-- 신규: 인쇄용 HTML 보고서 (숨김, 인쇄 시 표시) -->
-<div id="print-report" class="hidden"></div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 /* ════════════════════════════════════════════════════════
    설정
 ════════════════════════════════════════════════════════ */
+const APP_BUILD = 'b3-report';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
 const GH_URL  = 'https://sweetmusic.github.io/coating-inspection/app_config.json';
 const CFG_KEY = 'app_config';
 const DRAFT_KEY = 'inspection_draft';
@@ -523,7 +566,7 @@ function boot(){
   document.getElementById('inp-date').value = today();
   document.getElementById('inp-insp').value = CFG.meta?.inspector || '';
   document.getElementById('info-ver').textContent = CFG.meta?.version || '';
-  document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16);
+  document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16) + ' · 앱 ' + APP_BUILD;
   showScreen('sc-info');
   setTimeout(checkDraft, 300);
 }
@@ -1015,7 +1058,22 @@ function doExcel(){
 /* ════════════════════════════════════════════════════════
    신규: HTML 보고서 출력 (사진 포함)
 ════════════════════════════════════════════════════════ */
+function esc(v){
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// 실패해도 아무 반응이 없으면 원인을 알 수 없으므로 오류를 화면에 표시한다.
 function doHtmlReport(){
+  try{
+    buildReportView();
+  }catch(e){
+    alert('보고서 생성 중 오류가 발생했습니다.\n\n' + ((e && e.message) ? e.message : e));
+  }
+}
+
+function buildReportView(){
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const coNm = S.company.name;
   const dateStr = S.date;
@@ -1026,7 +1084,7 @@ function doHtmlReport(){
     if(s.id === '1-1-1' && S.type === '정기') return;
     const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
     const mxSc = Math.max(...s.options.map(o => o.score));
-    if(a.score < mxSc) ngList.push({id: s.id, major: maj.name, text: s.options[a.optionIdx].text, memo: a.memo || '', score: a.score, maxSc});
+    if(a.score < mxSc) ngList.push({id: s.id, major: maj.name, text: s.options[a.optionIdx].text, memo: a.memo || '', score: a.score, maxSc: mxSc});
   })));
 
   // 대분류별 점수
@@ -1065,181 +1123,127 @@ function doHtmlReport(){
 
   // 사진 그리드 HTML
   const photosHtml = S.photos.length > 0
-    ? `<div style="margin-top:24px;page-break-before:always;">
-        <h2 style="font-size:16px;font-weight:700;color:#0f2744;border-bottom:2px solid #0f2744;padding-bottom:6px;margin-bottom:16px;">
-          📷 참고 사진 (${S.photos.length}장)
-        </h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          ${S.photos.map((p, i) => `
-            <div style="border:1px solid #d1dce8;border-radius:8px;overflow:hidden;">
-              <img src="${p.dataUrl}" style="width:100%;height:200px;object-fit:cover;display:block;">
-              <div style="padding:8px 10px;font-size:11px;color:#5a7a9a;min-height:28px;">
-                사진 ${i+1}
-              </div>
-            </div>`).join('')}
-        </div>
-        <p style="font-size:11px;color:#9aa8b4;margin-top:12px;">
-          ※ 사진 설명(캡션)은 PC 업로드 화면에서 추가할 수 있습니다.
-        </p>
-      </div>` : '';
+    ? `<h2 class="rp-pagebreak">📷 참고 사진 (${S.photos.length}장)</h2>
+       <div class="rp-photos">
+         ${S.photos.map((p, i) => `
+           <div class="rp-photo">
+             <img src="${p.dataUrl}" alt="현장사진 ${i+1}">
+             <div class="rp-photo-cap">사진 ${i+1}</div>
+           </div>`).join('')}
+       </div>` : '';
 
-  const html = `<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>점검보고서_${coNm}_${dateStr}</title>
-<style>
-  @page { size: A4; margin: 15mm 12mm; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-size: 12px; color: #1a2a3a; background: #fff; }
-  .cover { background: #0f2744; color: #fff; padding: 32px 28px 28px; border-radius: 0 0 16px 16px; }
-  .cover-label { font-size: 11px; color: rgba(255,255,255,.55); letter-spacing:.1em; margin-bottom: 8px; }
-  .cover-title { font-size: 22px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
-  .cover-meta { display: flex; gap: 24px; flex-wrap: wrap; }
-  .cover-meta div { font-size: 12px; }
-  .cover-meta b { color: #f5c842; }
-  .cover-meta span { color: rgba(255,255,255,.7); }
-  .score-box { display: flex; align-items: center; gap: 24px; background: #f0f4f8; border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
-  .score-num { font-size: 56px; font-weight: 700; color: #0f2744; line-height: 1; font-family: monospace; }
-  .score-sub { font-size: 13px; color: #5a7a9a; margin-top: 4px; }
-  .grade-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 16px; font-weight: 700; color: #fff; }
-  .g-A { background: #1e8449; } .g-B { background: #d68910; } .g-C { background: #c0392b; } .g-none { background: #718096; }
-  h2 { font-size: 14px; font-weight: 700; color: #0f2744; border-bottom: 2px solid #0f2744; padding-bottom: 6px; margin: 20px 0 12px; }
-  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
-  th { background: #0f2744; color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; }
-  td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
-  tr:nth-child(even) td { background: #f8fafc; }
-  .bar-wrap { width: 80px; height: 7px; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; margin: 0 8px; }
-  .bar-fill { height: 100%; border-radius: 4px; }
-  .ng-tag { display: inline-block; background: #fdecea; color: #e74c3c; border: 1px solid rgba(231,76,60,.25); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; font-family: monospace; }
-  .ok { color: #1e8449; } .ng { color: #c0392b; }
-  .footer { margin-top: 32px; font-size: 10px; color: #9aa8b4; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 10px; }
-  @media print {
-    .no-print { display: none; }
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  }
-</style>
-</head>
-<body>
-
-<!-- 표지 -->
-<div class="cover">
-  <div class="cover-label">삼성중공업 도장QM · 사외 철의장 품질점검 보고서</div>
-  <div class="cover-title">도장 협력사 품질점검<br>결과 보고서</div>
-  <div class="cover-meta">
-    <div><span>협력사</span><br><b>${coNm}</b></div>
-    <div><span>점검일자</span><br><b>${dateStr}</b></div>
-    <div><span>점검유형</span><br><b>${S.type}</b></div>
-    <div><span>점검자</span><br><b>${S.inspector}</b></div>
+  // 보고서 본문 (앱 문서 안에 직접 삽입되는 조각 · 스타일은 #report-view 로 스코프됨)
+  const html = `
+<div class="rp-cover">
+  <div class="rp-cover-label">삼성중공업 도장QM · 사외 철의장 품질점검 보고서</div>
+  <div class="rp-cover-title">도장 협력사 품질점검<br>결과 보고서</div>
+  <div class="rp-cover-meta">
+    <div><span>협력사</span><br><b>${esc(coNm)}</b></div>
+    <div><span>점검일자</span><br><b>${esc(dateStr)}</b></div>
+    <div><span>점검유형</span><br><b>${esc(S.type)}</b></div>
+    <div><span>점검자</span><br><b>${esc(S.inspector)}</b></div>
   </div>
 </div>
 
-<!-- 종합점수 -->
-<div class="score-box">
-  <div>
-    <div class="score-num">${norm}</div>
-    <div class="score-sub">환산점수 / 100점<br><span style="font-size:11px;color:#9aa8b4;">원점수 ${cur}/${mx}점</span></div>
-  </div>
-  <div>
-    <span class="grade-badge ${gr ? 'g-' + gr.grade : 'g-none'}">${gr ? gr.grade + '등급' : '-'}</span>
-    <div style="font-size:12px;color:#5a7a9a;margin-top:6px;">${gr ? gr.label : ''}</div>
-    <div style="font-size:11px;color:#9aa8b4;margin-top:4px;">${gr?.note || ''}</div>
-  </div>
-</div>
+<div class="rp-main">
 
-<!-- 대분류별 점수 -->
-<h2>대분류별 점수</h2>
-<table>
-  <thead><tr><th>대분류</th><th>점수</th><th style="width:100px;">취득율</th></tr></thead>
-  <tbody>
-    ${majScores.map(m => `
-      <tr>
-        <td>${m.name}</td>
-        <td>${m.score}/${m.max}점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:${m.pct}%;background:${m.pct>=90?'#2ecc71':m.pct>=70?'#f39c12':'#e74c3c'}"></div>
-          </div>
-          <span class="${m.pct>=90?'ok':m.pct>=70?'':'ng'}">${m.pct}%</span>
-        </td>
-      </tr>`).join('')}
-  </tbody>
-</table>
+  <div class="rp-score-box">
+    <div>
+      <div class="rp-score-num">${norm}</div>
+      <div class="rp-score-sub">환산점수 / 100점<br>원점수 ${cur}/${mx}점</div>
+    </div>
+    <div>
+      <span class="rp-grade ${gr ? 'rp-g-' + gr.grade : 'rp-g-none'}">${gr ? gr.grade + '등급' : '-'}</span>
+      <div style="font-size:11.5px;color:#5a7a9a;margin-top:6px;">${esc(gr ? gr.label : '')}</div>
+      <div style="font-size:10.5px;color:#9aa8b4;margin-top:3px;">${esc(gr?.note || '')}</div>
+    </div>
+  </div>
 
-<!-- 세부 점검항목 -->
-<h2 style="page-break-before:always;">세부 점검항목</h2>
-${detailGroups.map(g => `
-  <h3 style="font-size:12.5px;font-weight:700;color:#0f2744;margin:14px 0 6px;">${g.maj.id}. ${g.maj.name}</h3>
-  <table style="margin-bottom:14px;">
-    <thead><tr><th style="width:110px;">중분류</th><th style="width:56px;">번호</th><th>평가내용(선택)</th><th style="width:64px;">점수</th><th>비고</th></tr></thead>
+  <h2>대분류별 점수</h2>
+  <table>
+    <thead><tr><th>대분류</th><th style="width:74px;">점수</th><th style="width:70px;">취득율</th></tr></thead>
     <tbody>
-      ${g.rows.map(r => `
+      ${majScores.map(m => `
         <tr>
-          <td>${r.itName}</td>
-          <td><span class="ng-tag" style="${r.answered && r.score >= r.maxSc ? 'background:#eafaf0;color:#1e8449;border-color:rgba(30,132,73,.25);' : ''}">${r.id}</span></td>
-          <td>${r.text}</td>
-          <td class="${!r.answered ? '' : (r.score < r.maxSc ? 'ng' : 'ok')}">${r.score}/${r.maxSc}점</td>
-          <td style="font-size:10.5px;color:#5a7a9a;">${r.memo || '-'}</td>
+          <td>${esc(m.name)}</td>
+          <td>${m.score}/${m.max}점</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="display:block;width:${m.pct}%;background:${m.pct>=90?'#2ecc71':m.pct>=70?'#f39c12':'#e74c3c'}"></span></span>
+            <span class="${m.pct>=90?'rp-ok':m.pct>=70?'':'rp-ng'}">${m.pct}%</span>
+          </td>
         </tr>`).join('')}
     </tbody>
-  </table>`).join('')}
+  </table>
 
-<!-- 지적사항 -->
-${ngList.length > 0 ? `
-<h2>지적사항 (${ngList.length}건)</h2>
-<table>
-  <thead><tr><th style="width:80px;">항목</th><th>지적 내용</th><th style="width:70px;">점수</th><th>비고</th></tr></thead>
-  <tbody>
-    ${ngList.map(n => `
-      <tr>
-        <td><span class="ng-tag">${n.id}</span><br><span style="font-size:10px;color:#5a7a9a;">${n.major}</span></td>
-        <td>${n.text}</td>
-        <td class="ng">${n.score}/${n.maxSc}점</td>
-        <td style="font-size:11px;color:#5a7a9a;">${n.memo || '-'}</td>
-      </tr>`).join('')}
-  </tbody>
-</table>` : '<h2>지적사항</h2><p style="padding:12px;color:#5a7a9a;font-size:12px;">지적사항 없음 ✅</p>'}
+  <h2 class="rp-pagebreak">세부 점검항목</h2>
+  ${detailGroups.map(g => `
+    <h3>${esc(g.maj.id + '. ' + g.maj.name)}</h3>
+    <table style="margin-bottom:12px;">
+      <thead><tr><th style="width:22%;">중분류</th><th style="width:52px;">번호</th><th>평가내용(선택)</th><th style="width:56px;">점수</th><th style="width:18%;">비고</th></tr></thead>
+      <tbody>
+        ${g.rows.map(r => `
+          <tr>
+            <td>${esc(r.itName)}</td>
+            <td><span class="rp-tag ${r.answered && r.score >= r.maxSc ? 'rp-tag-ok' : ''}">${esc(r.id)}</span></td>
+            <td>${esc(r.text)}</td>
+            <td class="${!r.answered ? '' : (r.score < r.maxSc ? 'rp-ng' : 'rp-ok')}">${r.score}/${r.maxSc}점</td>
+            <td style="color:#5a7a9a;">${esc(r.memo || '-')}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`).join('')}
 
-<!-- 참고 사진 -->
-${photosHtml}
+  ${ngList.length > 0 ? `
+  <h2>지적사항 (${ngList.length}건)</h2>
+  <table>
+    <thead><tr><th style="width:72px;">항목</th><th>지적 내용</th><th style="width:56px;">점수</th><th style="width:20%;">비고</th></tr></thead>
+    <tbody>
+      ${ngList.map(n => `
+        <tr>
+          <td><span class="rp-tag">${esc(n.id)}</span><br><span style="font-size:9.5px;color:#5a7a9a;">${esc(n.major)}</span></td>
+          <td>${esc(n.text)}</td>
+          <td class="rp-ng">${n.score}/${n.maxSc}점</td>
+          <td style="color:#5a7a9a;">${esc(n.memo || '-')}</td>
+        </tr>`).join('')}
+    </tbody>
+  </table>` : '<h2>지적사항</h2><p class="rp-note">지적사항 없음 ✅</p>'}
 
-<div class="footer">
-  삼성중공업㈜ 품질보증팀 도장QM · 점검자: ${S.inspector} · 생성일시: ${new Date().toLocaleString('ko-KR')}
-</div>
+  ${photosHtml}
 
-</body>
-</html>`;
+  <div class="rp-footer">
+    삼성중공업㈜ 품질보증팀 도장QM · 점검자: ${esc(S.inspector)} · 생성일시: ${new Date().toLocaleString('ko-KR')} · 앱 ${APP_BUILD}
+  </div>
+</div>`;
 
-  // 새 탭/팝업을 열지 않고 앱 화면 안에 오버레이(iframe)로 바로 표시.
-  // (새 탭·팝업 방식은 PC Chrome에서는 다운로드로 처리되어 아무 반응이
-  //  없는 것처럼 보였고, 모바일 브라우저/카카오톡 인앱 브라우저 등에서는
-  //  팝업 차단으로 아예 열리지 않는 경우가 많아 기기별로 동작이 들쭉날쭉했음.
-  //  현재 페이지 안에 그대로 렌더링하면 플랫폼에 관계없이 항상 보여진다.)
-  showReportOverlay(html);
+  showReportOverlay(html, '점검보고서 · ' + coNm + ' · ' + dateStr);
 }
 
-function showReportOverlay(html){
+/* 보고서를 새 탭/팝업/iframe 없이 현재 페이지 안에 그대로 그린다.
+   (새 탭·다운로드·팝업 방식은 PC Chrome에서는 조용한 다운로드로,
+    모바일 브라우저와 카카오톡 인앱 브라우저에서는 팝업 차단으로 막혀
+    "버튼을 눌러도 아무 일도 없는" 증상의 원인이었다. iframe(srcdoc) 역시
+    iOS Safari의 높이·스크롤 버그와 사진 첨부 시 수 MB 문자열 문제가 있어
+    사용하지 않는다. 일반 DOM 렌더링은 어떤 브라우저에서도 동일하게 동작한다.) */
+function showReportOverlay(html, title){
   let ov = document.getElementById('report-overlay');
   if(!ov){
     ov = document.createElement('div');
     ov.id = 'report-overlay';
-    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;';
     ov.innerHTML =
-      '<div style="display:flex;gap:8px;justify-content:flex-end;align-items:center;padding:10px 12px;background:#0f2744;flex:0 0 auto;">'
-      + '<button id="report-print-btn" style="padding:9px 16px;background:#f5c842;color:#0f2744;border:none;border-radius:8px;font-size:13px;font-weight:700;">🖨️ 인쇄 / PDF 저장</button>'
-      + '<button id="report-close-btn" style="padding:9px 16px;background:#f0f4f8;color:#1a2a3a;border:none;border-radius:8px;font-size:13px;font-weight:700;">✕ 닫기</button>'
+      '<div class="rp-bar">'
+      + '<span class="rp-bar-title" id="rp-title"></span>'
+      + '<button class="rp-btn rp-btn-print" id="rp-print">🖨️ 인쇄/PDF</button>'
+      + '<button class="rp-btn rp-btn-close" id="rp-close">✕ 닫기</button>'
       + '</div>'
-      + '<iframe id="report-iframe" style="flex:1 1 auto;border:0;width:100%;background:#fff;"></iframe>';
+      + '<div id="report-view"></div>';
     document.body.appendChild(ov);
-    document.getElementById('report-close-btn').onclick = () => { ov.classList.add('hidden'); };
-    document.getElementById('report-print-btn').onclick = () => {
-      const ifr = document.getElementById('report-iframe');
-      try{ ifr.contentWindow.focus(); ifr.contentWindow.print(); }
-      catch(e){ alert('인쇄 창을 열 수 없습니다. 브라우저에서 직접 인쇄해 주세요.'); }
-    };
+    document.getElementById('rp-close').onclick = () => { ov.classList.add('hidden'); };
+    document.getElementById('rp-print').onclick = () => { window.print(); };
   }
+  document.getElementById('rp-title').textContent = title || '점검보고서';
+  const view = document.getElementById('report-view');
+  view.innerHTML = html;
+  view.scrollTop = 0;
   ov.classList.remove('hidden');
-  document.getElementById('report-iframe').srcdoc = html;
 }
 
 /* ════════════════════════════════════════════════════════
