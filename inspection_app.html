@@ -371,7 +371,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   <div class="scroll" id="res-body"></div>
   <div class="btm" style="gap:6px;">
     <button class="btn btn-gray" onclick="showScreen('sc-check')">‹ 수정</button>
-    <button class="btn btn-report" onclick="openModal('modal-exp')" style="flex:1.5">📊 저장</button>
+    <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:1.5">📊 저장</button>
     <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.5">🖨️ 보고서</button>
   </div>
 </div>
@@ -1016,6 +1016,11 @@ function doExcel(){
    신규: HTML 보고서 출력 (사진 포함)
 ════════════════════════════════════════════════════════ */
 function doHtmlReport(){
+  // iOS Safari에서는 팝업 차단으로 새 탭 안 열릴 수 있음을 안내
+  const isIOSCheck = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if(isIOSCheck){
+    if(!confirm('보고서 파일이 생성됩니다.\n\n파일이 자동으로 열리지 않으면\n다운로드된 HTML 파일을 열어주세요.\n\n계속하시겠습니까?')) return;
+  }
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const coNm = S.company.name;
   const dateStr = S.date;
@@ -1175,20 +1180,36 @@ ${photosHtml}
 </body>
 </html>`;
 
-  // 새 창에서 열기
-  const win = window.open('', '_blank', 'width=800,height=900');
-  if(win){
-    win.document.write(html);
-    win.document.close();
-  } else {
-    // 팝업 차단된 경우 다운로드
-    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+  // Blob URL 생성 → 모바일/PC 모두 안정적으로 동작
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const blobUrl = URL.createObjectURL(blob);
+
+  // 1순위: 새 탭에서 열기
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.target = '_blank';
+  a.rel   = 'noopener';
+
+  // iOS Safari: download 속성 없이 열기
+  // Android/PC: download 속성 있으면 저장
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if(!isIOS){
     a.download = '점검보고서_' + coNm + '_' + dateStr + '.html';
-    a.click();
-    alert('팝업이 차단됐습니다. HTML 파일이 다운로드됩니다.\n브라우저에서 열어 인쇄(Ctrl+P)해 주세요.');
   }
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  // iOS에서 새 탭 차단 시 안내
+  if(isIOS){
+    setTimeout(() => {
+      // 탭이 열렸으면 아무것도 안 함, 안 열렸으면 안내
+    }, 500);
+  }
+
+  // URL 해제 (약간 딜레이)
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
 }
 
 /* ════════════════════════════════════════════════════════
