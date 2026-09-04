@@ -9,6 +9,9 @@
 <title>도장 품질점검</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════════════════════════
+   기존 CSS 전체 유지 + 사진 관련 CSS 추가
+════════════════════════════════════════════════════════════ */
 :root{
   --navy:#0f2744;--navy2:#1a3a5c;--navy3:#2c5282;
   --accent:#e8a020;--accent2:#f5c842;
@@ -29,7 +32,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 
 /* 앱 레이아웃 */
-#app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;background:var(--card);box-shadow:0 0 40px rgba(0,0,0,.12);overflow:hidden;}
+#app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;background:var(--card);box-shadow:0 0 40px rgba(0,0,0,.12);overflow:hidden;position:relative;}
 
 /* 헤더 */
 .hdr{background:var(--navy);padding:14px 16px 12px;flex-shrink:0;}
@@ -65,6 +68,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 .btn-gray{background:var(--bg);color:var(--navy);border:1.5px solid var(--border);}
 .btn-accent{background:var(--accent);color:var(--navy);font-weight:700;}
 .btn-ok{background:var(--ok);color:#fff;}
+.btn-report{background:#4a5568;color:#fff;}
 
 /* 로딩 화면 */
 #sc-load{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:16px;background:var(--navy);}
@@ -116,6 +120,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 .opt-radio::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff;opacity:0;transition:opacity .15s;}
 .opt-text{flex:1;font-size:12px;font-weight:500;color:var(--text);line-height:1.4;}
 .opt-score{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;background:var(--border);color:var(--text2);flex-shrink:0;}
+
 /* 선택 상태 */
 .opt.ok{border-color:var(--ok);background:var(--ok-bg);}
 .opt.ok .opt-radio{border-color:var(--ok);background:var(--ok);}
@@ -132,10 +137,78 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 .opt.mid .opt-radio::after{opacity:1;}
 .opt.mid .opt-text{color:#7d4e00;font-weight:600;}
 .opt.mid .opt-score{background:var(--mid);color:#fff;}
+
 /* 비고 */
 .memo-wrap{margin:0 10px 10px;}
 .memo{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:"Noto Sans KR",sans-serif;font-size:12px;color:var(--text);background:var(--bg);resize:none;outline:none;min-height:48px;}
 .memo:focus{border-color:var(--navy3);background:#fff;}
+
+/* ─── 신규: 사진 촬영 플로팅 버튼 ─────────────────── */
+#fab-photo{
+  position:absolute;
+  bottom:88px;right:16px;
+  width:54px;height:54px;
+  border-radius:50%;
+  background:var(--accent);
+  border:none;
+  font-size:24px;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  z-index:30;
+  transition:transform .15s,box-shadow .15s;
+}
+#fab-photo:active{transform:scale(.92);}
+#fab-photo .fab-badge{
+  position:absolute;top:-4px;right:-4px;
+  width:20px;height:20px;
+  background:var(--ng);
+  border-radius:50%;
+  font-size:10px;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--card);
+}
+
+/* ─── 신규: 사진 미리보기 영역 (점검화면 내) ─────── */
+.photo-strip{
+  margin:0 12px 12px;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.photo-thumb{
+  position:relative;width:72px;height:72px;
+  border-radius:8px;overflow:hidden;
+  border:2px solid var(--border);
+  flex-shrink:0;
+}
+.photo-thumb img{width:100%;height:100%;object-fit:cover;}
+.photo-del{
+  position:absolute;top:2px;right:2px;
+  width:20px;height:20px;
+  background:rgba(0,0,0,.65);
+  border:none;border-radius:50%;
+  color:#fff;font-size:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  line-height:1;
+}
+.photo-add{
+  width:72px;height:72px;
+  border:2px dashed var(--border);
+  border-radius:8px;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;cursor:pointer;font-size:22px;color:var(--text2);
+}
+.photo-add span{font-size:9px;color:var(--text2);}
+
+/* ─── 신규: 사진 카운트 뱃지 (진행바 영역) ─────── */
+.chip-photo{
+  background:rgba(232,160,32,.2);
+  color:var(--accent2);
+  font-size:11px;font-weight:600;
+  padding:3px 10px;border-radius:20px;
+  font-family:"JetBrains Mono",monospace;
+  cursor:pointer;
+}
 
 /* 결과 화면 */
 #sc-result{display:flex;flex-direction:column;height:100%;}
@@ -179,6 +252,18 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 /* 카카오 배너 */
 .kakao-banner{background:var(--accent);color:var(--navy);padding:12px 40px 12px 16px;font-size:12px;font-weight:600;line-height:1.5;position:relative;flex-shrink:0;}
 .kakao-close{position:absolute;top:8px;right:12px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--navy);}
+
+/* ─── 신규: HTML 보고서 인쇄 스타일 ────────────────── */
+@media print{
+  body *{visibility:hidden;}
+  #print-report,#print-report *{visibility:visible;}
+  #print-report{
+    position:fixed;inset:0;
+    background:#fff;
+    padding:0;margin:0;
+    width:210mm;min-height:297mm;
+  }
+}
 </style>
 </head>
 <body>
@@ -255,10 +340,19 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
     <div class="prog-scores">
       <span class="chip chip-cur" id="chip-score">0/0점</span>
       <span class="chip chip-grade g-none" id="chip-grade">입력 중</span>
+      <!-- 신규: 사진 카운트 뱃지 -->
+      <span class="chip chip-photo hidden" id="chip-photo" onclick="scrollToPhotos()">📷 0장</span>
     </div>
   </div>
   <div class="tabs" id="tabs"></div>
   <div class="scroll" id="chk-body"></div>
+
+  <!-- 신규: 사진 촬영 플로팅 버튼 -->
+  <button id="fab-photo" onclick="triggerCamera()" title="현장사진 추가">
+    📷
+    <div class="fab-badge hidden" id="fab-badge">0</div>
+  </button>
+
   <div class="btm">
     <button class="btn btn-gray" id="btn-prev" onclick="prevMaj()">‹ 이전</button>
     <button class="btn btn-navy" id="btn-next" onclick="nextMaj()" style="flex:2">다음 ›</button>
@@ -275,13 +369,18 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
     </div>
   </div>
   <div class="scroll" id="res-body"></div>
-  <div class="btm">
+  <div class="btm" style="gap:6px;">
     <button class="btn btn-gray" onclick="showScreen('sc-check')">‹ 수정</button>
-    <button class="btn btn-accent" onclick="openModal('modal-exp')" style="flex:2">📊 Excel + 메일 발송</button>
+    <button class="btn btn-report" onclick="openModal('modal-exp')" style="flex:1.5">📊 저장</button>
+    <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.5">🖨️ 보고서</button>
   </div>
 </div>
 
 </div><!-- #app -->
+
+<!-- 숨긴 카메라 input (사진 촬영/첨부) -->
+<input type="file" id="cam-input" accept="image/*" capture="environment" multiple class="hidden" onchange="onPhotoCapture(event)">
+<input type="file" id="gal-input" accept="image/*" multiple class="hidden" onchange="onPhotoCapture(event)">
 
 <!-- 모달: 설정 -->
 <div id="modal-cfg" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-cfg')">
@@ -297,58 +396,91 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<!-- 모달: 내보내기 -->
+<!-- 모달: 사진 소스 선택 (신규) -->
+<div id="modal-photo" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-photo')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">📷 현장 사진 추가</div>
+    <div class="sheet-desc">점검 중 촬영한 사진을 추가합니다.<br>최대 10장까지 첨부 가능합니다.</div>
+    <div class="sheet-btns">
+      <button class="btn btn-navy" onclick="closeModal('modal-photo');document.getElementById('cam-input').click()">📸 카메라로 촬영</button>
+      <button class="btn btn-gray" onclick="closeModal('modal-photo');document.getElementById('gal-input').click()">🖼️ 갤러리에서 선택</button>
+      <button class="btn btn-gray" onclick="closeModal('modal-photo')">취소</button>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: 내보내기 (기존 + 보고서 버튼 추가) -->
 <div id="modal-exp" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-exp')">
   <div class="sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">📊 결과 저장 및 발송</div>
     <div class="sheet-desc" id="exp-desc"></div>
     <div class="sheet-btns">
-      <button class="btn btn-ok" onclick="doExcel()">📥 Excel 다운로드</button>
-      <button class="btn btn-navy" onclick="doMail()">✉ 메일 앱 열기</button>
+      <button class="btn btn-ok" onclick="closeModal('modal-exp');doExcel()">📥 Excel 다운로드 (데이터용)</button>
+      <button class="btn btn-accent" onclick="closeModal('modal-exp');doHtmlReport()">🖨️ 보고서 출력 (사진 포함)</button>
+      <button class="btn btn-navy" onclick="closeModal('modal-exp');doMail()">✉ 메일 앱 열기</button>
       <button class="btn btn-gray" onclick="closeModal('modal-exp')">닫기</button>
     </div>
   </div>
 </div>
 
+<!-- 신규: 인쇄용 HTML 보고서 (숨김, 인쇄 시 표시) -->
+<div id="print-report" class="hidden"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-/* ════ 설정 ════ */
-const GH_URL   = 'https://sweetmusic.github.io/coating-inspection/app_config.json';
-const CFG_KEY  = 'app_config';
-const DRAFT_KEY= 'inspection_draft';
+/* ════════════════════════════════════════════════════════
+   설정
+════════════════════════════════════════════════════════ */
+const GH_URL  = 'https://sweetmusic.github.io/coating-inspection/app_config.json';
+const CFG_KEY = 'app_config';
+const DRAFT_KEY = 'inspection_draft';
+const MAX_PHOTOS = 10;     // 최대 사진 수
+const MAX_PX     = 1200;   // 압축 기준 가로px
 
-/* ════ 전역 상태 ════ */
+/* ════════════════════════════════════════════════════════
+   전역 상태
+════════════════════════════════════════════════════════ */
 let CFG = null;
-let S = { company:null, date:'', type:'정기', inspector:'', majIdx:0, ans:{} };
+let S = {
+  company: null, date: '', type: '정기', inspector: '',
+  majIdx: 0, ans: {},
+  photos: []   // ← 신규: [{dataUrl, name}]
+};
 
-/* ════ 초기화 ════ */
+/* ════════════════════════════════════════════════════════
+   초기화
+════════════════════════════════════════════════════════ */
 window.addEventListener('DOMContentLoaded', () => {
   if(isKakao()) showKakaoBanner();
   const cached = localStorage.getItem(CFG_KEY);
   if(cached){
-    try{ CFG=JSON.parse(cached); boot(); return; }catch(e){ localStorage.removeItem(CFG_KEY); }
+    try{ CFG = JSON.parse(cached); boot(); return; }
+    catch(e){ localStorage.removeItem(CFG_KEY); }
   }
   loadGitHub();
 });
 
-/* ════ 설정 로드 ════ */
+/* ════════════════════════════════════════════════════════
+   설정 로드
+════════════════════════════════════════════════════════ */
 async function loadGitHub(){
   showLoad('설정 파일 로드 중... (최대 10초)');
   const ctrl = new AbortController();
-  const timer = setTimeout(()=>ctrl.abort(), 10000);
+  const timer = setTimeout(() => ctrl.abort(), 10000);
   try{
-    const r = await fetch(GH_URL+'?t='+Date.now(), {signal:ctrl.signal});
+    const r = await fetch(GH_URL + '?t=' + Date.now(), {signal: ctrl.signal});
     clearTimeout(timer);
-    if(!r.ok) throw new Error('HTTP '+r.status);
+    if(!r.ok) throw new Error('HTTP ' + r.status);
     CFG = await r.json();
     localStorage.setItem(CFG_KEY, JSON.stringify(CFG));
     boot();
   }catch(e){
     clearTimeout(timer);
-    const msg = e.name==='AbortError'
+    const msg = e.name === 'AbortError'
       ? 'Wi-Fi 또는 데이터 연결을 확인 후\n직접 불러오기 버튼을 이용해 주세요.'
-      : '설정 파일 로드 실패: '+e.message+'\n\n직접 불러오기 버튼을 이용해 주세요.';
+      : '설정 파일 로드 실패: ' + e.message + '\n\n직접 불러오기 버튼을 이용해 주세요.';
     showErr(msg);
   }
 }
@@ -363,566 +495,827 @@ function onFileLoad(ev){
       boot();
     }catch(err){ alert('파일 오류: 올바른 app_config.json 파일인지 확인해 주세요.'); }
   };
-  fr.readAsText(f,'utf-8');
-  ev.target.value='';
+  fr.readAsText(f, 'utf-8');
+  ev.target.value = '';
 }
-
 function showLoad(msg){
-  document.getElementById('load-msg').textContent=msg;
-  document.getElementById('load-spin').style.display='block';
+  document.getElementById('load-msg').textContent = msg;
+  document.getElementById('load-spin').style.display = 'block';
   document.getElementById('load-err').classList.add('hidden');
   document.getElementById('btn-file').classList.add('hidden');
 }
 function showErr(msg){
-  document.getElementById('load-spin').style.display='none';
-  const el=document.getElementById('load-err');
-  el.textContent=msg; el.classList.remove('hidden');
+  document.getElementById('load-spin').style.display = 'none';
+  const el = document.getElementById('load-err');
+  el.textContent = msg; el.classList.remove('hidden');
   document.getElementById('btn-file').classList.remove('hidden');
 }
 
-/* ════ 부팅 ════ */
+/* ════════════════════════════════════════════════════════
+   부팅
+════════════════════════════════════════════════════════ */
 function boot(){
-  // 협력사 드롭다운
-  const sel=document.getElementById('sel-co');
-  sel.innerHTML='<option value="">-- 협력사를 선택하세요 --</option>';
-  (CFG.companies||[]).forEach((co,i)=>{
-    const o=document.createElement('option'); o.value=i; o.textContent=co.name; sel.appendChild(o);
+  const sel = document.getElementById('sel-co');
+  sel.innerHTML = '<option value="">-- 협력사를 선택하세요 --</option>';
+  (CFG.companies || []).forEach((co, i) => {
+    const o = document.createElement('option'); o.value = i; o.textContent = co.name; sel.appendChild(o);
   });
-  // 날짜/버전/점검자
-  document.getElementById('inp-date').value=today();
-  document.getElementById('inp-insp').value=CFG.meta?.inspector||'';
-  document.getElementById('info-ver').textContent=CFG.meta?.version||'';
-  document.getElementById('info-upd').textContent='업데이트: '+(CFG.meta?.updated_at||'').slice(0,16);
+  document.getElementById('inp-date').value = today();
+  document.getElementById('inp-insp').value = CFG.meta?.inspector || '';
+  document.getElementById('info-ver').textContent = CFG.meta?.version || '';
+  document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16);
   showScreen('sc-info');
-  // 임시저장 복구 확인
   setTimeout(checkDraft, 300);
 }
 
-/* ════ 화면 전환 ════ */
+/* ════════════════════════════════════════════════════════
+   화면 전환
+════════════════════════════════════════════════════════ */
 function showScreen(id){
-  ['sc-load','sc-info','sc-check','sc-result'].forEach(s=>{
-    const el=document.getElementById(s);
-    el.classList.toggle('hidden', s!==id);
-    if(s!==id) el.style.display='';
+  ['sc-load','sc-info','sc-check','sc-result'].forEach(s => {
+    document.getElementById(s).classList.toggle('hidden', s !== id);
   });
+  // 점검 화면일 때만 플로팅 버튼 표시
+  const fab = document.getElementById('fab-photo');
+  fab.classList.toggle('hidden', id !== 'sc-check');
 }
 function openModal(id){ document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id){ document.getElementById(id).classList.add('hidden'); }
 
-/* ════ 기본정보 ════ */
+/* ════════════════════════════════════════════════════════
+   기본정보
+════════════════════════════════════════════════════════ */
 function setType(btn){
-  document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
-  S.type=btn.dataset.t;
+  S.type = btn.dataset.t;
 }
 function startCheck(){
-  const ci=document.getElementById('sel-co').value;
-  const dt=document.getElementById('inp-date').value;
-  const insp=document.getElementById('inp-insp').value.trim();
-  if(!ci){ alert('협력사를 선택해 주세요.'); return; }
-  if(!dt){ alert('점검일자를 입력해 주세요.'); return; }
-  if(!insp){ alert('점검자 이름을 입력해 주세요.'); return; }
-  S.company=CFG.companies[parseInt(ci)];
-  S.date=dt; S.inspector=insp; S.majIdx=0; S.ans={};
+  const ci   = document.getElementById('sel-co').value;
+  const dt   = document.getElementById('inp-date').value;
+  const insp = document.getElementById('inp-insp').value.trim();
+  if(!ci)   { alert('협력사를 선택해 주세요.'); return; }
+  if(!dt)   { alert('점검일자를 입력해 주세요.'); return; }
+  if(!insp) { alert('점검자 이름을 입력해 주세요.'); return; }
+  S.company  = CFG.companies[parseInt(ci)];
+  S.date     = dt;
+  S.inspector = insp;
+  S.majIdx   = 0;
+  S.ans      = {};
+  S.photos   = [];  // 사진 초기화
   buildTabs();
   renderMaj(0);
   showScreen('sc-check');
+  refreshPhotoUI();
 }
 function goBack(){
-  if(Object.keys(S.ans).length>0){
+  if(Object.keys(S.ans).length > 0){
     if(!window.confirm('작성 중인 내용이 있습니다.\n처음으로 돌아갈까요?')) return;
   }
   clearDraft();
-  S={company:null,date:'',type:'정기',inspector:'',majIdx:0,ans:{}};
+  S = {company:null, date:'', type:'정기', inspector:'', majIdx:0, ans:{}, photos:[]};
   showScreen('sc-info');
 }
 
-/* ════ 탭 ════ */
+/* ════════════════════════════════════════════════════════
+   탭
+════════════════════════════════════════════════════════ */
 function buildTabs(){
-  const el=document.getElementById('tabs'); el.innerHTML='';
-  CFG.checklist.forEach((m,i)=>{
-    const t=document.createElement('div');
-    t.className='tab'+(i===0?' on':'');
-    t.id='tab-'+i;
-    t.innerHTML=m.id+'. '+m.name+'<span class="dot"></span>';
-    t.onclick=()=>{renderMaj(i); t.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});};
+  const el = document.getElementById('tabs'); el.innerHTML = '';
+  CFG.checklist.forEach((m, i) => {
+    const t = document.createElement('div');
+    t.className = 'tab' + (i === 0 ? ' on' : '');
+    t.id = 'tab-' + i;
+    t.innerHTML = m.id + '. ' + m.name + '<span class="dot"></span>';
+    t.onclick = () => { renderMaj(i); t.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'}); };
     el.appendChild(t);
   });
 }
 
-/* ════ 점검 렌더 ════ */
+/* ════════════════════════════════════════════════════════
+   점검 렌더
+════════════════════════════════════════════════════════ */
 function renderMaj(idx){
-  S.majIdx=idx;
-  const maj=CFG.checklist[idx];
-  // 탭 활성화
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',i===idx));
-  document.getElementById('chk-co').textContent=S.company.name;
-  document.getElementById('chk-date').textContent=S.date.replace(/-/g,'.');
-  document.getElementById('chk-major').textContent=maj.id+'. '+maj.name;
-  // 버튼
-  const isLast=idx===CFG.checklist.length-1;
-  document.getElementById('btn-prev').disabled=(idx===0);
-  const nb=document.getElementById('btn-next');
-  nb.textContent=isLast?'✅ 결과 보기':'다음 ›';
-  nb.className=isLast?'btn btn-accent':'btn btn-navy';
-  // 콘텐츠
-  const body=document.getElementById('chk-body'); body.innerHTML='';
-  maj.items.forEach(item=>{
-    const sec=document.createElement('div'); sec.className='mid-sec';
-    sec.innerHTML='<div class="mid-hdr"><span class="mid-num">'+item.id+'</span><span class="mid-name">'+item.name+'</span></div>';
-    item.subs.forEach(sub=>{
-      // 정기점검 시 1-1-1 숨김
-      if(sub.id==='1-1-1'&&S.type==='정기') return;
-      const subEl=document.createElement('div'); subEl.className='sub'; subEl.id='sub-'+sub.id;
-      const maxSc=Math.max(...sub.options.map(o=>o.score));
-      // 세부번호
-      subEl.innerHTML='<div class="sub-num">'+sub.id+'</div>';
-      // 선택지
-      const optsEl=document.createElement('div'); optsEl.className='opts';
-      sub.options.forEach((opt,oi)=>{
-        const saved=S.ans[sub.id];
-        const isSel=saved&&saved.optionIdx===oi;
-        const cls=isSel?' '+optCls(opt.score,maxSc):'';
-        const btn=document.createElement('button');
-        btn.className='opt'+cls;
-        btn.id='opt-'+sub.id+'-'+oi;
-        btn.innerHTML='<div class="opt-radio"></div><div class="opt-text">'+opt.text+'</div><div class="opt-score">'+opt.score+'점</div>';
-        btn.onclick=()=>pickOpt(sub,oi,opt.score,maxSc);
+  S.majIdx = idx;
+  const maj = CFG.checklist[idx];
+  document.querySelectorAll('.tab').forEach((t, i) => t.classList.toggle('on', i === idx));
+  document.getElementById('chk-co').textContent    = S.company.name;
+  document.getElementById('chk-date').textContent  = S.date.replace(/-/g, '.');
+  document.getElementById('chk-major').textContent = maj.id + '. ' + maj.name;
+  const isLast = idx === CFG.checklist.length - 1;
+  document.getElementById('btn-prev').disabled = (idx === 0);
+  const nb = document.getElementById('btn-next');
+  nb.textContent = isLast ? '✅ 결과 보기' : '다음 ›';
+  nb.className   = isLast ? 'btn btn-accent' : 'btn btn-navy';
+  const body = document.getElementById('chk-body'); body.innerHTML = '';
+
+  // ── 사진 미리보기 영역 (맨 위에 표시) ──────────────
+  if(S.photos.length > 0){
+    const photoSec = document.createElement('div');
+    photoSec.id = 'photo-section';
+    photoSec.innerHTML = '<div style="padding:10px 12px 6px;font-size:11px;font-weight:700;color:var(--navy);">📷 첨부 사진 (' + S.photos.length + '/' + MAX_PHOTOS + '장)</div>';
+    const strip = document.createElement('div');
+    strip.className = 'photo-strip';
+    S.photos.forEach((p, pi) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'photo-thumb';
+      wrap.innerHTML = '<img src="' + p.dataUrl + '" alt="사진' + (pi+1) + '">'
+        + '<button class="photo-del" onclick="deletePhoto(' + pi + ')">×</button>';
+      strip.appendChild(wrap);
+    });
+    if(S.photos.length < MAX_PHOTOS){
+      const addBtn = document.createElement('div');
+      addBtn.className = 'photo-add';
+      addBtn.innerHTML = '＋<span>사진추가</span>';
+      addBtn.onclick = () => triggerCamera();
+      strip.appendChild(addBtn);
+    }
+    photoSec.appendChild(strip);
+    body.appendChild(photoSec);
+  }
+
+  // ── 점검 항목 렌더 ──────────────────────────────────
+  maj.items.forEach(item => {
+    const sec = document.createElement('div'); sec.className = 'mid-sec';
+    sec.innerHTML = '<div class="mid-hdr"><span class="mid-num">' + item.id + '</span><span class="mid-name">' + item.name + '</span></div>';
+    item.subs.forEach(sub => {
+      if(sub.id === '1-1-1' && S.type === '정기') return;
+      const subEl = document.createElement('div'); subEl.className = 'sub'; subEl.id = 'sub-' + sub.id;
+      const maxSc = Math.max(...sub.options.map(o => o.score));
+      subEl.innerHTML = '<div class="sub-num">' + sub.id + '</div>';
+      const optsEl = document.createElement('div'); optsEl.className = 'opts';
+      sub.options.forEach((opt, oi) => {
+        const saved = S.ans[sub.id];
+        const isSel = saved && saved.optionIdx === oi;
+        const cls   = isSel ? ' ' + optCls(opt.score, maxSc) : '';
+        const btn   = document.createElement('button');
+        btn.className = 'opt' + cls;
+        btn.id        = 'opt-' + sub.id + '-' + oi;
+        btn.innerHTML = '<div class="opt-radio"></div><div class="opt-text">' + opt.text + '</div><div class="opt-score">' + opt.score + '점</div>';
+        btn.onclick   = () => pickOpt(sub, oi, opt.score, maxSc);
         optsEl.appendChild(btn);
       });
       subEl.appendChild(optsEl);
-      // 비고
-      const memoWrap=document.createElement('div'); memoWrap.className='memo-wrap';
-      const ta=document.createElement('textarea'); ta.className='memo';
-      ta.placeholder='비고 (선택)'; ta.rows=2;
-      ta.value=S.ans[sub.id]?.memo||'';
-      ta.oninput=()=>{ ensureAns(sub.id); S.ans[sub.id].memo=ta.value; doSave(); };
+      const memoWrap = document.createElement('div'); memoWrap.className = 'memo-wrap';
+      const ta = document.createElement('textarea'); ta.className = 'memo';
+      ta.placeholder = '비고 (선택)'; ta.rows = 2;
+      ta.value = S.ans[sub.id]?.memo || '';
+      ta.oninput = () => { ensureAns(sub.id); S.ans[sub.id].memo = ta.value; doSave(); };
       memoWrap.appendChild(ta); subEl.appendChild(memoWrap);
       sec.appendChild(subEl);
     });
     body.appendChild(sec);
   });
-  body.scrollTop=0;
+  body.scrollTop = 0;
   refreshProgress();
 }
-
-function optCls(score,maxSc){
-  if(score===maxSc&&score>0) return 'ok';
-  if(score===0) return 'ng';
+function optCls(score, maxSc){
+  if(score === maxSc && score > 0) return 'ok';
+  if(score === 0) return 'ng';
   return 'mid';
 }
 function ensureAns(id){
-  if(!S.ans[id]) S.ans[id]={optionIdx:-1,score:0,memo:''};
+  if(!S.ans[id]) S.ans[id] = {optionIdx: -1, score: 0, memo: ''};
 }
-function pickOpt(sub,oi,score,maxSc){
-  sub.options.forEach((_,i)=>{
-    const b=document.getElementById('opt-'+sub.id+'-'+i);
-    if(b) b.className='opt';
+function pickOpt(sub, oi, score, maxSc){
+  sub.options.forEach((_, i) => {
+    const b = document.getElementById('opt-' + sub.id + '-' + i);
+    if(b) b.className = 'opt';
   });
-  const btn=document.getElementById('opt-'+sub.id+'-'+oi);
-  if(btn) btn.classList.add(optCls(score,maxSc));
+  const btn = document.getElementById('opt-' + sub.id + '-' + oi);
+  if(btn) btn.classList.add(optCls(score, maxSc));
   ensureAns(sub.id);
-  S.ans[sub.id].optionIdx=oi;
-  S.ans[sub.id].score=score;
+  S.ans[sub.id].optionIdx = oi;
+  S.ans[sub.id].score     = score;
   refreshProgress();
   refreshTabs();
   doSave();
 }
 
-/* ════ 진행률 ════ */
+/* ════════════════════════════════════════════════════════
+   진행률
+════════════════════════════════════════════════════════ */
 function validSubs(){
-  return CFG.checklist.flatMap(m=>m.items.flatMap(i=>i.subs))
-    .filter(s=>!(s.id==='1-1-1'&&S.type==='정기'));
+  return CFG.checklist.flatMap(m => m.items.flatMap(i => i.subs))
+    .filter(s => !(s.id === '1-1-1' && S.type === '정기'));
 }
 function curScore(){
-  return Object.entries(S.ans).reduce((a,[id,v])=>{
-    if(id==='1-1-1'&&S.type==='정기') return a;
-    return a+(v.score||0);
-  },0);
+  return Object.entries(S.ans).reduce((a, [id, v]) => {
+    if(id === '1-1-1' && S.type === '정기') return a;
+    return a + (v.score || 0);
+  }, 0);
 }
 function maxScore(){
-  return validSubs().reduce((a,s)=>a+Math.max(...s.options.map(o=>o.score)),0)||CFG.max_score||109;
+  return validSubs().reduce((a, s) => a + Math.max(...s.options.map(o => o.score)), 0) || CFG.max_score || 109;
 }
 function normScore(){
-  const mx=maxScore(); return mx>0?Math.round(curScore()/mx*100):0;
+  const mx = maxScore(); return mx > 0 ? Math.round(curScore() / mx * 100) : 0;
 }
 function grade(pct){
-  return (CFG?.grades||[]).find(g=>pct>=g.min&&pct<=g.max)||null;
+  return (CFG?.grades || []).find(g => pct >= g.min && pct <= g.max) || null;
 }
 function refreshProgress(){
-  const subs=validSubs();
-  const done=subs.filter(s=>S.ans[s.id]?.optionIdx>=0).length;
-  const total=subs.length;
-  const pct=total>0?Math.round(done/total*100):0;
-  document.getElementById('prog-txt').textContent=done+' / '+total+' 항목 완료';
-  document.getElementById('prog-pct').textContent=pct+'%';
-  document.getElementById('prog-fill').style.width=pct+'%';
-  const cur=curScore(), mx=maxScore(), norm=normScore();
-  document.getElementById('chip-score').textContent=cur+'/'+mx+'점 (환산 '+norm+'점)';
-  const gr=grade(norm);
-  const gc=document.getElementById('chip-grade');
-  gc.textContent=gr?gr.grade+'등급·'+gr.label:'입력 중';
-  gc.className='chip chip-grade '+(gr?'g-'+gr.grade:'g-none');
+  const subs = validSubs();
+  const done  = subs.filter(s => S.ans[s.id]?.optionIdx >= 0).length;
+  const total = subs.length;
+  const pct   = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('prog-txt').textContent  = done + ' / ' + total + ' 항목 완료';
+  document.getElementById('prog-pct').textContent  = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  const cur = curScore(), mx = maxScore(), norm = normScore();
+  document.getElementById('chip-score').textContent = cur + '/' + mx + '점 (환산 ' + norm + '점)';
+  const gr = grade(norm);
+  const gc = document.getElementById('chip-grade');
+  gc.textContent = gr ? gr.grade + '등급·' + gr.label : '입력 중';
+  gc.className   = 'chip chip-grade ' + (gr ? 'g-' + gr.grade : 'g-none');
 }
 function refreshTabs(){
-  CFG.checklist.forEach((maj,i)=>{
-    const tab=document.getElementById('tab-'+i); if(!tab) return;
-    const subs=maj.items.flatMap(it=>it.subs).filter(s=>!(s.id==='1-1-1'&&S.type==='정기'));
-    const done=subs.filter(s=>S.ans[s.id]?.optionIdx>=0);
-    const hasNg=subs.some(s=>{
-      const a=S.ans[s.id]; if(!a||a.optionIdx<0) return false;
-      return a.score<Math.max(...s.options.map(o=>o.score));
+  CFG.checklist.forEach((maj, i) => {
+    const tab = document.getElementById('tab-' + i); if(!tab) return;
+    const subs = maj.items.flatMap(it => it.subs).filter(s => !(s.id === '1-1-1' && S.type === '정기'));
+    const done  = subs.filter(s => S.ans[s.id]?.optionIdx >= 0);
+    const hasNg = subs.some(s => {
+      const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return false;
+      return a.score < Math.max(...s.options.map(o => o.score));
     });
-    tab.classList.toggle('ng',hasNg);
-    tab.classList.toggle('done',done.length===subs.length&&subs.length>0);
+    tab.classList.toggle('ng', hasNg);
+    tab.classList.toggle('done', done.length === subs.length && subs.length > 0);
   });
 }
-function prevMaj(){ if(S.majIdx>0) renderMaj(S.majIdx-1); }
+function prevMaj(){ if(S.majIdx > 0) renderMaj(S.majIdx - 1); }
 function nextMaj(){
-  if(S.majIdx<CFG.checklist.length-1) renderMaj(S.majIdx+1);
+  if(S.majIdx < CFG.checklist.length - 1) renderMaj(S.majIdx + 1);
   else buildResult();
 }
 
-/* ════ 결과 ════ */
+/* ════════════════════════════════════════════════════════
+   신규: 사진 기능
+════════════════════════════════════════════════════════ */
+function triggerCamera(){
+  if(S.photos.length >= MAX_PHOTOS){
+    alert('사진은 최대 ' + MAX_PHOTOS + '장까지 첨부할 수 있습니다.');
+    return;
+  }
+  openModal('modal-photo');
+}
+
+async function onPhotoCapture(ev){
+  const files = Array.from(ev.target.files);
+  if(!files.length) return;
+  const remaining = MAX_PHOTOS - S.photos.length;
+  const toProcess = files.slice(0, remaining);
+  if(files.length > remaining){
+    alert('남은 공간(' + remaining + '장)만큼만 추가합니다.');
+  }
+  for(const file of toProcess){
+    const dataUrl = await compressImage(file, MAX_PX);
+    S.photos.push({ dataUrl, name: file.name });
+  }
+  ev.target.value = '';
+  refreshPhotoUI();
+  doSave();
+  // 사진 영역이 보이도록 재렌더
+  renderMaj(S.majIdx);
+}
+
+function compressImage(file, maxPx){
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      let w = img.width, h = img.height;
+      if(w > maxPx || h > maxPx){
+        if(w > h){ h = Math.round(h * maxPx / w); w = maxPx; }
+        else      { w = Math.round(w * maxPx / h); h = maxPx; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(canvas.toDataURL('image/jpeg', 0.82));
+    };
+    img.src = url;
+  });
+}
+
+function deletePhoto(idx){
+  if(!window.confirm('이 사진을 삭제할까요?')) return;
+  S.photos.splice(idx, 1);
+  refreshPhotoUI();
+  doSave();
+  renderMaj(S.majIdx);
+}
+
+function refreshPhotoUI(){
+  const cnt   = S.photos.length;
+  const badge = document.getElementById('fab-badge');
+  const chip  = document.getElementById('chip-photo');
+  badge.textContent = cnt;
+  badge.classList.toggle('hidden', cnt === 0);
+  chip.textContent = '📷 ' + cnt + '장';
+  chip.classList.toggle('hidden', cnt === 0);
+}
+
+function scrollToPhotos(){
+  const sec = document.getElementById('photo-section');
+  if(sec) sec.scrollIntoView({behavior:'smooth'});
+}
+
+/* ════════════════════════════════════════════════════════
+   결과
+════════════════════════════════════════════════════════ */
 function buildResult(){
-  const body=document.getElementById('res-body'); body.innerHTML='';
-  const cur=curScore(), mx=maxScore(), norm=normScore();
-  const gr=grade(norm);
-  document.getElementById('res-date').textContent=S.date.replace(/-/g,'.');
-  // 히어로
-  const hero=document.createElement('div'); hero.className='result-hero';
-  hero.innerHTML='<div class="r-co">'+S.company.name+' · '+S.type+'</div>'
-    +'<div class="r-score">'+norm+'</div>'
-    +'<div class="r-raw">/ 100점 (원점수 '+cur+'/'+mx+'점)</div>'
-    +'<div class="r-badge '+(gr?'g-'+gr.grade:'')+'" style="'+(gr?'':'background:rgba(255,255,255,.1)')+'">'+
-    (gr?gr.grade+'등급 · '+gr.label:'등급 산출 불가')+'</div>'
-    +'<div class="r-note">'+(gr?.note||'')+'</div>';
+  const body = document.getElementById('res-body'); body.innerHTML = '';
+  const cur = curScore(), mx = maxScore(), norm = normScore();
+  const gr  = grade(norm);
+  document.getElementById('res-date').textContent = S.date.replace(/-/g, '.');
+  const hero = document.createElement('div'); hero.className = 'result-hero';
+  hero.innerHTML =
+    '<div class="r-co">' + S.company.name + ' · ' + S.type + '</div>'
+    + '<div class="r-score">' + norm + '</div>'
+    + '<div class="r-raw">/ 100점 (원점수 ' + cur + '/' + mx + '점)</div>'
+    + '<div class="r-badge ' + (gr ? 'g-' + gr.grade : '') + '" style="' + (gr ? '' : 'background:rgba(255,255,255,.1)') + '">'
+    + (gr ? gr.grade + '등급 · ' + gr.label : '등급 산출 불가') + '</div>'
+    + '<div class="r-note">' + (gr?.note || '') + '</div>';
   body.appendChild(hero);
+
+  // 사진 카운트 요약
+  if(S.photos.length > 0){
+    const photoInfo = document.createElement('div');
+    photoInfo.style.cssText = 'margin:12px 12px 0;padding:10px 14px;background:var(--mid-bg);border:1px solid var(--border);border-radius:var(--r);font-size:12px;color:var(--text);';
+    photoInfo.innerHTML = '📷 첨부된 현장사진: <strong>' + S.photos.length + '장</strong> — 보고서 출력 시 포함됩니다.';
+    body.appendChild(photoInfo);
+  }
+
   // 대분류별
-  const s1=makeSec('📊 대분류별 점수');
-  CFG.checklist.forEach(maj=>{
-    let g=0,m=0;
-    maj.items.forEach(it=>it.subs.forEach(s=>{
-      if(s.id==='1-1-1'&&S.type==='정기') return;
-      m+=Math.max(...s.options.map(o=>o.score));
-      g+=S.ans[s.id]?.score||0;
+  const s1 = makeSec('📊 대분류별 점수');
+  CFG.checklist.forEach(maj => {
+    let g = 0, m = 0;
+    maj.items.forEach(it => it.subs.forEach(s => {
+      if(s.id === '1-1-1' && S.type === '정기') return;
+      m += Math.max(...s.options.map(o => o.score));
+      g += S.ans[s.id]?.score || 0;
     }));
-    const bp=m>0?Math.round(g/m*100):0;
-    const bc=bp>=90?'var(--ok)':bp>=70?'var(--mid)':'var(--ng)';
-    const row=document.createElement('div'); row.className='r-row';
-    row.innerHTML='<div class="r-row-name">'+maj.id+'. '+maj.name+'</div>'
-      +'<div class="r-bar-wrap"><div class="r-bar" style="width:'+bp+'%;background:'+bc+'"></div></div>'
-      +'<div class="r-row-score">'+g+'/'+m+'점</div>';
+    const bp = m > 0 ? Math.round(g / m * 100) : 0;
+    const bc = bp >= 90 ? 'var(--ok)' : bp >= 70 ? 'var(--mid)' : 'var(--ng)';
+    const row = document.createElement('div'); row.className = 'r-row';
+    row.innerHTML = '<div class="r-row-name">' + maj.id + '. ' + maj.name + '</div>'
+      + '<div class="r-bar-wrap"><div class="r-bar" style="width:' + bp + '%;background:' + bc + '"></div></div>'
+      + '<div class="r-row-score">' + g + '/' + m + '점</div>';
     s1.appendChild(row);
   });
   body.appendChild(s1);
+
   // 지적사항
-  const ngList=[];
-  CFG.checklist.forEach(maj=>maj.items.forEach(it=>it.subs.forEach(s=>{
-    if(s.id==='1-1-1'&&S.type==='정기') return;
-    const a=S.ans[s.id]; if(!a||a.optionIdx<0) return;
-    const mx=Math.max(...s.options.map(o=>o.score));
-    if(a.score<mx) ngList.push({id:s.id,text:s.options[a.optionIdx].text,memo:a.memo||''});
+  const ngList = [];
+  CFG.checklist.forEach(maj => maj.items.forEach(it => it.subs.forEach(s => {
+    if(s.id === '1-1-1' && S.type === '정기') return;
+    const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
+    const mx2 = Math.max(...s.options.map(o => o.score));
+    if(a.score < mx2) ngList.push({id: s.id, text: s.options[a.optionIdx].text, memo: a.memo || ''});
   })));
-  if(ngList.length>0){
-    const s2=makeSec('⚠ 지적사항 ('+ngList.length+'건)');
-    ngList.forEach(ng=>{
-      const r=document.createElement('div'); r.className='ng-item';
-      r.innerHTML='<div class="ng-tag">'+ng.id+'</div><div><div class="ng-txt">'+ng.text+'</div>'+(ng.memo?'<div class="ng-memo">📝 '+ng.memo+'</div>':'')+'</div>';
+  if(ngList.length > 0){
+    const s2 = makeSec('⚠ 지적사항 (' + ngList.length + '건)');
+    ngList.forEach(ng => {
+      const r = document.createElement('div'); r.className = 'ng-item';
+      r.innerHTML = '<div class="ng-tag">' + ng.id + '</div><div><div class="ng-txt">' + ng.text + '</div>'
+        + (ng.memo ? '<div class="ng-memo">📝 ' + ng.memo + '</div>' : '') + '</div>';
       s2.appendChild(r);
     });
     body.appendChild(s2);
   }
+
   // 미입력
-  const miss=validSubs().filter(s=>!S.ans[s.id]||S.ans[s.id].optionIdx<0);
-  if(miss.length>0){
-    const s3=makeSec('❓ 미입력 항목 ('+miss.length+'건) — 탭하여 이동');
-    miss.forEach(s=>{
-      let majIdx=0;
-      CFG.checklist.forEach((m,mi)=>m.items.forEach(it=>it.subs.forEach(ss=>{if(ss.id===s.id)majIdx=mi;})));
-      const r=document.createElement('div'); r.className='miss-item';
-      r.innerHTML='<div class="miss-dot"></div><div class="miss-txt">'+s.id+'</div><div class="miss-arr">→</div>';
-      r.onclick=()=>{
+  const miss = validSubs().filter(s => !S.ans[s.id] || S.ans[s.id].optionIdx < 0);
+  if(miss.length > 0){
+    const s3 = makeSec('❓ 미입력 항목 (' + miss.length + '건) — 탭하여 이동');
+    miss.forEach(s => {
+      let majIdx = 0;
+      CFG.checklist.forEach((m, mi) => m.items.forEach(it => it.subs.forEach(ss => { if(ss.id === s.id) majIdx = mi; })));
+      const r = document.createElement('div'); r.className = 'miss-item';
+      r.innerHTML = '<div class="miss-dot"></div><div class="miss-txt">' + s.id + '</div><div class="miss-arr">→</div>';
+      r.onclick = () => {
         showScreen('sc-check');
         renderMaj(majIdx);
-        setTimeout(()=>{
-          const el=document.getElementById('sub-'+s.id);
-          const cont=document.getElementById('chk-body');
-          if(el&&cont){
-            cont.scrollTo({top:el.offsetTop-cont.offsetTop-60,behavior:'smooth'});
-            el.style.outline='2.5px solid var(--mid)';
-            el.style.borderRadius='8px';
-            setTimeout(()=>{el.style.outline='';},2500);
+        setTimeout(() => {
+          const el = document.getElementById('sub-' + s.id);
+          const cont = document.getElementById('chk-body');
+          if(el && cont){
+            cont.scrollTo({top: el.offsetTop - cont.offsetTop - 60, behavior:'smooth'});
+            el.style.outline = '2.5px solid var(--mid)';
+            el.style.borderRadius = '8px';
+            setTimeout(() => { el.style.outline = ''; }, 2500);
           }
-        },300);
+        }, 300);
       };
       s3.appendChild(r);
     });
     body.appendChild(s3);
   }
-  const sp=document.createElement('div'); sp.style.height='16px'; body.appendChild(sp);
+
+  const sp = document.createElement('div'); sp.style.height = '16px'; body.appendChild(sp);
   showScreen('sc-result');
+  // 내보내기 모달 desc 업데이트
+  updateExpDesc();
 }
 function makeSec(title){
-  const s=document.createElement('div'); s.className='r-sec';
-  s.innerHTML='<div class="r-sec-title">'+title+'</div>';
+  const s = document.createElement('div'); s.className = 'r-sec';
+  s.innerHTML = '<div class="r-sec-title">' + title + '</div>';
   return s;
 }
-
-/* ════ Excel ════ */
-function openExportModal(){
-  const cur=curScore(),mx=maxScore(),norm=normScore(),gr=grade(norm);
-  const miss=validSubs().filter(s=>!S.ans[s.id]||S.ans[s.id].optionIdx<0).length;
-  document.getElementById('exp-desc').innerHTML=
-    '<strong>'+S.company.name+'</strong> · '+S.date+' · '+S.type+'<br>'
-    +'원점수: <strong>'+cur+'/'+mx+'점</strong> → 환산 <strong>'+norm+'점</strong> <strong>'+(gr?gr.grade+'등급':'-')+'</strong>'
-    +(miss>0?'<br>⚠ 미입력 '+miss+'항목 있음':'');
-  openModal('modal-exp');
+function updateExpDesc(){
+  const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
+  const miss = validSubs().filter(s => !S.ans[s.id] || S.ans[s.id].optionIdx < 0).length;
+  document.getElementById('exp-desc').innerHTML =
+    '<strong>' + S.company.name + '</strong> · ' + S.date + ' · ' + S.type + '<br>'
+    + '원점수: <strong>' + cur + '/' + mx + '점</strong> → 환산 <strong>' + norm + '점</strong> <strong>' + (gr ? gr.grade + '등급' : '-') + '</strong>'
+    + (miss > 0 ? '<br>⚠ 미입력 ' + miss + '항목 있음' : '')
+    + (S.photos.length > 0 ? '<br>📷 사진 ' + S.photos.length + '장 첨부됨' : '');
 }
+
+/* ════════════════════════════════════════════════════════
+   Excel 다운로드 (기존 유지 + 사진 시트 개선)
+════════════════════════════════════════════════════════ */
 function doExcel(){
-  const wb=XLSX.utils.book_new();
-  const cur=curScore();
-  const mx=maxScore();
-  const norm=normScore();
-  const gr=grade(norm);
-  const date=S.date.replace(/-/g,'');
-  const insp=S.inspector;
-  const coNm=S.company.name;
+  const wb   = XLSX.utils.book_new();
+  const cur  = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
+  const date = S.date.replace(/-/g, '');
+  const insp = S.inspector, coNm = S.company.name;
 
-  /* ══ 시트1: 점검결과 ══════════════════════════════════ */
-  const r1=[];
-
-  // 1행: 타이틀
+  /* ── 시트1: 점검결과 ─────────────────────────────── */
+  const r1 = [];
   r1.push(['(운반선) 사외 의장품 도장 협력사 종합평가_품질점검 체크시트','','','','','','']);
-
-  // 2행: 점검유형|값|점검일자|값|점검자(E~F병합라벨)|값(G)
-  r1.push([
-    '점검유형',
-    S.type==='정기'?'□ 정기 기본품질점검  ☑ 상/하반기 종합평가':
-                   '☑ 정기 기본품질점검  □ 상/하반기 종합평가',
-    '점검일자', S.date,
-    '점검자', '', insp
-  ]);
-
-  // 3행: 협력사|값|원점수|값|환산점수(E~F병합라벨)|값(G)
-  r1.push([
-    '협력사', coNm,
-    '원점수', cur+'/'+mx+'점',
-    '환산점수(100점)', '', norm+'점'
-  ]);
-
-  // 4행: 평가등급|값|빈칸들
-  r1.push([
-    '평가등급',
-    gr?gr.grade+'등급 ('+gr.label+')':'-',
-    '','','','',''
-  ]);
-
-  // 5행: 빈 구분
+  r1.push(['점검유형',
+    S.type === '정기' ? '□ 정기 기본품질점검 ☑ 상/하반기 종합평가' : '☑ 정기 기본품질점검 □ 상/하반기 종합평가',
+    '점검일자', S.date, '점검자', '', insp]);
+  r1.push(['협력사', coNm, '원점수', cur + '/' + mx + '점', '환산점수(100점)', '', norm + '점']);
+  r1.push(['평가등급', gr ? gr.grade + '등급 (' + gr.label + ')' : '-', '','','','','']);
   r1.push([]);
-
-  // 6행: 헤더
   r1.push(['대분류','중분류(점검항목)','세부번호','평가항목','배점','선택','비고']);
-
-  // 데이터: 모든 선택지를 행으로, 선택된 항목에 ✓
-  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
-    if(s.id==='1-1-1'&&S.type==='정기') return;
-    const a=S.ans[s.id];
-    const selIdx=(a&&a.optionIdx>=0)?a.optionIdx:-1;
-    s.options.forEach((opt,oi)=>{
-      const isSel=(oi===selIdx);
-      const isFirst=(oi===0);
+  CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
+    if(s.id === '1-1-1' && S.type === '정기') return;
+    const a = S.ans[s.id];
+    const selIdx = (a && a.optionIdx >= 0) ? a.optionIdx : -1;
+    s.options.forEach((opt, oi) => {
+      const isSel = (oi === selIdx), isFirst = (oi === 0);
       r1.push([
-        isFirst?m.id+'. '+m.name:'',
-        isFirst?it.name:'',
-        isFirst?s.id:'',
-        opt.text,
-        opt.score,
-        isSel?'✓':'',
-        (isSel&&a?.memo)?a.memo:''
+        isFirst ? m.id + '. ' + m.name : '',
+        isFirst ? it.name : '',
+        isFirst ? s.id : '',
+        opt.text, opt.score,
+        isSel ? '✓' : '',
+        (isSel && a?.memo) ? a.memo : ''
       ]);
     });
   })));
+  r1.push(['합 계','','','', mx, cur + '점','']);
+  const ws1 = XLSX.utils.aoa_to_sheet(r1);
+  ws1['!cols'] = [{wch:20},{wch:44},{wch:12},{wch:48},{wch:8},{wch:6},{wch:30}];
+  if(!ws1['!merges']) ws1['!merges'] = [];
+  ws1['!merges'].push({s:{r:1,c:4},e:{r:1,c:5}}, {s:{r:2,c:4},e:{r:2,c:5}});
+  XLSX.utils.book_append_sheet(wb, ws1, '점검결과');
 
-  // 합계행
-  r1.push(['합  계','','',''  ,mx,cur+'점','']);
-
-  const ws1=XLSX.utils.aoa_to_sheet(r1);
-  ws1['!cols']=[{wch:20},{wch:44},{wch:12},{wch:48},{wch:8},{wch:6},{wch:30}];
-
-  // 2~3행 E~F 병합 (E=col5, F=col6, 0-indexed row 1~2)
-  if(!ws1['!merges']) ws1['!merges']=[];
-  ws1['!merges'].push(
-    {s:{r:1,c:4},e:{r:1,c:5}},  // 2행 E~F
-    {s:{r:2,c:4},e:{r:2,c:5}}   // 3행 E~F
-  );
-
-  XLSX.utils.book_append_sheet(wb,ws1,'점검결과');
-
-  /* ══ 시트2: 지적사항요약 ══════════════════════════════ */
-  const r2=[
+  /* ── 시트2: 지적사항요약 ──────────────────────────── */
+  const r2 = [
     ['지적사항 요약','','','','',''],
-    [coNm+' · '+S.date+' · '+S.type+' · 점검자: '+insp+' · 환산 '+norm+'점 / '+(gr?gr.grade+'등급('+gr.label+')':'-'),'','','','',''],
+    [coNm + ' · ' + S.date + ' · ' + S.type + ' · 점검자: ' + insp + ' · 환산 ' + norm + '점 / ' + (gr ? gr.grade + '등급(' + gr.label + ')' : '-'),'','','','',''],
     [],
     ['세부번호','대분류','선택된 평가항목','취득점수','만점','비고']
   ];
-  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
-    if(s.id==='1-1-1'&&S.type==='정기') return;
-    const a=S.ans[s.id]; if(!a||a.optionIdx<0) return;
-    const mxSc=Math.max(...s.options.map(o=>o.score));
-    if(a.score<mxSc){
-      r2.push([s.id,m.name,s.options[a.optionIdx].text,a.score,mxSc,a.memo||'']);
+  CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
+    if(s.id === '1-1-1' && S.type === '정기') return;
+    const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
+    const mxSc = Math.max(...s.options.map(o => o.score));
+    if(a.score < mxSc){
+      r2.push([s.id, m.name, s.options[a.optionIdx].text, a.score, mxSc, a.memo || '']);
     }
   })));
-  if(r2.length===4) r2.push(['','','지적사항 없음','','','']);
-  const ws2=XLSX.utils.aoa_to_sheet(r2);
-  ws2['!cols']=[{wch:12},{wch:18},{wch:50},{wch:8},{wch:8},{wch:30}];
-  XLSX.utils.book_append_sheet(wb,ws2,'지적사항요약');
+  if(r2.length === 4) r2.push(['','','지적사항 없음','','','']);
+  const ws2 = XLSX.utils.aoa_to_sheet(r2);
+  ws2['!cols'] = [{wch:12},{wch:18},{wch:50},{wch:8},{wch:8},{wch:30}];
+  XLSX.utils.book_append_sheet(wb, ws2, '지적사항요약');
 
-  /* ══ 시트3: 사진첨부 ══════════════════════════════════ */
-  // 헤더
-  const r3=[
-    ['점검 사진 첨부','',''],
-    ['※ NG 항목 사진을 아래 공란에 직접 삽입해 주세요.','',''],
-    ['세부번호','항목내용','비고']
+  /* ── 시트3: 참고사진 안내 ────────────────────────── */
+  const r3 = [
+    ['참고사진','',''],
+    ['※ 사진이 포함된 보고서는 [보고서 출력] 버튼을 이용해 주세요 (브라우저 인쇄 → PDF 저장)','',''],
+    [],
+    ['첨부된 사진 수 : ' + S.photos.length + '장','',''],
+    ['협력사','점검일','점검자'],
+    [coNm, S.date, insp]
   ];
-  // NG 항목별 데이터행 + 사진공란행
-  const photoRows=[];
-  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
-    if(s.id==='1-1-1'&&S.type==='정기') return;
-    const a=S.ans[s.id]; if(!a||a.optionIdx<0) return;
-    const mxSc=Math.max(...s.options.map(o=>o.score));
-    if(a.score<mxSc){
-      r3.push([s.id, s.options[a.optionIdx].text, a.memo||'']); // NG 데이터행
-      r3.push(['','','']);                                        // 사진 공란행
-      photoRows.push(r3.length-1); // 공란행 인덱스 기록 (높이 조정용)
-    }
-  })));
-  const ws3=XLSX.utils.aoa_to_sheet(r3);
-  ws3['!cols']=[{wch:12},{wch:50},{wch:30}];
-  // 공란행 높이 설정 (SheetJS는 !rows로 행 높이 지정)
-  ws3['!rows']=[];
-  r3.forEach((_,i)=>{
-    ws3['!rows'][i]=photoRows.includes(i)?{hpt:75}:{hpt:14};
-  });
-  XLSX.utils.book_append_sheet(wb,ws3,'사진첨부');
+  const ws3 = XLSX.utils.aoa_to_sheet(r3);
+  ws3['!cols'] = [{wch:30},{wch:20},{wch:20}];
+  XLSX.utils.book_append_sheet(wb, ws3, '참고사진안내');
 
-  XLSX.writeFile(wb,'점검결과_'+coNm+'_'+date+'_'+S.type+'.xlsx');
+  XLSX.writeFile(wb, '점검결과_' + coNm + '_' + date + '_' + S.type + '.xlsx');
   clearDraft();
 }
 
-/* ════ 메일 ════ */
-function doMail(){
-  const cur=curScore(),mx=maxScore(),norm=normScore(),gr=grade(norm);
-  const insp=S.inspector;
-  const rd=new Date(S.date); rd.setDate(rd.getDate()+(CFG.meta?.reply_days||7));
-  const rdStr=rd.toISOString().slice(0,10).replace(/-/g,'.');
-  const ngLines=[];
-  CFG.checklist.forEach(m=>m.items.forEach(it=>it.subs.forEach(s=>{
-    if(s.id==='1-1-1'&&S.type==='정기') return;
-    const a=S.ans[s.id]; if(!a||a.optionIdx<0) return;
-    const mxSc=Math.max(...s.options.map(o=>o.score));
-    if(a.score<mxSc) ngLines.push('  - ['+s.id+'] '+s.options[a.optionIdx].text);
+/* ════════════════════════════════════════════════════════
+   신규: HTML 보고서 출력 (사진 포함)
+════════════════════════════════════════════════════════ */
+function doHtmlReport(){
+  const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
+  const coNm = S.company.name;
+  const dateStr = S.date;
+
+  // 지적사항 목록
+  const ngList = [];
+  CFG.checklist.forEach(maj => maj.items.forEach(it => it.subs.forEach(s => {
+    if(s.id === '1-1-1' && S.type === '정기') return;
+    const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
+    const mxSc = Math.max(...s.options.map(o => o.score));
+    if(a.score < mxSc) ngList.push({id: s.id, major: maj.name, text: s.options[a.optionIdx].text, memo: a.memo || '', score: a.score, maxSc});
   })));
-  const majLines=CFG.checklist.map(m=>{
-    let g=0,mx2=0;
-    m.items.forEach(it=>it.subs.forEach(s=>{
-      if(s.id==='1-1-1'&&S.type==='정기') return;
-      mx2+=Math.max(...s.options.map(o=>o.score)); g+=S.ans[s.id]?.score||0;
+
+  // 대분류별 점수
+  const majScores = CFG.checklist.map(maj => {
+    let g = 0, m = 0;
+    maj.items.forEach(it => it.subs.forEach(s => {
+      if(s.id === '1-1-1' && S.type === '정기') return;
+      m += Math.max(...s.options.map(o => o.score));
+      g += S.ans[s.id]?.score || 0;
     }));
-    return '  '+m.id+'. '+m.name+': '+g+'/'+mx2+'점';
+    return {name: maj.id + '. ' + maj.name, score: g, max: m, pct: m > 0 ? Math.round(g/m*100) : 0};
   });
-  const subj=encodeURIComponent('[도장품질점검] '+S.company.name+'_'+S.date.replace(/-/g,'.')+'_'+S.type+'_'+norm+'점('+(gr?gr.grade+'등급':'-')+')');
-  const body=encodeURIComponent(
-    '안녕하세요. 삼성중공업 도장QM '+insp+'입니다.\n\n'
-    +'금일 실시한 도장 품질점검 결과를 송부드립니다.\n\n'
-    +'■ 점검일자 : '+S.date+'\n'
-    +'■ 점검유형 : '+S.type+'\n'
-    +'■ 협력사   : '+S.company.name+'\n'
-    +'■ 점검자   : '+insp+'\n\n'
-    +'━━ 종합 결과 ━━━━━━━━━━━━━━━━\n'
-    +'  원점수: '+cur+' / '+mx+'점\n'
-    +'  환산점수(100점 기준): '+norm+'점\n'
-    +'  등급: '+(gr?gr.grade+'등급 · '+gr.label:'-')+'\n\n'
-    +'━━ 대분류별 점수 ━━━━━━━━━━━━━\n'
-    +majLines.join('\n')+'\n'
-    +(ngLines.length>0?'\n━━ 주요 지적사항 ('+ngLines.length+'건) ━━━━━━━\n'+ngLines.join('\n')+'\n':'')
-    +'\n조치 완료 후 '+rdStr+'까지 회신 부탁드립니다.\n'
-    +'상세 점검결과는 첨부 파일을 확인해 주시기 바랍니다.\n\n'
-    +'감사합니다.\n삼성중공업 도장QM '+insp
+
+  // 사진 그리드 HTML
+  const photosHtml = S.photos.length > 0
+    ? `<div style="margin-top:24px;page-break-before:always;">
+        <h2 style="font-size:16px;font-weight:700;color:#0f2744;border-bottom:2px solid #0f2744;padding-bottom:6px;margin-bottom:16px;">
+          📷 참고 사진 (${S.photos.length}장)
+        </h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          ${S.photos.map((p, i) => `
+            <div style="border:1px solid #d1dce8;border-radius:8px;overflow:hidden;">
+              <img src="${p.dataUrl}" style="width:100%;height:200px;object-fit:cover;display:block;">
+              <div style="padding:8px 10px;font-size:11px;color:#5a7a9a;min-height:28px;">
+                사진 ${i+1}
+              </div>
+            </div>`).join('')}
+        </div>
+        <p style="font-size:11px;color:#9aa8b4;margin-top:12px;">
+          ※ 사진 설명(캡션)은 PC 업로드 화면에서 추가할 수 있습니다.
+        </p>
+      </div>` : '';
+
+  const html = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>점검보고서_${coNm}_${dateStr}</title>
+<style>
+  @page { size: A4; margin: 15mm 12mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-size: 12px; color: #1a2a3a; background: #fff; }
+  .cover { background: #0f2744; color: #fff; padding: 32px 28px 28px; border-radius: 0 0 16px 16px; }
+  .cover-label { font-size: 11px; color: rgba(255,255,255,.55); letter-spacing:.1em; margin-bottom: 8px; }
+  .cover-title { font-size: 22px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
+  .cover-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .cover-meta div { font-size: 12px; }
+  .cover-meta b { color: #f5c842; }
+  .cover-meta span { color: rgba(255,255,255,.7); }
+  .score-box { display: flex; align-items: center; gap: 24px; background: #f0f4f8; border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .score-num { font-size: 56px; font-weight: 700; color: #0f2744; line-height: 1; font-family: monospace; }
+  .score-sub { font-size: 13px; color: #5a7a9a; margin-top: 4px; }
+  .grade-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 16px; font-weight: 700; color: #fff; }
+  .g-A { background: #1e8449; } .g-B { background: #d68910; } .g-C { background: #c0392b; } .g-none { background: #718096; }
+  h2 { font-size: 14px; font-weight: 700; color: #0f2744; border-bottom: 2px solid #0f2744; padding-bottom: 6px; margin: 20px 0 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  th { background: #0f2744; color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .bar-wrap { width: 80px; height: 7px; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; margin: 0 8px; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .ng-tag { display: inline-block; background: #fdecea; color: #e74c3c; border: 1px solid rgba(231,76,60,.25); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; font-family: monospace; }
+  .ok { color: #1e8449; } .ng { color: #c0392b; }
+  .footer { margin-top: 32px; font-size: 10px; color: #9aa8b4; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+  @media print {
+    .no-print { display: none; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 인쇄 버튼 -->
+<div class="no-print" style="position:fixed;top:12px;right:12px;display:flex;gap:8px;z-index:100;">
+  <button onclick="window.print()" style="padding:10px 20px;background:#0f2744;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">🖨️ 인쇄 / PDF 저장</button>
+  <button onclick="window.close()" style="padding:10px 16px;background:#f0f4f8;color:#1a2a3a;border:1px solid #d1dce8;border-radius:8px;font-size:13px;cursor:pointer;">닫기</button>
+</div>
+
+<!-- 표지 -->
+<div class="cover">
+  <div class="cover-label">삼성중공업 도장QM · 사외 철의장 품질점검 보고서</div>
+  <div class="cover-title">도장 협력사 품질점검<br>결과 보고서</div>
+  <div class="cover-meta">
+    <div><span>협력사</span><br><b>${coNm}</b></div>
+    <div><span>점검일자</span><br><b>${dateStr}</b></div>
+    <div><span>점검유형</span><br><b>${S.type}</b></div>
+    <div><span>점검자</span><br><b>${S.inspector}</b></div>
+  </div>
+</div>
+
+<!-- 종합점수 -->
+<div class="score-box">
+  <div>
+    <div class="score-num">${norm}</div>
+    <div class="score-sub">환산점수 / 100점<br><span style="font-size:11px;color:#9aa8b4;">원점수 ${cur}/${mx}점</span></div>
+  </div>
+  <div>
+    <span class="grade-badge ${gr ? 'g-' + gr.grade : 'g-none'}">${gr ? gr.grade + '등급' : '-'}</span>
+    <div style="font-size:12px;color:#5a7a9a;margin-top:6px;">${gr ? gr.label : ''}</div>
+    <div style="font-size:11px;color:#9aa8b4;margin-top:4px;">${gr?.note || ''}</div>
+  </div>
+</div>
+
+<!-- 대분류별 점수 -->
+<h2>대분류별 점수</h2>
+<table>
+  <thead><tr><th>대분류</th><th>점수</th><th style="width:100px;">취득율</th></tr></thead>
+  <tbody>
+    ${majScores.map(m => `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.score}/${m.max}점</td>
+        <td>
+          <div class="bar-wrap">
+            <div class="bar-fill" style="width:${m.pct}%;background:${m.pct>=90?'#2ecc71':m.pct>=70?'#f39c12':'#e74c3c'}"></div>
+          </div>
+          <span class="${m.pct>=90?'ok':m.pct>=70?'':'ng'}">${m.pct}%</span>
+        </td>
+      </tr>`).join('')}
+  </tbody>
+</table>
+
+<!-- 지적사항 -->
+${ngList.length > 0 ? `
+<h2>지적사항 (${ngList.length}건)</h2>
+<table>
+  <thead><tr><th style="width:80px;">항목</th><th>지적 내용</th><th style="width:70px;">점수</th><th>비고</th></tr></thead>
+  <tbody>
+    ${ngList.map(n => `
+      <tr>
+        <td><span class="ng-tag">${n.id}</span><br><span style="font-size:10px;color:#5a7a9a;">${n.major}</span></td>
+        <td>${n.text}</td>
+        <td class="ng">${n.score}/${n.maxSc}점</td>
+        <td style="font-size:11px;color:#5a7a9a;">${n.memo || '-'}</td>
+      </tr>`).join('')}
+  </tbody>
+</table>` : '<h2>지적사항</h2><p style="padding:12px;color:#5a7a9a;font-size:12px;">지적사항 없음 ✅</p>'}
+
+<!-- 참고 사진 -->
+${photosHtml}
+
+<div class="footer">
+  삼성중공업㈜ 품질보증팀 도장QM · 점검자: ${S.inspector} · 생성일시: ${new Date().toLocaleString('ko-KR')}
+</div>
+
+</body>
+</html>`;
+
+  // 새 창에서 열기
+  const win = window.open('', '_blank', 'width=800,height=900');
+  if(win){
+    win.document.write(html);
+    win.document.close();
+  } else {
+    // 팝업 차단된 경우 다운로드
+    const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '점검보고서_' + coNm + '_' + dateStr + '.html';
+    a.click();
+    alert('팝업이 차단됐습니다. HTML 파일이 다운로드됩니다.\n브라우저에서 열어 인쇄(Ctrl+P)해 주세요.');
+  }
+}
+
+/* ════════════════════════════════════════════════════════
+   메일
+════════════════════════════════════════════════════════ */
+function doMail(){
+  const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
+  const insp = S.inspector;
+  const rd = new Date(S.date); rd.setDate(rd.getDate() + (CFG.meta?.reply_days || 7));
+  const rdStr = rd.toISOString().slice(0, 10).replace(/-/g, '.');
+  const ngLines = [];
+  CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
+    if(s.id === '1-1-1' && S.type === '정기') return;
+    const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
+    const mxSc = Math.max(...s.options.map(o => o.score));
+    if(a.score < mxSc) ngLines.push(' - [' + s.id + '] ' + s.options[a.optionIdx].text);
+  })));
+  const majLines = CFG.checklist.map(m => {
+    let g = 0, mx2 = 0;
+    m.items.forEach(it => it.subs.forEach(s => {
+      if(s.id === '1-1-1' && S.type === '정기') return;
+      mx2 += Math.max(...s.options.map(o => o.score)); g += S.ans[s.id]?.score || 0;
+    }));
+    return ' ' + m.id + '. ' + m.name + ': ' + g + '/' + mx2 + '점';
+  });
+  const subj = encodeURIComponent('[도장품질점검] ' + S.company.name + '_' + S.date.replace(/-/g, '.') + '_' + S.type + '_' + norm + '점(' + (gr ? gr.grade + '등급' : '-') + ')');
+  const body = encodeURIComponent(
+    '안녕하세요. 삼성중공업 도장QM ' + insp + '입니다.\n\n'
+    + '금일 실시한 도장 품질점검 결과를 송부드립니다.\n\n'
+    + '■ 점검일자 : ' + S.date + '\n'
+    + '■ 점검유형 : ' + S.type + '\n'
+    + '■ 협력사 : ' + S.company.name + '\n'
+    + '■ 점검자 : ' + insp + '\n\n'
+    + '━━ 종합 결과 ━━━━━━━━━━━━━━━━\n'
+    + ' 원점수: ' + cur + ' / ' + mx + '점\n'
+    + ' 환산점수(100점 기준): ' + norm + '점\n'
+    + ' 등급: ' + (gr ? gr.grade + '등급 · ' + gr.label : '-') + '\n\n'
+    + '━━ 대분류별 점수 ━━━━━━━━━━━━━\n'
+    + majLines.join('\n') + '\n'
+    + (ngLines.length > 0 ? '\n━━ 주요 지적사항 (' + ngLines.length + '건) ━━━━━━━\n' + ngLines.join('\n') + '\n' : '')
+    + (S.photos.length > 0 ? '\n※ 현장 사진 ' + S.photos.length + '장은 별도 보고서 파일로 첨부드립니다.\n' : '')
+    + '\n조치 완료 후 ' + rdStr + '까지 회신 부탁드립니다.\n'
+    + '상세 점검결과는 첨부 파일을 확인해 주시기 바랍니다.\n\n'
+    + '감사합니다.\n삼성중공업 도장QM ' + insp
   );
-  window.location.href='mailto:?subject='+subj+'&body='+body;
+  window.location.href = 'mailto:?subject=' + subj + '&body=' + body;
   closeModal('modal-exp');
 }
 
-/* ════ 자동저장 ════ */
+/* ════════════════════════════════════════════════════════
+   자동저장
+════════════════════════════════════════════════════════ */
 function doSave(){
   try{
-    localStorage.setItem(DRAFT_KEY,JSON.stringify({
-      company:S.company,date:S.date,type:S.type,inspector:S.inspector,
-      majIdx:S.majIdx,ans:S.ans,savedAt:new Date().toISOString()
+    // 사진은 용량이 크므로 별도 키에 저장
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({
+      company: S.company, date: S.date, type: S.type, inspector: S.inspector,
+      majIdx: S.majIdx, ans: S.ans, savedAt: new Date().toISOString(),
+      photoCount: S.photos.length
     }));
+    // 사진 dataUrl은 별도 키로 저장 (용량 한도 주의)
+    try{
+      localStorage.setItem(DRAFT_KEY + '_photos', JSON.stringify(S.photos));
+    }catch(e){ /* 용량 초과 시 사진만 제외 */ }
     showSaveInd();
   }catch(e){}
 }
-function clearDraft(){ localStorage.removeItem(DRAFT_KEY); }
+function clearDraft(){
+  localStorage.removeItem(DRAFT_KEY);
+  localStorage.removeItem(DRAFT_KEY + '_photos');
+}
 function showSaveInd(){
-  let el=document.getElementById('save-ind');
-  if(!el){ el=document.createElement('div'); el.id='save-ind'; el.className='save-ind'; document.body.appendChild(el); }
-  el.textContent='💾 자동저장됨'; el.style.display='block';
+  let el = document.getElementById('save-ind');
+  if(!el){ el = document.createElement('div'); el.id = 'save-ind'; el.className = 'save-ind'; document.body.appendChild(el); }
+  el.textContent = '💾 자동저장됨'; el.style.display = 'block';
   clearTimeout(window._sit);
-  window._sit=setTimeout(()=>{ el.style.display='none'; },1500);
+  window._sit = setTimeout(() => { el.style.display = 'none'; }, 1500);
 }
 function checkDraft(){
   try{
-    const raw=localStorage.getItem(DRAFT_KEY); if(!raw) return;
-    const d=JSON.parse(raw); if(!d.company||!d.date) return;
-    const diff=Math.floor((Date.now()-new Date(d.savedAt))/60000);
-    const ts=diff<60?diff+'분 전':Math.floor(diff/60)+'시간 '+diff%60+'분 전';
-    const msg='저장된 점검 작업이 있습니다.\n\n협력사: '+d.company.name+'\n점검일: '+d.date+'\n점검자: '+(d.inspector||'-')+'\n저장: '+ts+'\n\n이어서 작업하시겠습니까?';
+    const raw = localStorage.getItem(DRAFT_KEY); if(!raw) return;
+    const d = JSON.parse(raw); if(!d.company || !d.date) return;
+    const diff = Math.floor((Date.now() - new Date(d.savedAt)) / 60000);
+    const ts   = diff < 60 ? diff + '분 전' : Math.floor(diff / 60) + '시간 ' + diff % 60 + '분 전';
+    const photoMsg = d.photoCount > 0 ? '\n사진: ' + d.photoCount + '장' : '';
+    const msg = '저장된 점검 작업이 있습니다.\n\n협력사: ' + d.company.name + '\n점검일: ' + d.date + '\n점검자: ' + (d.inspector || '-') + photoMsg + '\n저장: ' + ts + '\n\n이어서 작업하시겠습니까?';
     if(window.confirm(msg)){
-      S.company=d.company; S.date=d.date; S.type=d.type;
-      S.inspector=d.inspector; S.majIdx=d.majIdx||0; S.ans=d.ans||{};
-      const sel=document.getElementById('sel-co');
-      CFG.companies.forEach((co,i)=>{ if(co.id===d.company.id) sel.value=i; });
-      document.getElementById('inp-date').value=d.date;
-      document.getElementById('inp-insp').value=d.inspector||'';
-      document.querySelectorAll('.type-btn').forEach(b=>b.classList.toggle('on',b.dataset.t===d.type));
-      S.type=d.type;
+      S.company   = d.company; S.date = d.date; S.type = d.type;
+      S.inspector = d.inspector; S.majIdx = d.majIdx || 0; S.ans = d.ans || {};
+      // 사진 복구
+      try{
+        const photoRaw = localStorage.getItem(DRAFT_KEY + '_photos');
+        S.photos = photoRaw ? JSON.parse(photoRaw) : [];
+      }catch(e){ S.photos = []; }
+      const sel = document.getElementById('sel-co');
+      CFG.companies.forEach((co, i) => { if(co.id === d.company.id) sel.value = i; });
+      document.getElementById('inp-date').value  = d.date;
+      document.getElementById('inp-insp').value  = d.inspector || '';
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('on', b.dataset.t === d.type));
+      S.type = d.type;
       if(window.confirm('기본정보 화면에서 시작할까요?\n(아니오: 점검 화면으로 바로 이동)')){
         showScreen('sc-info');
-      }else{
-        buildTabs(); renderMaj(S.majIdx); showScreen('sc-check');
+      } else {
+        buildTabs(); renderMaj(S.majIdx); showScreen('sc-check'); refreshPhotoUI();
       }
-    }else{
+    } else {
       if(window.confirm('저장된 작업을 삭제할까요?')) clearDraft();
     }
   }catch(e){ localStorage.removeItem(DRAFT_KEY); }
 }
 
-/* ════ Export 모달 ════ */
-// openModal('modal-exp') 호출 전 desc 세팅
-document.getElementById('modal-exp').addEventListener('click',function(e){
-  if(e.target===this) closeModal('modal-exp');
+/* ════════════════════════════════════════════════════════
+   결과 화면 버튼 연결
+════════════════════════════════════════════════════════ */
+document.getElementById('modal-exp').addEventListener('click', function(e){
+  if(e.target === this) closeModal('modal-exp');
 });
-// btn-accent onclick을 openExportModal로 연결
-document.querySelector('.btn-accent').onclick=function(){
-  const cur=curScore(),mx=maxScore(),norm=normScore(),gr=grade(norm);
-  const miss=validSubs().filter(s=>!S.ans[s.id]||S.ans[s.id].optionIdx<0).length;
-  document.getElementById('exp-desc').innerHTML=
-    '<strong>'+S.company.name+'</strong> · '+S.date+' · '+S.type+'<br>'
-    +'원점수: <strong>'+cur+'/'+mx+'점</strong> → 환산 <strong>'+norm+'점</strong> <strong>'+(gr?gr.grade+'등급':'-')+'</strong>'
-    +(miss>0?'<br>⚠ 미입력 '+miss+'항목 있음':'');
-  openModal('modal-exp');
-};
 
-/* ════ 유틸 ════ */
-function today(){ return new Date().toISOString().slice(0,10); }
-function isKakao(){ const ua=navigator.userAgent.toLowerCase(); return ua.includes('kakaotalk')||ua.includes('kakao'); }
+/* ════════════════════════════════════════════════════════
+   유틸
+════════════════════════════════════════════════════════ */
+function today(){ return new Date().toISOString().slice(0, 10); }
+function isKakao(){ const ua = navigator.userAgent.toLowerCase(); return ua.includes('kakaotalk') || ua.includes('kakao'); }
 function showKakaoBanner(){
-  const b=document.createElement('div'); b.className='kakao-banner';
-  b.innerHTML='⚠ 카카오톡 브라우저에서는 파일 저장이 안됩니다.<br><span style="font-weight:400;font-size:11px;">우측 상단 ⋮ → <strong>외부 브라우저로 열기</strong> 선택 후 사용해 주세요.</span><button class="kakao-close" onclick="this.parentElement.remove()">×</button>';
-  document.getElementById('app').insertBefore(b,document.getElementById('app').firstChild);
+  const b = document.createElement('div'); b.className = 'kakao-banner';
+  b.innerHTML = '⚠ 카카오톡 브라우저에서는 파일 저장이 안됩니다.<br><span style="font-weight:400;font-size:11px;">우측 상단 ⋮ → <strong>외부 브라우저로 열기</strong> 선택 후 사용해 주세요.</span><button class="kakao-close" onclick="this.parentElement.remove()">×</button>';
+  document.getElementById('app').insertBefore(b, document.getElementById('app').firstChild);
 }
 </script>
 </body>
