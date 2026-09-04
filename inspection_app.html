@@ -1016,11 +1016,6 @@ function doExcel(){
    신규: HTML 보고서 출력 (사진 포함)
 ════════════════════════════════════════════════════════ */
 function doHtmlReport(){
-  // iOS Safari에서는 팝업 차단으로 새 탭 안 열릴 수 있음을 안내
-  const isIOSCheck = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  if(isIOSCheck){
-    if(!confirm('보고서 파일이 생성됩니다.\n\n파일이 자동으로 열리지 않으면\n다운로드된 HTML 파일을 열어주세요.\n\n계속하시겠습니까?')) return;
-  }
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const coNm = S.company.name;
   const dateStr = S.date;
@@ -1044,6 +1039,29 @@ function doHtmlReport(){
     }));
     return {name: maj.id + '. ' + maj.name, score: g, max: m, pct: m > 0 ? Math.round(g/m*100) : 0};
   });
+
+  // 세부 점검항목 (대분류 > 중분류 > 세부번호 단위 상세 내역)
+  const detailGroups = CFG.checklist.map(maj => {
+    const rows = [];
+    maj.items.forEach(it => {
+      it.subs.forEach((s, idx) => {
+        if(s.id === '1-1-1' && S.type === '정기') return;
+        const a = S.ans[s.id];
+        const mxSc = Math.max(...s.options.map(o => o.score));
+        const answered = a && a.optionIdx >= 0;
+        rows.push({
+          itName: idx === 0 ? it.name : '',
+          id: s.id,
+          text: answered ? s.options[a.optionIdx].text : '미입력',
+          score: answered ? a.score : 0,
+          maxSc: mxSc,
+          answered,
+          memo: (answered && a.memo) ? a.memo : ''
+        });
+      });
+    });
+    return {maj, rows};
+  }).filter(g => g.rows.length > 0);
 
   // 사진 그리드 HTML
   const photosHtml = S.photos.length > 0
@@ -1104,12 +1122,6 @@ function doHtmlReport(){
 </head>
 <body>
 
-<!-- 인쇄 버튼 -->
-<div class="no-print" style="position:fixed;top:12px;right:12px;display:flex;gap:8px;z-index:100;">
-  <button onclick="window.print()" style="padding:10px 20px;background:#0f2744;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">🖨️ 인쇄 / PDF 저장</button>
-  <button onclick="window.close()" style="padding:10px 16px;background:#f0f4f8;color:#1a2a3a;border:1px solid #d1dce8;border-radius:8px;font-size:13px;cursor:pointer;">닫기</button>
-</div>
-
 <!-- 표지 -->
 <div class="cover">
   <div class="cover-label">삼성중공업 도장QM · 사외 철의장 품질점검 보고서</div>
@@ -1154,6 +1166,24 @@ function doHtmlReport(){
   </tbody>
 </table>
 
+<!-- 세부 점검항목 -->
+<h2 style="page-break-before:always;">세부 점검항목</h2>
+${detailGroups.map(g => `
+  <h3 style="font-size:12.5px;font-weight:700;color:#0f2744;margin:14px 0 6px;">${g.maj.id}. ${g.maj.name}</h3>
+  <table style="margin-bottom:14px;">
+    <thead><tr><th style="width:110px;">중분류</th><th style="width:56px;">번호</th><th>평가내용(선택)</th><th style="width:64px;">점수</th><th>비고</th></tr></thead>
+    <tbody>
+      ${g.rows.map(r => `
+        <tr>
+          <td>${r.itName}</td>
+          <td><span class="ng-tag" style="${r.answered && r.score >= r.maxSc ? 'background:#eafaf0;color:#1e8449;border-color:rgba(30,132,73,.25);' : ''}">${r.id}</span></td>
+          <td>${r.text}</td>
+          <td class="${!r.answered ? '' : (r.score < r.maxSc ? 'ng' : 'ok')}">${r.score}/${r.maxSc}점</td>
+          <td style="font-size:10.5px;color:#5a7a9a;">${r.memo || '-'}</td>
+        </tr>`).join('')}
+    </tbody>
+  </table>`).join('')}
+
 <!-- 지적사항 -->
 ${ngList.length > 0 ? `
 <h2>지적사항 (${ngList.length}건)</h2>
@@ -1180,22 +1210,36 @@ ${photosHtml}
 </body>
 </html>`;
 
-  // Blob URL 생성 → 새 탭에서 바로 열어서 보여줌
-  // (target=_blank와 download 속성을 함께 쓰면 PC/Android Chrome에서
-  //  새 탭이 열리지 않고 조용히 다운로드만 되어, 사용자에게는 버튼이
-  //  아무 반응 없는 것처럼 보이는 문제가 있었음. 보기 전용으로 새 탭에 연다.)
-  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
-  const blobUrl = URL.createObjectURL(blob);
+  // 새 탭/팝업을 열지 않고 앱 화면 안에 오버레이(iframe)로 바로 표시.
+  // (새 탭·팝업 방식은 PC Chrome에서는 다운로드로 처리되어 아무 반응이
+  //  없는 것처럼 보였고, 모바일 브라우저/카카오톡 인앱 브라우저 등에서는
+  //  팝업 차단으로 아예 열리지 않는 경우가 많아 기기별로 동작이 들쭉날쭉했음.
+  //  현재 페이지 안에 그대로 렌더링하면 플랫폼에 관계없이 항상 보여진다.)
+  showReportOverlay(html);
+}
 
-  const win = window.open(blobUrl, '_blank');
-
-  if(!win){
-    // 팝업이 차단된 경우: 다운로드로 대체 안내
-    alert('팝업이 차단되어 보고서를 새 탭에서 열 수 없습니다.\n브라우저의 팝업 차단을 해제한 뒤 다시 시도해 주세요.');
+function showReportOverlay(html){
+  let ov = document.getElementById('report-overlay');
+  if(!ov){
+    ov = document.createElement('div');
+    ov.id = 'report-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;';
+    ov.innerHTML =
+      '<div style="display:flex;gap:8px;justify-content:flex-end;align-items:center;padding:10px 12px;background:#0f2744;flex:0 0 auto;">'
+      + '<button id="report-print-btn" style="padding:9px 16px;background:#f5c842;color:#0f2744;border:none;border-radius:8px;font-size:13px;font-weight:700;">🖨️ 인쇄 / PDF 저장</button>'
+      + '<button id="report-close-btn" style="padding:9px 16px;background:#f0f4f8;color:#1a2a3a;border:none;border-radius:8px;font-size:13px;font-weight:700;">✕ 닫기</button>'
+      + '</div>'
+      + '<iframe id="report-iframe" style="flex:1 1 auto;border:0;width:100%;background:#fff;"></iframe>';
+    document.body.appendChild(ov);
+    document.getElementById('report-close-btn').onclick = () => { ov.classList.add('hidden'); };
+    document.getElementById('report-print-btn').onclick = () => {
+      const ifr = document.getElementById('report-iframe');
+      try{ ifr.contentWindow.focus(); ifr.contentWindow.print(); }
+      catch(e){ alert('인쇄 창을 열 수 없습니다. 브라우저에서 직접 인쇄해 주세요.'); }
+    };
   }
-
-  // URL 해제 (새 탭이 로드될 시간을 충분히 준 뒤)
-  setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+  ov.classList.remove('hidden');
+  document.getElementById('report-iframe').srcdoc = html;
 }
 
 /* ════════════════════════════════════════════════════════
