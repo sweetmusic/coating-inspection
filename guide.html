@@ -136,6 +136,26 @@ h2{margin:0 0 4px; font-size:16px; font-weight:700; letter-spacing:-.01em;}
 .g-l{margin:1px 0 0; font-size:11.5px; color:var(--ink-2);}
 .g-r{margin:3px 0 0; font-family:var(--mono); font-size:10px; color:var(--ink-3); font-variant-numeric:tabular-nums;}
 
+.safe{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:12px;}
+.sf{border:1px solid var(--line); border-radius:11px; padding:13px 15px; background:var(--paper-3);}
+.sf-t{margin:0 0 4px; font-size:13px; font-weight:700; color:var(--navy-3);}
+.sf-d{margin:0; font-size:12.5px; color:var(--ink-2); line-height:1.55;}
+.sf-d b{color:var(--ink);}
+.chipline{display:flex; gap:6px; flex-wrap:wrap; margin:12px 0 0;}
+.chip{
+  font-size:11.5px; border:1px solid var(--line); border-radius:20px;
+  padding:3px 11px; background:var(--paper-3); color:var(--ink-2);
+}
+.chip b{color:var(--ink); font-weight:700;}
+.tbl{width:100%; border-collapse:collapse; margin-top:12px; font-size:12.5px;}
+.tbl th,.tbl td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top;}
+.tbl th{background:var(--paper-2); font-weight:700; font-size:12px; color:var(--navy-3); white-space:nowrap;}
+.tbl td b{color:var(--ink);}
+.tbl td{color:var(--ink-2);}
+.note-inline{
+  margin:10px 0 0; font-size:12px; color:var(--ink-3);
+  border-left:3px solid var(--line); padding-left:10px;
+}
 .notes{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px;}
 .notes li{display:grid; grid-template-columns:auto 1fr; gap:10px; font-size:13px; color:var(--ink-2);}
 .notes b{color:var(--ink); font-weight:700;}
@@ -153,6 +173,7 @@ footer{
   main,.band,.addr{padding-left:20px; padding-right:20px;}
   footer{margin-left:20px; margin-right:20px;}
   .fl{border-radius:10px!important; border-right:0; margin-bottom:2px;}
+  .safe{grid-template-columns:1fr;}
 }
 
 @page{size:A4 portrait; margin:9mm;}
@@ -257,7 +278,7 @@ footer{
 
     <section>
       <h2>점검 진행 순서</h2>
-      <p class="sub">협력사 16곳 &middot; 7개 대분류 기준으로 점검합니다.</p>
+      <p class="sub">협력사 16곳 &middot; 7개 대분류 &middot; 51개 세부항목으로 점검합니다.</p>
       <div class="flow">
         <div class="fl">
           <p class="fl-n">STEP 1</p>
@@ -267,7 +288,7 @@ footer{
         <div class="fl">
           <p class="fl-n">STEP 2</p>
           <p class="fl-t">항목 점검</p>
-          <p class="fl-d">품질조직부터 안전관리까지 7개 대분류</p>
+          <p class="fl-d">7개 대분류를 탭으로 옮겨가며 입력</p>
         </div>
         <div class="fl">
           <p class="fl-n">STEP 3</p>
@@ -277,14 +298,115 @@ footer{
         <div class="fl">
           <p class="fl-n">STEP 4</p>
           <p class="fl-t">결과 확인</p>
-          <p class="fl-d">100점 환산 점수와 등급, 지적사항</p>
+          <p class="fl-d">100점 환산 점수 &middot; 지적사항 &middot; 미입력 항목</p>
         </div>
         <div class="fl">
           <p class="fl-n">STEP 5</p>
-          <p class="fl-t">보고서 &middot; 발송</p>
+          <p class="fl-t">저장 &middot; 발송</p>
           <p class="fl-d">보고서 출력, 엑셀 저장, 메일 발송</p>
         </div>
       </div>
+
+      <div class="chipline">
+        <span class="chip">대분류 <b>1 품질조직</b></span>
+        <span class="chip"><b>2 품질문서관리</b></span>
+        <span class="chip"><b>3 작업환경관리</b></span>
+        <span class="chip"><b>4 표면처리 품질관리</b></span>
+        <span class="chip"><b>5 도장품질관리</b></span>
+        <span class="chip"><b>6 안전관리</b></span>
+        <span class="chip"><b>7 기타 외 가/감점</b></span>
+      </div>
+
+      <table class="tbl">
+        <tr><th>점검유형</th><th>만점</th><th>내용</th></tr>
+        <tr>
+          <td><b>정기 기본품질점검</b></td>
+          <td><b>105점</b></td>
+          <td>품질조직 독립성&middot;품질전담인원 배치(1-1-1) 항목은 <b>제외</b>하고 점검합니다.</td>
+        </tr>
+        <tr>
+          <td><b>상/하반기 종합평가</b></td>
+          <td><b>110점</b></td>
+          <td>1-1-1 항목을 포함한 전체 51개 항목을 점검합니다.</td>
+        </tr>
+      </table>
+      <p class="note-inline">점수는 유형에 관계없이 <b>100점 기준으로 환산</b>되어 표시됩니다. 사진 첨부에는 설명과 관련 점검항목을 함께 지정할 수 있고, 지정한 내용은 보고서에 그대로 실립니다.</p>
+    </section>
+
+    <section>
+      <h2>입력한 내용은 사라지지 않습니다</h2>
+      <p class="sub">앱 조작이 익숙하지 않아 화면을 잘못 나가더라도 처음부터 다시 입력할 일은 없습니다.</p>
+      <div class="safe">
+        <div class="sf">
+          <p class="sf-t">💾 자동저장</p>
+          <p class="sf-d">항목을 고르거나 비고&middot;사진을 넣을 때마다 <b>자동으로 저장</b>됩니다. 화면 아래에 &lsquo;자동저장됨&rsquo; 표시가 잠깐 나타납니다.</p>
+        </div>
+        <div class="sf">
+          <p class="sf-t">↩ 저장된 이전 작업</p>
+          <p class="sf-d">앱은 점검 내용을 <b>지우지 않습니다.</b> 화면을 나가면 보관함으로 옮겨 두며, 기본정보 화면 위쪽 노란 버튼으로 <b>최근 5건</b>까지 골라 되살릴 수 있습니다.</p>
+        </div>
+        <div class="sf">
+          <p class="sf-t">◀ 뒤로가기 보호</p>
+          <p class="sf-d">휴대폰 뒤로가기를 눌러도 앱이 통째로 닫히지 않습니다. 열려 있는 창을 먼저 닫고, 그 다음 <b>확인을 물은 뒤에만</b> 앞 화면으로 이동합니다.</p>
+        </div>
+        <div class="sf">
+          <p class="sf-t">📱 앱을 껐을 때</p>
+          <p class="sf-d">전화가 오거나 다른 앱으로 넘어가도 그 직전에 한 번 더 저장합니다. 다시 열면 <b>&lsquo;이어서 점검하기&rsquo;</b> 안내가 뜹니다.</p>
+        </div>
+      </div>
+      <p class="note-inline">다만 저장되는 곳은 <b>본인 휴대폰</b>입니다. 점검을 마치면 반드시 보고서나 엑셀로 내보내 주세요.</p>
+    </section>
+
+    <section>
+      <h2>하루에 여러 곳을 점검할 때</h2>
+      <p class="sub">협력사를 옮겨 갈 때 헷갈리지 않도록 도와드립니다.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div class="step-b">
+            <p class="step-t">결과 화면에서 <b>&lsquo;✓ 이 협력사 완료 &mdash; 다음 협력사 점검&rsquo;</b></p>
+            <p class="step-d">초록색 버튼 하나로 정리됩니다. <b>협력사 칸만 비워지고 점검일자와 점검자 이름은 그대로 남으므로</b>, 다음 협력사만 고르면 바로 시작할 수 있습니다.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div class="step-b">
+            <p class="step-t">&lsquo;✓ 오늘 마친 점검&rsquo; 목록 확인</p>
+            <p class="step-d">기본정보 화면 위쪽 초록 상자에 <b>오늘 저장을 마친 협력사</b>가 쌓입니다. 어디까지 저장했는지 눈으로 확인할 수 있고, 날짜가 바뀌면 자동으로 비워집니다.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div class="step-b">
+            <p class="step-t">협력사를 바꾸지 않으면 경고합니다</p>
+            <p class="step-d">오늘 이미 마친 협력사를 다시 고른 채로 점검을 시작하면 <b>&lsquo;협력사를 확인해 주세요&rsquo;</b> 확인창이 뜹니다. 앞 협력사 이름으로 잘못 점검하는 일을 막아 줍니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>결과 저장하기</h2>
+      <p class="sub">결과 화면 아래 세 가지 중에서 고르시면 됩니다.</p>
+      <table class="tbl">
+        <tr><th>버튼</th><th>쓰임</th><th>비고</th></tr>
+        <tr>
+          <td><b>🖨️ 보고서</b></td>
+          <td><b>협력사에 보내는 정식 보고서.</b> 첨부한 사진과 설명이 모두 들어갑니다.</td>
+          <td>화면에서 바로 열리며 <b>인쇄/PDF</b>로 저장합니다.</td>
+        </tr>
+        <tr>
+          <td><b>📊 저장</b></td>
+          <td><b>엑셀 파일(데이터용).</b> 항목별 점수와 지적사항이 표로 정리됩니다.</td>
+          <td>사진 이미지는 들어가지 않습니다.</td>
+        </tr>
+        <tr>
+          <td><b>✉ 메일</b></td>
+          <td>휴대폰 메일 앱이 열리고 <b>결과 요약이 자동으로 작성</b>됩니다.</td>
+          <td>보고서 파일은 직접 첨부해 주세요.</td>
+        </tr>
+      </table>
+      <p class="note-inline"><b>등급(A&middot;B&middot;C&middot;D)은 앱 화면과 보고서, 메일에 표시하지 않습니다.</b> 금회 점검의 환산 점수와 지적 건수만 나옵니다. 협력사 <b>연간 등급은 연간 점검 이력과 품질 문제 등을 종합해 연말에 별도로 결정</b>되기 때문입니다. 아래 기준은 연말 종합평가 때 쓰이는 참고용입니다.</p>
 
       <div class="grades">
         <div class="g"><p class="g-k" style="color:var(--gA);">A</p><p class="g-l">우수</p><p class="g-r">90 – 100점</p></div>
@@ -297,10 +419,11 @@ footer{
     <section>
       <h2>알아두실 점</h2>
       <ul class="notes">
-        <li><span class="dot"></span><span><b>인터넷 연결이 필요합니다.</b> 통신이 되지 않는 구역에서는 앱이 열리지 않으니, 점검 시작 전에 미리 실행해 두시면 좋습니다.</span></li>
-        <li><span class="dot"></span><span><b>점검 내용은 휴대폰에 자동 저장됩니다.</b> 점검 도중 앱을 닫아도 다시 열면 이어서 진행할 수 있습니다. 다만 데이터는 본인 휴대폰에만 남으므로, 결과는 보고서나 엑셀로 내보내 주셔야 합니다.</span></li>
-        <li><span class="dot"></span><span><b>협력사 목록과 배점은 자동으로 최신 상태가 됩니다.</b> 별도로 업데이트하실 필요가 없습니다.</span></li>
-        <li><span class="dot"></span><span><b>보고서는 앱 화면에서 바로 열립니다.</b> 사진까지 포함된 보고서를 확인한 뒤 &lsquo;인쇄/PDF&rsquo;로 저장하실 수 있습니다.</span></li>
+        <li><span class="dot"></span><span><b>한 번 열어 둔 뒤에는 통신이 안 되는 곳에서도 열립니다.</b> 점검 항목 입력, 사진 촬영, 결과 확인, 보고서 출력까지 모두 가능합니다. 인터넷이 필요한 것은 <b>맨 처음 설치할 때</b>와 메일 발송뿐입니다. 그래도 현장에 들어가기 전에 한 번 실행해 두시면 안전합니다.</span></li>
+        <li><span class="dot"></span><span><b>협력사 목록과 배점은 자동으로 최신 상태가 됩니다.</b> 앱을 열면 뒤에서 조용히 확인합니다. 다만 <b>점검 도중에는 점수가 어긋나지 않도록 바로 바꾸지 않고</b>, &lsquo;새 점검 설정 있음&rsquo; 안내만 띄운 뒤 다음에 앱을 열 때 적용합니다.</span></li>
+        <li><span class="dot"></span><span><b>점검 결과는 본인 휴대폰에만 저장됩니다.</b> 서버로 전송되지 않으니, 점검을 마치면 보고서나 엑셀로 반드시 내보내 주세요.</span></li>
+        <li><span class="dot"></span><span><b>사진을 많이 넣으면 저장 공간이 부족할 수 있습니다.</b> 그럴 때는 &lsquo;사진은 임시보관되지 않습니다&rsquo; 안내가 뜹니다. 점검 항목과 비고는 정상 저장되니, 안내가 보이면 <b>그 자리에서 보고서로 저장</b>해 주세요.</span></li>
+        <li><span class="dot"></span><span><b>조치 회신 기한은 점검일로부터 7일</b>입니다. 보고서와 메일에 기한이 자동으로 계산되어 들어갑니다.</span></li>
       </ul>
     </section>
 
@@ -308,7 +431,7 @@ footer{
 
   <footer>
     <span>삼성중공업㈜ 품질보증팀 · 도장QM</span>
-    <span>조치 회신 기한 7일 · 앱 버전 b7</span>
+    <span>조치 회신 기한 7일 · 앱 버전 b10</span>
   </footer>
 
 </div>

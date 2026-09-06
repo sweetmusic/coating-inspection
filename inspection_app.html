@@ -86,6 +86,21 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 /* 정보입력 화면 */
 #sc-info{display:flex;flex-direction:column;height:100%;}
 .info-body{flex:1;overflow-y:auto;padding:20px 16px 100px;}
+.btn-restore{width:100%;margin-bottom:18px;padding:13px 14px;border-radius:10px;border:1.5px solid #f0b429;background:#fff8e6;color:#7a5200;font-size:13.5px;font-weight:700;text-align:left;line-height:1.5;cursor:pointer;}
+.dr-ts{color:var(--text2);font-size:12px;}
+.done-box{background:#eaf6ec;border:1.5px solid #7cb98a;border-radius:10px;padding:11px 13px;margin-bottom:12px;}
+.done-hd{font-size:12.5px;font-weight:700;color:#1e6b34;margin-bottom:6px;}
+.done-row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--navy);padding:2px 0;}
+.done-nm{font-weight:600;}
+.done-how{font-size:11.5px;color:#1e6b34;background:#d6ecdb;border-radius:9px;padding:1px 8px;white-space:nowrap;}
+.bak-list{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow-y:auto;}
+.bak-row{width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;cursor:pointer;}
+.bak-nm{font-size:14px;font-weight:700;color:var(--navy);}
+.bak-sub{font-size:12px;color:var(--text2);line-height:1.55;}
+.btm-col{flex-direction:column;gap:7px;}
+.btm-row{display:flex;gap:6px;}
+.btn-next-co{width:100%;background:#1e6b34;color:#fff;font-size:14.5px;}
+.dr-info{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.75;color:var(--navy);margin-bottom:14px;}
 .fld{margin-bottom:18px;}
 .fld-label{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.04em;margin-bottom:7px;display:flex;align-items:center;gap:4px;}
 .req{color:var(--ng);font-size:14px;line-height:1;}
@@ -401,6 +416,10 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
     <div class="hdr-meta" id="info-upd"></div>
   </div>
   <div class="info-body">
+    <!-- 오늘 마친 점검 목록 (하루 2~3곳 도는 경우 저장 누락 확인용) -->
+    <div id="done-today" class="done-box hidden"></div>
+    <!-- 치워둔 작업이 있을 때만 나타난다 -->
+    <button id="btn-restore" class="btn-restore hidden" onclick="restoreBak()"></button>
     <div class="fld">
       <div class="fld-label">협력사 <span class="req">*</span></div>
       <div class="sel-wrap">
@@ -479,10 +498,13 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
     </div>
   </div>
   <div class="scroll" id="res-body"></div>
-  <div class="btm" style="gap:6px;">
-    <button class="btn btn-gray" onclick="showScreen('sc-check')">‹ 수정</button>
-    <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:1.5">📊 저장</button>
-    <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.5">🖨️ 보고서</button>
+  <div class="btm btm-col">
+    <button class="btn btn-next-co" onclick="finishAndNext()">✓ 이 협력사 완료 — 다음 협력사 점검</button>
+    <div class="btm-row">
+      <button class="btn btn-gray" onclick="showScreen('sc-check')">‹ 수정</button>
+      <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:1.5">📊 저장</button>
+      <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.5">🖨️ 보고서</button>
+    </div>
   </div>
 </div>
 
@@ -538,6 +560,34 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
+<!-- 모달: 보관함에서 되살리기 -->
+<div id="modal-bak" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-bak')">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">↩ 저장된 이전 작업</div>
+    <div class="sheet-desc">되살릴 점검을 골라 주세요. 최근 5건까지 보관됩니다.</div>
+    <div id="bak-body" class="bak-list"></div>
+    <div class="sheet-btns" style="margin-top:12px;">
+      <button class="btn btn-gray" onclick="closeModal('modal-bak')">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- 모달: 저장된 작업 이어하기 -->
+<div id="modal-draft" class="overlay hidden">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">💾 저장된 점검 작업이 있습니다</div>
+    <div class="sheet-desc">앱이 꺼져도 입력한 내용은 자동으로 보관됩니다.</div>
+    <div class="dr-info" id="dr-info"></div>
+    <div class="sheet-btns">
+      <button class="btn btn-navy" onclick="draftContinue()">▶ 이어서 점검하기</button>
+      <button class="btn btn-gray" onclick="draftInfo()">기본정보부터 확인</button>
+      <button class="btn btn-gray" onclick="draftLater()">나중에 (그대로 두기)</button>
+    </div>
+  </div>
+</div>
+
 <!-- 모달: 내보내기 (기존 + 보고서 버튼 추가) -->
 <div id="modal-exp" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-exp')">
   <div class="sheet">
@@ -558,10 +608,13 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 /* ════════════════════════════════════════════════════════
    설정
 ════════════════════════════════════════════════════════ */
-const APP_BUILD = 'b7';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
+const APP_BUILD = 'b10';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
 const GH_URL  = 'https://sweetmusic.github.io/coating-inspection/app_config.json';
 const CFG_KEY = 'app_config';
 const DRAFT_KEY = 'inspection_draft';
+const BAK_KEY   = 'inspection_bak_list';    // 치워둔 작업 보관함(삭제 대신 여기로 옮긴다)
+const BAK_MAX   = 5;                        // 보관함에 남겨두는 최근 작업 수
+const DONE_KEY  = 'inspection_done_today';  // 오늘 완료한 협력사 이력
 const MAX_PHOTOS = 10;     // 최대 사진 수
 const MAX_PX     = 1200;   // 압축 기준 가로px
 
@@ -569,6 +622,7 @@ const MAX_PX     = 1200;   // 압축 기준 가로px
    전역 상태
 ════════════════════════════════════════════════════════ */
 let CFG = null;
+let _lastDoneCoId = null;   // 방금 마친 협력사 (협력사 변경을 잊는 사고 방지용)
 let S = {
   company: null, date: '', type: '정기', inspector: '',
   majIdx: 0, ans: {},
@@ -607,8 +661,9 @@ async function refreshConfig(){
     const fresh = await r.json();
     if(!fresh || !Array.isArray(fresh.checklist) || !Array.isArray(fresh.companies)) return;
 
-    const stamp = c => (c.meta?.updated_at || '') + '|' + (c.meta?.version || '');
-    if(stamp(fresh) === stamp(CFG)) return;
+    // 내용 자체를 비교한다. updated_at 을 고치는 걸 잊고 협력사만 추가해도
+    // 정상적으로 반영되도록 하기 위함.
+    if(JSON.stringify(fresh) === JSON.stringify(CFG)) return;
 
     localStorage.setItem(CFG_KEY, JSON.stringify(fresh));
 
@@ -688,7 +743,10 @@ function showErr(msg){
 function boot(skipDraft){
   const sel = document.getElementById('sel-co');
   sel.innerHTML = '<option value="">-- 협력사를 선택하세요 --</option>';
+  // active:false 인 협력사는 목록에서 제외한다 (거래 종료 등).
+  // value 에는 원본 배열의 인덱스를 그대로 넣어 선택 결과가 어긋나지 않게 한다.
   (CFG.companies || []).forEach((co, i) => {
+    if(co.active === false) return;
     const o = document.createElement('option'); o.value = i; o.textContent = co.name; sel.appendChild(o);
   });
   document.getElementById('inp-date').value = today();
@@ -696,6 +754,8 @@ function boot(skipDraft){
   document.getElementById('info-ver').textContent = CFG.meta?.version || '';
   document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16) + ' · 앱 ' + APP_BUILD;
   showScreen('sc-info');
+  refreshRestoreBtn();
+  refreshDoneList();
   if(!skipDraft) setTimeout(checkDraft, 300);
 }
 
@@ -728,7 +788,27 @@ function startCheck(){
   if(!ci)   { alert('협력사를 선택해 주세요.'); return; }
   if(!dt)   { alert('점검일자를 입력해 주세요.'); return; }
   if(!insp) { alert('점검자 이름을 입력해 주세요.'); return; }
-  S.company  = CFG.companies[parseInt(ci)];
+  // 진행 중이던 점검이 있으면 소리 없이 날리지 않는다.
+  const prev = slotRead(DRAFT_KEY);
+  if(prev && Object.keys(prev.ans || {}).length > 0){
+    if(!window.confirm('진행 중이던 점검이 있습니다.\n\n'
+      + '\u25b6 ' + prev.company.name + ' / ' + prev.date + ' / 입력 ' + Object.keys(prev.ans).length + '개\n\n'
+      + '이 내용을 접어두고 새 점검을 시작할까요?\n'
+      + '(접어둔 내용은 [\u21a9 저장된 이전 작업]으로 복구할 수 있습니다)')) return;
+    stashDraft();
+  }
+  const co = CFG.companies[parseInt(ci)];
+  // 하루에 여러 곳을 도는 동선에서 협력사 변경을 잊는 사고를 막는다.
+  const already = doneToday().items.find(x => x.companyId === co.id && x.date === dt);
+  if(already || _lastDoneCoId === co.id){
+    if(!window.confirm('\u26a0 협력사를 확인해 주세요.\n\n'
+      + '\u25b6 ' + co.name + '\n\n'
+      + (already ? '이 협력사는 오늘 이미 점검을 마친 것으로 기록돼 있습니다.\n'
+                 : '방금 점검을 마친 협력사와 같습니다.\n')
+      + '협력사를 바꾸지 않으셨다면 [취소]를 누르고 다시 선택해 주세요.\n\n'
+      + '이대로 진행할까요?')) return;
+  }
+  S.company  = co;
   S.date     = dt;
   S.inspector = insp;
   S.majIdx   = 0;
@@ -740,12 +820,18 @@ function startCheck(){
   refreshPhotoUI();
 }
 function goBack(){
-  if(Object.keys(S.ans).length > 0){
-    if(!window.confirm('작성 중인 내용이 있습니다.\n처음으로 돌아갈까요?')) return;
+  if(Object.keys(S.ans).length > 0 || S.photos.length > 0){
+    // 내용은 지우지 않고 보관함으로 옮기므로, 실수로 눌러도 되살릴 수 있다.
+    if(!window.confirm('입력한 내용을 접어두고 처음 화면으로 돌아갑니다.\n\n'
+      + '내용은 지워지지 않습니다.\n'
+      + '기본정보 화면의 [\u21a9 저장된 이전 작업] 버튼으로\n언제든 이어서 할 수 있습니다.\n\n'
+      + '돌아갈까요?')) return;
+    doSave();   // 마지막 상태까지 반영한 뒤 보관
   }
-  clearDraft();
+  stashDraft();
   S = {company:null, date:'', type:'정기', inspector:'', majIdx:0, ans:{}, photos:[]};
   showScreen('sc-info');
+  refreshRestoreBtn();
 }
 
 /* ════════════════════════════════════════════════════════
@@ -1148,7 +1234,7 @@ function buildResult(){
     body.appendChild(s3);
   }
 
-  const sp = document.createElement('div'); sp.style.height = '16px'; body.appendChild(sp);
+  const sp = document.createElement('div'); sp.style.height = '78px'; body.appendChild(sp);
   showScreen('sc-result');
   // 내보내기 모달 desc 업데이트
   updateExpDesc();
@@ -1249,6 +1335,7 @@ function doExcel(){
   XLSX.utils.book_append_sheet(wb, ws3, '참고사진목록');
 
   XLSX.writeFile(wb, '점검결과_' + coNm + '_' + date + '_' + S.type + '.xlsx');
+  markDone('엑셀');
   clearDraft();
 }
 
@@ -1265,6 +1352,7 @@ function esc(v){
 function doHtmlReport(){
   try{
     buildReportView();
+    markDone('보고서');
   }catch(e){
     alert('보고서 생성 중 오류가 발생했습니다.\n\n' + ((e && e.message) ? e.message : e));
   }
@@ -1521,6 +1609,9 @@ function doMail(){
     + '상세 점검결과는 첨부 파일을 확인해 주시기 바랍니다.\n\n'
     + '감사합니다.\n삼성중공업 도장QM ' + insp
   );
+  _allowLeave = true;   // 메일 앱 전환은 종료가 아니므로 경고창을 띄우지 않는다
+  setTimeout(() => { _allowLeave = false; }, 5000);
+  doSave();
   window.location.href = 'mailto:?subject=' + subj + '&body=' + body;
   closeModal('modal-exp');
 }
@@ -1528,63 +1619,263 @@ function doMail(){
 /* ════════════════════════════════════════════════════════
    자동저장
 ════════════════════════════════════════════════════════ */
-function doSave(){
+/* 저장 슬롯 공통 처리.
+   draft = 지금 진행 중인 작업 / bak = 치워둔 작업 보관함.
+   점검자가 실수로 화면을 나가더라도 내용이 사라지지 않도록,
+   이 앱은 "삭제"를 하지 않고 항상 bak 으로 옮겨만 둔다. */
+function slotWrite(key, obj, photos){
+  localStorage.setItem(key, JSON.stringify(obj));
   try{
-    // 사진은 용량이 크므로 별도 키에 저장
-    localStorage.setItem(DRAFT_KEY, JSON.stringify({
+    localStorage.setItem(key + '_photos', JSON.stringify(photos || []));
+    return true;
+  }catch(e){
+    // 용량 초과: 사진만 저장 실패. 점검 내용 자체는 위에서 이미 저장됐다.
+    localStorage.removeItem(key + '_photos');
+    return false;
+  }
+}
+function slotRead(key){
+  try{
+    const raw = localStorage.getItem(key); if(!raw) return null;
+    const d = JSON.parse(raw);
+    if(!d || !d.company || !d.date) return null;
+    try{ d._photos = JSON.parse(localStorage.getItem(key + '_photos') || '[]'); }
+    catch(e){ d._photos = []; }
+    return d;
+  }catch(e){ return null; }
+}
+function slotDrop(key){
+  localStorage.removeItem(key);
+  localStorage.removeItem(key + '_photos');
+}
+
+/* ── 보관함(최근 BAK_MAX건) ───────────────────────────────
+   하루에 협력사 2~3곳을 도는 동선에서, 앞 협력사 작업이
+   뒤 협력사 작업에 덮이지 않도록 여러 칸을 유지한다.
+   목록은 BAK_KEY 한 곳에, 사진은 건별 키에 따로 담는다. */
+function bakList(){
+  try{ const a = JSON.parse(localStorage.getItem(BAK_KEY) || '[]'); return Array.isArray(a) ? a : []; }
+  catch(e){ return []; }
+}
+function bakPhotoKey(id){ return 'inspection_bak_' + id + '_photos'; }
+function bakPhotos(id){
+  try{ return JSON.parse(localStorage.getItem(bakPhotoKey(id)) || '[]'); }catch(e){ return []; }
+}
+function bakPut(d, photos){
+  const list = bakList();
+  const id = 'b' + Date.now().toString(36);
+  // 같은 협력사·같은 날짜 건은 최신 것만 남긴다 (같은 작업이 여러 칸을 먹지 않도록)
+  const dup = list.filter(e => e.companyId === d.company.id && e.date === d.date);
+  dup.forEach(e => localStorage.removeItem(bakPhotoKey(e.id)));
+  let next = list.filter(e => !(e.companyId === d.company.id && e.date === d.date));
+  next.unshift({
+    id, companyId: d.company.id, companyName: d.company.name,
+    date: d.date, type: d.type, inspector: d.inspector,
+    majIdx: d.majIdx || 0, ans: d.ans || {},
+    savedAt: d.savedAt || new Date().toISOString(),
+    ansCount: Object.keys(d.ans || {}).length, photoCount: (photos || []).length
+  });
+  // 오래된 것부터 버린다
+  while(next.length > BAK_MAX){
+    const drop = next.pop();
+    localStorage.removeItem(bakPhotoKey(drop.id));
+  }
+  try{ localStorage.setItem(bakPhotoKey(id), JSON.stringify(photos || [])); }
+  catch(e){ localStorage.removeItem(bakPhotoKey(id)); next[0].photoCount = 0; }
+  try{ localStorage.setItem(BAK_KEY, JSON.stringify(next)); }
+  catch(e){
+    // 용량이 모자라면 가장 오래된 건의 사진부터 비우고 다시 시도한다
+    for(let k = next.length - 1; k >= 1; k--){
+      localStorage.removeItem(bakPhotoKey(next[k].id)); next[k].photoCount = 0;
+      try{ localStorage.setItem(BAK_KEY, JSON.stringify(next)); return; }catch(e2){}
+    }
+  }
+}
+/* 진행 중 작업을 치운다. 지우지 않고 보관함으로 옮긴다. */
+function stashDraft(){
+  const d = slotRead(DRAFT_KEY);
+  if(d) bakPut(d, d._photos);
+  slotDrop(DRAFT_KEY);
+  refreshRestoreBtn();
+}
+// 기존 호출부(내보내기 완료 등) 호환용 - 이제는 삭제가 아니라 보관이다.
+function clearDraft(){ stashDraft(); }
+
+/* ── 오늘 완료한 협력사 이력 ──────────────────────────────
+   저장(엑셀)·보고서 출력·[완료 후 다음 협력사]에서 기록한다.
+   날짜가 바뀌면 자동으로 비워진다. */
+function doneToday(){
+  try{
+    const d = JSON.parse(localStorage.getItem(DONE_KEY) || 'null');
+    if(!d || d.date !== today()) return { date: today(), items: [] };
+    return d;
+  }catch(e){ return { date: today(), items: [] }; }
+}
+function markDone(how){
+  if(!S.company) return;
+  const d = doneToday();
+  const hit = d.items.find(x => x.companyId === S.company.id && x.date === S.date);
+  if(hit){
+    if(hit.how.indexOf(how) < 0) hit.how += '/' + how;
+    hit.at = new Date().toISOString();
+  } else {
+    d.items.push({
+      companyId: S.company.id, companyName: S.company.name,
+      date: S.date, type: S.type, how: how,
+      ansCount: Object.keys(S.ans).length, photoCount: S.photos.length,
+      at: new Date().toISOString()
+    });
+  }
+  try{ localStorage.setItem(DONE_KEY, JSON.stringify(d)); }catch(e){}
+  refreshDoneList();
+}
+function refreshDoneList(){
+  const el = document.getElementById('done-today'); if(!el) return;
+  const d = doneToday();
+  if(!d.items.length){ el.classList.add('hidden'); return; }
+  el.classList.remove('hidden');
+  el.innerHTML = '<div class="done-hd">\u2713 오늘 마친 점검 ' + d.items.length + '곳</div>'
+    + d.items.map(x =>
+        '<div class="done-row"><span class="done-nm">' + escHtml(x.companyName) + '</span>'
+        + '<span class="done-how">' + escHtml(x.how) + '</span></div>').join('');
+}
+
+/* 결과 화면 -> 다음 협력사 점검으로 (하루 2~3곳 동선의 정식 경로) */
+function finishAndNext(){
+  const done = Object.keys(S.ans).length;
+  if(!window.confirm('이 협력사 점검을 마치고 다음 협력사 점검을 시작합니다.\n\n'
+    + '\u25b6 ' + S.company.name + ' / 입력 ' + done + '개 / 사진 ' + S.photos.length + '장\n\n'
+    + '\u26a0 결과 파일([\ud83d\udcca 저장] 또는 [\ud83d\udda8\ufe0f 보고서])을 아직 받지 않았다면\n'
+    + '   먼저 저장해 주세요. (내용은 보관함에 남으므로 되살릴 수 있습니다)\n\n'
+    + '계속할까요?')) return;
+  doSave();
+  markDone('완료처리');
+  stashDraft();
+  _lastDoneCoId = S.company.id;
+  const keepDate = S.date, keepInsp = S.inspector, keepType = S.type;
+  S = {company:null, date:'', type:keepType, inspector:'', majIdx:0, ans:{}, photos:[]};
+  _photoQuotaWarned = false;
+  // 협력사만 비우고 점검일·점검자는 그대로 둔다 (같은 날 이어서 도는 경우가 대부분)
+  document.getElementById('sel-co').value = '';
+  document.getElementById('inp-date').value = keepDate;
+  document.getElementById('inp-insp').value = keepInsp;
+  showScreen('sc-info');
+  refreshRestoreBtn();
+  refreshDoneList();
+}
+
+let _photoQuotaWarned = false;
+function doSave(){
+  if(!S.company) return;   // 아직 시작 전이면 저장할 것이 없다
+  try{
+    const ok = slotWrite(DRAFT_KEY, {
       company: S.company, date: S.date, type: S.type, inspector: S.inspector,
       majIdx: S.majIdx, ans: S.ans, savedAt: new Date().toISOString(),
       photoCount: S.photos.length
-    }));
-    // 사진 dataUrl은 별도 키로 저장 (용량 한도 주의)
-    try{
-      localStorage.setItem(DRAFT_KEY + '_photos', JSON.stringify(S.photos));
-    }catch(e){ /* 용량 초과 시 사진만 제외 */ }
+    }, S.photos);
+    if(!ok && S.photos.length > 0 && !_photoQuotaWarned){
+      // 조용히 사진이 사라지면 나중에 원인을 알 수 없으므로 한 번은 알린다.
+      _photoQuotaWarned = true;
+      setTimeout(() => alert(
+        '\u26a0 저장 공간이 부족해 사진은 임시보관되지 않습니다.\n'
+        + '점검 항목과 비고는 정상 저장됩니다.\n\n'
+        + '앱을 껐다 켜면 사진이 사라질 수 있으니,\n'
+        + '지금 [결과 보기] 화면에서 [보고서 출력]으로 한 번 저장해 주세요.'), 100);
+    }
     showSaveInd();
   }catch(e){}
-}
-function clearDraft(){
-  localStorage.removeItem(DRAFT_KEY);
-  localStorage.removeItem(DRAFT_KEY + '_photos');
 }
 function showSaveInd(){
   let el = document.getElementById('save-ind');
   if(!el){ el = document.createElement('div'); el.id = 'save-ind'; el.className = 'save-ind'; document.body.appendChild(el); }
-  el.textContent = '💾 자동저장됨'; el.style.display = 'block';
+  el.textContent = '\ud83d\udcbe 자동저장됨'; el.style.display = 'block';
   clearTimeout(window._sit);
   window._sit = setTimeout(() => { el.style.display = 'none'; }, 1500);
 }
+
+/* 저장 시각을 "N분 전" 으로 */
+function agoTxt(iso){
+  const diff = Math.max(0, Math.floor((Date.now() - new Date(iso)) / 60000));
+  if(diff < 1)  return '방금 전';
+  if(diff < 60) return diff + '분 전';
+  return Math.floor(diff / 60) + '시간 ' + (diff % 60) + '분 전';
+}
+
+/* 저장 데이터를 화면/상태에 반영 */
+function applyDraft(d){
+  S.company   = d.company; S.date = d.date; S.type = d.type || '정기';
+  S.inspector = d.inspector || ''; S.majIdx = d.majIdx || 0; S.ans = d.ans || {};
+  S.photos    = d._photos || [];
+  const sel = document.getElementById('sel-co');
+  (CFG.companies || []).forEach((co, i) => { if(co.id === d.company.id) sel.value = i; });
+  document.getElementById('inp-date').value = d.date;
+  document.getElementById('inp-insp').value = d.inspector || '';
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('on', b.dataset.t === S.type));
+}
+
+/* 앱 시작 시 진행 중 작업이 있으면 이어하기 안내 */
 function checkDraft(){
-  try{
-    const raw = localStorage.getItem(DRAFT_KEY); if(!raw) return;
-    const d = JSON.parse(raw); if(!d.company || !d.date) return;
-    const diff = Math.floor((Date.now() - new Date(d.savedAt)) / 60000);
-    const ts   = diff < 60 ? diff + '분 전' : Math.floor(diff / 60) + '시간 ' + diff % 60 + '분 전';
-    const photoMsg = d.photoCount > 0 ? '\n사진: ' + d.photoCount + '장' : '';
-    const msg = '저장된 점검 작업이 있습니다.\n\n협력사: ' + d.company.name + '\n점검일: ' + d.date + '\n점검자: ' + (d.inspector || '-') + photoMsg + '\n저장: ' + ts + '\n\n이어서 작업하시겠습니까?';
-    if(window.confirm(msg)){
-      S.company   = d.company; S.date = d.date; S.type = d.type;
-      S.inspector = d.inspector; S.majIdx = d.majIdx || 0; S.ans = d.ans || {};
-      // 사진 복구
-      try{
-        const photoRaw = localStorage.getItem(DRAFT_KEY + '_photos');
-        S.photos = photoRaw ? JSON.parse(photoRaw) : [];
-      }catch(e){ S.photos = []; }
-      const sel = document.getElementById('sel-co');
-      CFG.companies.forEach((co, i) => { if(co.id === d.company.id) sel.value = i; });
-      document.getElementById('inp-date').value  = d.date;
-      document.getElementById('inp-insp').value  = d.inspector || '';
-      document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('on', b.dataset.t === d.type));
-      S.type = d.type;
-      if(window.confirm('기본정보 화면에서 시작할까요?\n(아니오: 점검 화면으로 바로 이동)')){
-        showScreen('sc-info');
-      } else {
-        buildTabs(); renderMaj(S.majIdx); showScreen('sc-check'); refreshPhotoUI();
-      }
-    } else {
-      if(window.confirm('저장된 작업을 삭제할까요?')) clearDraft();
-    }
-  }catch(e){ localStorage.removeItem(DRAFT_KEY); }
+  refreshRestoreBtn();
+  const d = slotRead(DRAFT_KEY);
+  if(!d) return;
+  const done = Object.keys(d.ans || {}).length;
+  document.getElementById('dr-info').innerHTML =
+    '<b>' + escHtml(d.company.name) + '</b><br>'
+    + '점검일 ' + escHtml(d.date) + ' \u00b7 ' + escHtml(d.type || '') + ' \u00b7 점검자 ' + escHtml(d.inspector || '-') + '<br>'
+    + '입력한 항목 <b>' + done + '개</b> \u00b7 사진 <b>' + (d._photos ? d._photos.length : 0) + '장</b><br>'
+    + '<span class="dr-ts">마지막 저장: ' + agoTxt(d.savedAt) + '</span>';
+  window._draft = d;
+  openModal('modal-draft');
+}
+function draftContinue(){
+  closeModal('modal-draft');
+  applyDraft(window._draft);
+  buildTabs(); renderMaj(S.majIdx); showScreen('sc-check'); refreshPhotoUI();
+}
+function draftInfo(){
+  closeModal('modal-draft');
+  applyDraft(window._draft);
+  showScreen('sc-info');
+}
+function draftLater(){ closeModal('modal-draft'); }   // 그대로 둔다 (다음에 켜도 또 뜬다)
+
+/* 보관함 버튼 (최근 BAK_MAX건 중에서 골라 되살린다) */
+function refreshRestoreBtn(){
+  const b = document.getElementById('btn-restore'); if(!b) return;
+  const list = bakList();
+  b.classList.toggle('hidden', list.length === 0);
+  if(list.length){
+    const t = list[0];
+    b.innerHTML = '\u21a9 저장된 이전 작업 ' + list.length + '건 \u2014 되살리기<br>'
+      + '<span style="font-weight:500;font-size:12.5px;">'
+      + '최근: ' + escHtml(t.companyName) + ' \u00b7 ' + escHtml(t.date)
+      + ' \u00b7 입력 ' + t.ansCount + '개 \u00b7 사진 ' + t.photoCount + '장</span>';
+  }
+}
+function restoreBak(){
+  const list = bakList();
+  if(!list.length){ alert('되살릴 작업이 없습니다.'); refreshRestoreBtn(); return; }
+  const body = document.getElementById('bak-body');
+  body.innerHTML = list.map(e =>
+      '<button class="bak-row" onclick="restorePick(\'' + e.id + '\')">'
+      + '<div class="bak-nm">' + escHtml(e.companyName) + '</div>'
+      + '<div class="bak-sub">' + escHtml(e.date) + ' \u00b7 ' + escHtml(e.type || '')
+      + ' \u00b7 점검자 ' + escHtml(e.inspector || '-') + '</div>'
+      + '<div class="bak-sub">입력 ' + e.ansCount + '개 \u00b7 사진 ' + e.photoCount + '장 \u00b7 '
+      + agoTxt(e.savedAt) + '</div></button>').join('');
+  openModal('modal-bak');
+}
+function restorePick(id){
+  const e = bakList().find(x => x.id === id);
+  if(!e){ closeModal('modal-bak'); return; }
+  // 진행 중인 작업이 있으면 그것도 보관함에 넣고 바꾼다 (덮어쓰지 않는다)
+  if(S.company && (Object.keys(S.ans).length > 0 || S.photos.length > 0)){ doSave(); stashDraft(); }
+  closeModal('modal-bak');
+  const co = (CFG.companies || []).find(c => c.id === e.companyId) || {id: e.companyId, name: e.companyName};
+  applyDraft({ company: co, date: e.date, type: e.type, inspector: e.inspector,
+               majIdx: e.majIdx, ans: e.ans, _photos: bakPhotos(e.id) });
+  buildTabs(); renderMaj(S.majIdx); showScreen('sc-check'); refreshPhotoUI();
+  doSave();
 }
 
 /* ════════════════════════════════════════════════════════
@@ -1597,6 +1888,44 @@ document.getElementById('modal-exp').addEventListener('click', function(e){
 /* ════════════════════════════════════════════════════════
    유틸
 ════════════════════════════════════════════════════════ */
+/* 안드로이드 하드웨어 뒤로가기 / 브라우저 뒤로가기로 앱이 통째로 닫히는 것을 막는다.
+   히스토리에 항상 한 칸을 남겨두고, 뒤로가기를 앱 안쪽 이동으로 바꿔 처리한다. */
+function initBackGuard(){
+  try{ history.pushState({app:1}, ''); }catch(e){ return; }
+  window.addEventListener('popstate', () => {
+    try{ history.pushState({app:1}, ''); }catch(e){}
+    // 1순위: 열려 있는 모달부터 닫는다
+    const open = document.querySelector('.overlay:not(.hidden)');
+    if(open){ open.classList.add('hidden'); return; }
+    const rp = document.getElementById('report-overlay');
+    if(rp && !rp.classList.contains('hidden')){ rp.classList.add('hidden'); return; }
+    // 2순위: 결과 화면 -> 점검 화면
+    if(!document.getElementById('sc-result').classList.contains('hidden')){
+      showScreen('sc-check'); return;
+    }
+    // 3순위: 점검 화면 -> 확인 후 처음으로
+    if(!document.getElementById('sc-check').classList.contains('hidden')){
+      goBack(); return;
+    }
+  });
+}
+
+/* 화면이 가려지거나(홈 버튼·전화 수신·앱 전환) 닫히기 직전에 한 번 더 저장한다. */
+let _allowLeave = false;
+function initExitGuard(){
+  document.addEventListener('visibilitychange', () => {
+    if(document.visibilityState === 'hidden') doSave();
+  });
+  window.addEventListener('pagehide', () => { doSave(); });
+  window.addEventListener('beforeunload', (e) => {
+    doSave();
+    if(!_allowLeave && S.company && (Object.keys(S.ans).length > 0 || S.photos.length > 0)){
+      e.preventDefault(); e.returnValue = '';   // 브라우저 기본 종료 확인창
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', () => { initBackGuard(); initExitGuard(); });
+
 function today(){ return new Date().toISOString().slice(0, 10); }
 function isKakao(){ const ua = navigator.userAgent.toLowerCase(); return ua.includes('kakaotalk') || ua.includes('kakao'); }
 function showKakaoBanner(){
