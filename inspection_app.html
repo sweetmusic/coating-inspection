@@ -302,6 +302,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 .rp-bar-title{flex:1;min-width:0;color:#fff;font-size:11.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .rp-btn{padding:9px 12px;border:none;border-radius:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0;}
 .rp-btn-print{background:var(--accent2);color:var(--navy);}
+.rp-btn-html{background:#1e6b34;color:#fff;}
 .rp-btn-close{background:#f0f4f8;color:var(--text);}
 #report-view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#fff;color:#1a2a3a;font-size:11.5px;line-height:1.45;user-select:text;padding-bottom:40px;}
 
@@ -332,7 +333,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 #report-view table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed;}
 #report-view th{background:#0f2744;color:#fff;padding:4px 6px;text-align:left;font-weight:600;font-size:9.5px;}
 #report-view td{padding:4px 6px;border-bottom:1px solid #e6ecf2;vertical-align:top;word-break:break-word;line-height:1.4;}
-#report-view tbody tr:nth-child(even) td{background:#f8fafc;}
+#report-view tbody tr:nth-child(even) td:not(.rp-edit){background:#f8fafc;}
 #report-view .rp-num{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;}
 #report-view .rp-dim{color:#5a7a9a;}
 #report-view .rp-item-name{display:block;color:#9aa8b4;font-size:9px;margin-top:1px;}
@@ -356,17 +357,26 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 #report-view .rp-photo-no{font-family:"JetBrains Mono",monospace;color:#9aa8b4;}
 #report-view .rp-photo-cap{flex:1 1 100%;color:#1a2a3a;line-height:1.35;}
 
-/* 전체 점검항목 (부록) — 번호+점수만 압축 표기 */
-#report-view .rp-legend{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 7px;}
-#report-view .rp-legend-txt{font-size:9.5px;color:#7b8fa4;}
-#report-view .rp-chip-group{display:flex;gap:8px;align-items:baseline;margin-bottom:5px;break-inside:avoid;}
-#report-view .rp-chip-head{flex:0 0 108px;font-size:9.5px;font-weight:700;color:#0f2744;line-height:1.5;}
-#report-view .rp-chips{flex:1;display:flex;flex-wrap:wrap;gap:3px;}
-#report-view .rp-chip{display:inline-flex;align-items:center;gap:3px;border-radius:3px;padding:1px 4px;font-size:8.5px;font-family:"JetBrains Mono",monospace;border:1px solid transparent;white-space:nowrap;}
-#report-view .rp-chip b{font-weight:700;}
-#report-view .rp-c-ok{background:#f2f7f4;color:#4a6b58;border-color:#dce8e1;}
-#report-view .rp-c-ng{background:#fdecea;color:#c0392b;border-color:#f3c9c3;font-weight:700;}
-#report-view .rp-c-miss{background:#fef9e7;color:#9a6b12;border-color:#f0e0b8;}
+/* 전체 점검 체크시트 — 전 항목의 평가기준을 그대로 싣는다 */
+#report-view .rp-legend-txt{font-size:9.5px;color:#7b8fa4;margin:0 0 6px;line-height:1.5;}
+#report-view .rp-cs td{vertical-align:top;}
+#report-view .rp-cs-maj td{background:#0f2744!important;color:#fff;font-weight:700;font-size:9.5px;padding:3px 6px;}
+#report-view .rp-cs-maj .rp-num{color:#f5c842;}
+#report-view .rp-cs-item td{background:#eef3f8!important;color:#2c5282;font-weight:700;font-size:9px;padding:3px 6px;}
+#report-view .rp-opts{list-style:none;margin:0;padding:0;}
+#report-view .rp-opts li{display:flex;gap:4px;align-items:baseline;color:#7b8fa4;line-height:1.45;}
+#report-view .rp-opts li.on{color:#1a2a3a;font-weight:700;}
+#report-view .rp-mark{font-size:8.5px;flex:0 0 auto;color:#b6c3d0;}
+#report-view .rp-opts li.on .rp-mark{color:#0f2744;}
+#report-view .rp-osc{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:8.5px;color:#9aa8b4;}
+#report-view .rp-cs-ng td:not(.rp-edit){background:#fdf3f2!important;}
+#report-view .rp-cs-ng .rp-num{color:#c0392b;font-weight:700;}
+#report-view .rp-cs-miss td:not(.rp-edit){background:#fefaef!important;}
+#report-view .rp-cs-miss .rp-num{color:#9a6b12;font-weight:700;}
+/* 편집 가능한 칸 (앱 화면·내보낸 HTML 공통) */
+#report-view .rp-edit{background:#fffdf5!important;outline:1px dashed #d8c48a;outline-offset:-2px;min-height:14px;cursor:text;}
+#report-view .rp-edit:focus{background:#fff8e0!important;outline:1.5px solid #e8a020;}
+#report-view .rp-edit:empty::before{content:attr(data-ph);color:#c3ccd6;font-style:italic;}
 
 #report-view .rp-footer{margin-top:16px;font-size:9px;color:#9aa8b4;text-align:center;border-top:1px solid #e2e8f0;padding-top:8px;}
 
@@ -386,6 +396,8 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   #report-view thead{display:table-header-group;}
   #report-view tr{break-inside:avoid;}
   #report-view .rp-photo img{height:88px;}
+  #report-view .rp-edit{background:transparent!important;outline:none!important;}
+  #report-view .rp-edit:empty::before{content:""!important;}
   #report-view .rp-sum-num{font-size:30px;}
   body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 }
@@ -608,7 +620,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 /* ════════════════════════════════════════════════════════
    설정
 ════════════════════════════════════════════════════════ */
-const APP_BUILD = 'b10';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
+const APP_BUILD = 'b11';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
 const GH_URL  = 'https://sweetmusic.github.io/coating-inspection/app_config.json';
 const CFG_KEY = 'app_config';
 const DRAFT_KEY = 'inspection_draft';
@@ -1393,25 +1405,37 @@ function buildReportView(){
     return {name: maj.id + '. ' + maj.name, score: g, max: m, pct: m > 0 ? Math.round(g/m*100) : 0};
   });
 
-  // 전체 점검항목 (부록) — 평가내용 전문은 지적사항에 있으므로 번호·점수만 압축 표기
-  let missCount = 0;
-  const chipGroups = CFG.checklist.map(maj => {
-    const chips = [];
-    maj.items.forEach(it => it.subs.forEach(s => {
-      if(s.id === '1-1-1' && S.type === '정기') return;
-      const a = S.ans[s.id];
-      const mxSc = Math.max(...s.options.map(o => o.score));
-      const answered = a && a.optionIdx >= 0;
-      if(!answered) missCount++;
-      chips.push({
-        id: s.id,
-        score: answered ? a.score : 0,
-        maxSc: mxSc,
-        cls: !answered ? 'rp-c-miss' : (a.score < mxSc ? 'rp-c-ng' : 'rp-c-ok')
+  // 전체 점검 체크시트 — 모든 항목의 평가기준을 그대로 싣는다.
+  // 협력사가 "어떤 기준으로 몇 점인지"를 보고서만으로 검증할 수 있어야 하므로
+  // 선택지를 전부 펼치고 점검자가 고른 것에 ● 를 표시한다.
+  let missCount = 0, subTotal = 0;
+  const sheetGroups = CFG.checklist.map(maj => {
+    let mg = 0, mm = 0;
+    const items = [];
+    maj.items.forEach(it => {
+      const rows = [];
+      it.subs.forEach(sub => {
+        if(sub.id === '1-1-1' && S.type === '정기') return;
+        const a = S.ans[sub.id];
+        const mxSc = Math.max(...sub.options.map(o => o.score));
+        const answered = a && a.optionIdx >= 0;
+        if(!answered) missCount++;
+        subTotal++;
+        mm += mxSc; mg += answered ? a.score : 0;
+        rows.push({
+          id: sub.id, maxSc: mxSc,
+          score: answered ? a.score : null,
+          memo: a && a.memo ? a.memo : '',
+          cls: !answered ? 'rp-cs-miss' : (a.score < mxSc ? 'rp-cs-ng' : ''),
+          options: sub.options.map((o, oi) => ({
+            text: o.text, score: o.score, on: answered && oi === a.optionIdx
+          }))
+        });
       });
-    }));
-    return {name: maj.id + '. ' + maj.name, chips};
-  }).filter(g => g.chips.length > 0);
+      if(rows.length) items.push({name: it.name, rows});
+    });
+    return {name: maj.id + '. ' + maj.name, items, got: mg, max: mm};
+  }).filter(g => g.items.length > 0);
 
   // 지적항목 → 연결된 사진 번호 (지적사항 표에서 "사진 3" 처럼 참조)
   const photoRefs = {};
@@ -1429,7 +1453,7 @@ function buildReportView(){
              <figcaption>
                <span class="rp-photo-no">사진 ${i+1}</span>
                ${p.linkId ? `<span class="rp-tag">${esc(p.linkId)}</span>` : ''}
-               ${p.caption ? `<span class="rp-photo-cap">${esc(p.caption)}</span>` : ''}
+               <span class="rp-photo-cap rp-edit" contenteditable="true" data-photo="${i}" data-ph="사진 설명 입력">${esc(p.caption || '')}</span>
              </figcaption>
            </figure>`).join('')}
        </div>` : '';
@@ -1476,7 +1500,7 @@ function buildReportView(){
       <th style="width:92px;">대분류</th>
       <th style="width:46px;">감점</th>
       <th style="width:52px;">사진</th>
-      <th style="width:18%;">조치 계획 / 비고</th>
+      <th style="width:20%;">점검자 코멘트 · 조치 계획</th>
     </tr></thead>
     <tbody>
       ${ngList.map(n => `
@@ -1486,7 +1510,7 @@ function buildReportView(){
           <td class="rp-dim">${esc(n.major)}</td>
           <td class="rp-ng rp-num">−${n.loss}</td>
           <td class="rp-dim rp-num">${photoRefs[n.id] ? photoRefs[n.id].join(', ') : ''}</td>
-          <td class="rp-dim">${esc(n.memo || '')}</td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="${esc(n.id)}" data-ph="조치 계획 입력">${esc(n.memo || '')}</td>
         </tr>`).join('')}
     </tbody>
   </table>
@@ -1509,23 +1533,51 @@ function buildReportView(){
     </tbody>
   </table>
 
-  ${photosHtml}
-
-  <h2>전체 점검항목 <span class="rp-count">${chipGroups.reduce((a,g)=>a+g.chips.length,0)}항목</span></h2>
-  <p class="rp-legend">
-    <span class="rp-chip rp-c-ok">만점</span>
-    <span class="rp-chip rp-c-ng">감점</span>
-    ${missCount ? '<span class="rp-chip rp-c-miss">미입력</span>' : ''}
-    <span class="rp-legend-txt">감점 항목의 상세 내용은 위 &lsquo;조치 요구 사항&rsquo;을 참고해 주십시오.</span>
+  <h2>전체 점검 체크시트 <span class="rp-count">${subTotal}항목</span></h2>
+  <p class="rp-legend-txt">
+    각 항목의 평가기준을 모두 실었으며, <b>&#9679;</b> 표시가 금회 점검에서 확인된 상태입니다.
+    감점 항목은 붉은 바탕${missCount ? ', 미입력 항목은 노란 바탕' : ''}으로 표시했습니다.
+    비고는 점검자 코멘트입니다.
   </p>
-  ${chipGroups.map(g => `
-    <div class="rp-chip-group">
-      <div class="rp-chip-head">${esc(g.name)}</div>
-      <div class="rp-chips">
-        ${g.chips.map(c => `
-          <span class="rp-chip ${c.cls}"><b>${esc(c.id)}</b>${c.score}/${c.maxSc}</span>`).join('')}
-      </div>
-    </div>`).join('')}
+  <table class="rp-cs">
+    <thead><tr>
+      <th style="width:54px;">번호</th>
+      <th>점검항목 / 평가기준</th>
+      <th style="width:38px;">배점</th>
+      <th style="width:38px;">획득</th>
+      <th style="width:22%;">비고</th>
+    </tr></thead>
+    <tbody>
+      ${sheetGroups.map(g => `
+        <tr class="rp-cs-maj">
+          <td colspan="2">${esc(g.name)}</td>
+          <td class="rp-num">${g.max}</td>
+          <td class="rp-num">${g.got}</td>
+          <td></td>
+        </tr>
+        ${g.items.map(it => `
+          <tr class="rp-cs-item"><td colspan="5">${esc(it.name)}</td></tr>
+          ${it.rows.map(r => `
+            <tr class="${r.cls}">
+              <td><span class="rp-tag">${esc(r.id)}</span></td>
+              <td>
+                <ul class="rp-opts">
+                  ${r.options.map(o => `
+                    <li class="${o.on ? 'on' : ''}">
+                      <span class="rp-mark">${o.on ? '&#9679;' : '&#9675;'}</span>
+                      <span>${esc(o.text)}</span>
+                      <span class="rp-osc">${o.score}점</span>
+                    </li>`).join('')}
+                </ul>
+              </td>
+              <td class="rp-num">${r.maxSc}</td>
+              <td class="rp-num">${r.score === null ? '&ndash;' : r.score}</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="${esc(r.id)}" data-ph="코멘트 입력">${esc(r.memo)}</td>
+            </tr>`).join('')}`).join('')}`).join('')}
+    </tbody>
+  </table>
+
+  ${photosHtml}
 
   <div class="rp-footer">
     삼성중공업㈜ 품질보증팀 도장QM · 점검자 ${esc(S.inspector)} · 생성 ${new Date().toLocaleString('ko-KR')} · 앱 ${APP_BUILD}
@@ -1549,6 +1601,7 @@ function showReportOverlay(html, title){
     ov.innerHTML =
       '<div class="rp-bar">'
       + '<span class="rp-bar-title" id="rp-title"></span>'
+      + '<button class="rp-btn rp-btn-html" id="rp-html">📤 HTML</button>'
       + '<button class="rp-btn rp-btn-print" id="rp-print">🖨️ 인쇄/PDF</button>'
       + '<button class="rp-btn rp-btn-close" id="rp-close">✕ 닫기</button>'
       + '</div>'
@@ -1556,12 +1609,137 @@ function showReportOverlay(html, title){
     document.body.appendChild(ov);
     document.getElementById('rp-close').onclick = () => { ov.classList.add('hidden'); };
     document.getElementById('rp-print').onclick = () => { window.print(); };
+    document.getElementById('rp-html').onclick = () => { exportReportHtml(); };
+
+    // 보고서 화면에서 고친 코멘트·사진설명을 앱 데이터에도 반영한다.
+    // (반영하지 않으면 타이핑한 내용이 화면을 닫는 순간 사라진다)
+    const view = document.getElementById('report-view');
+    view.addEventListener('focusout', e => {
+      const el = e.target;
+      if(!el.classList || !el.classList.contains('rp-edit')) return;
+      const txt = el.textContent.trim();
+      if(el.dataset.sub){
+        ensureAns(el.dataset.sub);
+        S.ans[el.dataset.sub].memo = txt;
+        // 같은 항목이 조치요구사항 표와 체크시트 양쪽에 있으므로 함께 맞춘다
+        view.querySelectorAll('.rp-edit[data-sub="' + el.dataset.sub + '"]').forEach(o => {
+          if(o !== el) o.textContent = txt;
+        });
+      }else if(el.dataset.photo !== undefined){
+        const pi = parseInt(el.dataset.photo);
+        if(S.photos[pi]) S.photos[pi].caption = txt;
+      }else return;
+      doSave();
+    });
   }
   document.getElementById('rp-title').textContent = title || '점검보고서';
   const view = document.getElementById('report-view');
   view.innerHTML = html;
   view.scrollTop = 0;
   ov.classList.remove('hidden');
+}
+
+/* ════════════════════════════════════════════════════════
+   보고서를 "고칠 수 있는" HTML 파일로 내보내기
+
+   PDF 는 한 번 뽑으면 문구 하나 고치려 해도 방법이 없다.
+   그렇다고 원본 HTML 을 메모장으로 고치라고 하면 태그를 알아야 하고,
+   사진이 base64 로 들어가 파일이 수 MB 라 실질적으로 불가능하다.
+   그래서 "열면 그 자리에서 고쳐지는" HTML 을 내보낸다.
+   PC 크롬에서 열어 노란 칸을 클릭해 타이핑하고 [수정본 저장] 을 누르면
+   고친 내용이 반영된 HTML 이 새로 저장된다. 인쇄/PDF 도 그 화면에서 한다.
+════════════════════════════════════════════════════════ */
+/* 페이지 스타일시트에서 보고서에 필요한 규칙만 골라 복사한다.
+   (내보낸 파일이 앱 없이 혼자서도 똑같이 보여야 한다) */
+function collectReportCss(){
+  const out = [];
+  for(const sheet of document.styleSheets){
+    let rules;
+    try{ rules = sheet.cssRules; }catch(e){ continue; }   // 외부 폰트 CSS 등
+    if(!rules) continue;
+    for(const r of rules){
+      if(r.type === CSSRule.STYLE_RULE){
+        if(/#report-view|\.rp-|#report-overlay/.test(r.selectorText)) out.push(r.cssText);
+      }else if(r.type === CSSRule.MEDIA_RULE && /print/.test(r.conditionText || r.media.mediaText)){
+        out.push(r.cssText);
+      }else if(r.type === CSSRule.PAGE_RULE){
+        out.push(r.cssText);
+      }
+    }
+  }
+  return out.join('\n');
+}
+
+function exportReportHtml(){
+  const view = document.getElementById('report-view');
+  if(!view || !view.innerHTML.trim()){ alert('먼저 보고서를 열어 주세요.'); return; }
+  try{
+    const title = '점검보고서_' + S.company.name + '_' + S.date + '_' + S.type;
+    const css   = collectReportCss();
+
+    // 내보낸 파일 안에서 동작할 스크립트. 앱과 무관하게 혼자 돌아간다.
+    const inner = [
+      "var BAR=document.getElementById('xbar');",
+      "document.getElementById('xprint').onclick=function(){window.print();};",
+      "document.getElementById('xsave').onclick=function(){",
+      "  var clone=document.documentElement.cloneNode(true);",
+      // 저장 직전 현재 화면의 편집 내용을 복제본에 반영
+      "  var src=document.querySelectorAll('.rp-edit'), dst=clone.querySelectorAll('.rp-edit');",
+      "  for(var i=0;i<src.length;i++){ dst[i].textContent=src[i].textContent; }",
+      "  var html='<!DOCTYPE html>'+String.fromCharCode(10)+clone.outerHTML;",
+      "  var blob=new Blob([html],{type:'text/html;charset=utf-8'});",
+      "  var a=document.createElement('a');",
+      "  a.href=URL.createObjectURL(blob);",
+      "  a.download=document.title.replace(/[\\/:*?\"<>|]/g,'_')+'.html';",
+      "  document.body.appendChild(a); a.click();",
+      "  setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},1500);",
+      "  var m=document.getElementById('xmsg');",
+      "  m.style.display='inline'; setTimeout(function(){m.style.display='none';},2500);",
+      "};"
+    ].join('\n');
+
+    const doc =
+'<html lang="ko"><head><meta charset="UTF-8">'
++ '<meta name="viewport" content="width=device-width, initial-scale=1">'
++ '<title>' + esc(title) + '</title>'
++ '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">'
++ '<style>\n'
++ 'body{margin:0;background:#fff;font-family:"Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif;}\n'
++ '#report-view{max-width:840px;margin:0 auto;background:#fff;color:#1a2a3a;font-size:11.5px;line-height:1.45;}\n'
++ '#xbar{position:sticky;top:0;z-index:9;display:flex;gap:8px;align-items:center;'
++ 'padding:10px 14px;background:#0f2744;color:#fff;font-size:12px;}\n'
++ '#xbar .xt{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}\n'
++ '#xbar button{padding:8px 13px;border:none;border-radius:8px;font-size:12.5px;font-weight:700;'
++ 'font-family:inherit;cursor:pointer;}\n'
++ '#xsave{background:#1e6b34;color:#fff;} #xprint{background:#f5c842;color:#0f2744;}\n'
++ '#xmsg{display:none;color:#f5c842;font-size:11.5px;font-weight:700;}\n'
++ '#xhelp{background:#fffdf5;border-bottom:1px solid #e8dcb8;color:#7a5200;'
++ 'font-size:11.5px;padding:9px 14px;line-height:1.6;}\n'
++ '#xhelp b{color:#5a3d00;}\n'
++ css + '\n'
++ '@media print{#xbar,#xhelp{display:none!important;} #report-view{max-width:none;}}\n'
++ '</style></head><body>'
++ '<div id="xbar"><span class="xt">' + esc(title) + '</span>'
++ '<span id="xmsg">저장했습니다</span>'
++ '<button id="xsave">\ud83d\udcbe 수정본 저장</button>'
++ '<button id="xprint">\ud83d\udda8\ufe0f 인쇄/PDF</button></div>'
++ '<div id="xhelp">노란색 칸(<b>비고 · 조치 계획 · 사진 설명</b>)은 <b>클릭해서 바로 고칠 수 있습니다.</b> '
++ '다 고친 뒤 <b>[\ud83d\udcbe 수정본 저장]</b>을 누르면 고친 내용이 담긴 HTML 파일이 새로 저장됩니다. '
++ 'PDF가 필요하면 <b>[\ud83d\udda8\ufe0f 인쇄/PDF]</b>를 누르세요.</div>'
++ '<div id="report-view">' + view.innerHTML + '</div>'
++ '<script>' + inner + '<\/script></body></html>';
+
+    const blob = new Blob(['<!DOCTYPE html>\n' + doc], {type: 'text/html;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = title.replace(/[\/:*?"<>|]/g, '_') + '.html';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    markDone('HTML');
+    showInfoInd('\ud83d\udce4 HTML 보고서를 저장했습니다');
+  }catch(e){
+    alert('HTML 내보내기 중 오류가 발생했습니다.\n\n' + ((e && e.message) ? e.message : e));
+  }
 }
 
 /* ════════════════════════════════════════════════════════
