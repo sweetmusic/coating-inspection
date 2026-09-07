@@ -380,7 +380,10 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 
 #report-view .rp-footer{margin-top:16px;font-size:9px;color:#9aa8b4;text-align:center;border-top:1px solid #e2e8f0;padding-top:8px;}
 
-@page{size:A4;margin:11mm 10mm;}
+/* 브라우저가 페이지 여백에 자동으로 찍는 머리글/바닥글(문서 제목·날짜·페이지 URL)을
+   없애려면 용지 여백이 0이어야 한다. 그래서 여백은 @page 가 아니라
+   #report-view 의 padding 으로 만든다. */
+@page{size:A4;margin:0;}
 @media print{
   html,body{height:auto!important;overflow:visible!important;}
   #app{display:none!important;}
@@ -388,7 +391,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   #report-overlay{position:static!important;display:block!important;}
   #report-overlay.hidden{display:none!important;}
   .rp-bar{display:none!important;}
-  #report-view{overflow:visible!important;height:auto!important;padding-bottom:0!important;font-size:9.5px;}
+  #report-view{overflow:visible!important;height:auto!important;padding:12mm 10mm!important;font-size:9.5px;}
   #report-view .rp-main{padding:0;}
   #report-view .rp-cover{margin-bottom:2px;}
   #report-view h2{margin:11px 0 5px;break-after:avoid;}
@@ -620,7 +623,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 /* ════════════════════════════════════════════════════════
    설정
 ════════════════════════════════════════════════════════ */
-const APP_BUILD = 'b11';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
+const APP_BUILD = 'b12';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
 const GH_URL  = 'https://sweetmusic.github.io/coating-inspection/app_config.json';
 const CFG_KEY = 'app_config';
 const DRAFT_KEY = 'inspection_draft';
@@ -638,8 +641,21 @@ let _lastDoneCoId = null;   // 방금 마친 협력사 (협력사 변경을 잊�
 let S = {
   company: null, date: '', type: '정기', inspector: '',
   majIdx: 0, ans: {},
-  photos: []   // ← 신규: [{dataUrl, name}]
+  photos: [],  // ← 신규: [{dataUrl, name}]
+  replyDue: '' // 조치 회신 기한. 비어 있으면 '점검일 + reply_days' 로 자동 계산한다.
 };
+
+/* 조치 회신 기한 (YYYY-MM-DD).
+   기본값은 점검일 + 설정파일의 meta.reply_days(없으면 7일)이며,
+   결과 화면에서 직접 고치면 S.replyDue 에 담겨 보고서·메일·엑셀에 그대로 쓰인다. */
+function replyDefault(){
+  if(!S.date) return '';
+  const rd = new Date(S.date);
+  rd.setDate(rd.getDate() + (CFG?.meta?.reply_days || 7));
+  return rd.toISOString().slice(0, 10);
+}
+function replyDue(){ return S.replyDue || replyDefault(); }
+function replyDays(){ return CFG?.meta?.reply_days || 7; }
 
 /* ════════════════════════════════════════════════════════
    초기화
@@ -822,6 +838,7 @@ function startCheck(){
   }
   S.company  = co;
   S.date     = dt;
+  S.replyDue = '';
   S.inspector = insp;
   S.majIdx   = 0;
   S.ans      = {};
@@ -841,7 +858,7 @@ function goBack(){
     doSave();   // 마지막 상태까지 반영한 뒤 보관
   }
   stashDraft();
-  S = {company:null, date:'', type:'정기', inspector:'', majIdx:0, ans:{}, photos:[]};
+  S = {company:null, date:'', type:'정기', inspector:'', majIdx:0, ans:{}, photos:[], replyDue:''};
   showScreen('sc-info');
   refreshRestoreBtn();
 }
@@ -1157,9 +1174,7 @@ function buildResult(){
   const body = document.getElementById('res-body'); body.innerHTML = '';
   const cur = curScore(), mx = maxScore(), norm = normScore();
   const ngCnt = countNg();
-  const rd = new Date(S.date);
-  rd.setDate(rd.getDate() + (CFG.meta?.reply_days || 7));
-  const rdStr = rd.toISOString().slice(0, 10).replace(/-/g, '.');
+  const rdStr = replyDue().replace(/-/g, '.');
   document.getElementById('res-date').textContent = S.date.replace(/-/g, '.');
   // 등급은 연간 점검 이력·품질 문제를 종합해 연말에 별도 결정되므로 여기서는 표시하지 않는다
   const hero = document.createElement('div'); hero.className = 'result-hero';
@@ -1169,8 +1184,12 @@ function buildResult(){
     + '<div class="r-raw">/ 100점 (원점수 ' + cur + '/' + mx + '점)</div>'
     + '<div class="r-badge ' + (ngCnt > 0 ? 'g-C' : 'g-A') + '">'
     + (ngCnt > 0 ? '지적사항 ' + ngCnt + '건' : '지적사항 없음') + '</div>'
-    + '<div class="r-note">' + (ngCnt > 0 ? '조치 회신 기한 ' + rdStr : '금회 점검 지적사항 없음') + '</div>';
+    + '<div class="r-note">' + (ngCnt > 0 ? '조치 회신 기한 <span id="r-reply-txt">' + rdStr + '</span>' : '금회 점검 지적사항 없음') + '</div>';
   body.appendChild(hero);
+
+  // 조치 회신 기한 — 자동 계산값을 그대로 쓰거나, 여기서 직접 고칠 수 있다.
+  // (지적사항이 없으면 회신받을 것이 없으므로 표시하지 않는다)
+  if(ngCnt > 0) body.appendChild(buildReplyBox());
 
   // 사진 카운트 요약
   if(S.photos.length > 0){
@@ -1370,15 +1389,48 @@ function doHtmlReport(){
   }
 }
 
+/* 결과 화면의 '조치 회신 기한' 편집 상자.
+   여기서 고친 날짜가 보고서·메일·엑셀에 그대로 들어간다. */
+function buildReplyBox(){
+  const box = document.createElement('div');
+  box.style.cssText = 'margin:12px 12px 0;padding:12px 14px;background:var(--mid-bg);border:1px solid var(--border);border-radius:var(--r);';
+  box.innerHTML =
+    '<div style="font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:8px;">📅 조치 회신 기한</div>'
+    + '<div style="display:flex;gap:8px;align-items:center;">'
+    + '<input type="date" id="inp-reply" class="fld-input" style="flex:1;margin:0;" value="' + replyDue() + '">'
+    + '<button type="button" id="btn-reply-reset" class="btn btn-gray" style="flex:0 0 auto;padding:10px 12px;font-size:12px;">기본값</button>'
+    + '</div>'
+    + '<div id="reply-hint" style="margin-top:7px;font-size:11.5px;line-height:1.5;color:var(--dim,#7a8794);"></div>';
+  bindReplyBox(box);
+  return box;
+}
+function bindReplyBox(box){
+  const inp  = box.querySelector('#inp-reply');
+  const btn  = box.querySelector('#btn-reply-reset');
+  const hint = box.querySelector('#reply-hint');
+  const paint = () => {
+    hint.innerHTML = S.replyDue
+      ? '직접 지정한 날짜입니다. (자동 계산값: ' + replyDefault().replace(/-/g, '.') + ')'
+      : '자동 계산: 점검일 ' + (S.date || '').replace(/-/g, '.') + ' + ' + replyDays() + '일';
+    const txt = document.getElementById('r-reply-txt');
+    if(txt) txt.textContent = replyDue().replace(/-/g, '.');
+  };
+  inp.onchange = () => {
+    S.replyDue = (inp.value && inp.value !== replyDefault()) ? inp.value : '';
+    inp.value = replyDue();
+    paint(); doSave();
+  };
+  btn.onclick = () => { S.replyDue = ''; inp.value = replyDue(); paint(); doSave(); };
+  paint();
+}
+
 function buildReportView(){
   const cur = curScore(), mx = maxScore(), norm = normScore();
   const coNm = S.company.name;
   const dateStr = S.date;
 
-  // 조치 회신 기한
-  const rd = new Date(S.date);
-  rd.setDate(rd.getDate() + (CFG.meta?.reply_days || 7));
-  const replyStr = rd.toISOString().slice(0, 10);
+  // 조치 회신 기한 (결과 화면에서 직접 고친 값이 있으면 그 값)
+  const replyStr = replyDue();
 
   // 지적사항 (조치가 필요한 항목) — 보고서의 핵심
   const ngList = [];
@@ -1748,8 +1800,7 @@ function exportReportHtml(){
 function doMail(){
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const insp = S.inspector;
-  const rd = new Date(S.date); rd.setDate(rd.getDate() + (CFG.meta?.reply_days || 7));
-  const rdStr = rd.toISOString().slice(0, 10).replace(/-/g, '.');
+  const rdStr = replyDue().replace(/-/g, '.');
   const ngLines = [];
   CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
     if(s.id === '1-1-1' && S.type === '정기') return;
@@ -1931,7 +1982,7 @@ function finishAndNext(){
   stashDraft();
   _lastDoneCoId = S.company.id;
   const keepDate = S.date, keepInsp = S.inspector, keepType = S.type;
-  S = {company:null, date:'', type:keepType, inspector:'', majIdx:0, ans:{}, photos:[]};
+  S = {company:null, date:'', type:keepType, inspector:'', majIdx:0, ans:{}, photos:[], replyDue:''};
   _photoQuotaWarned = false;
   // 협력사만 비우고 점검일·점검자는 그대로 둔다 (같은 날 이어서 도는 경우가 대부분)
   document.getElementById('sel-co').value = '';
@@ -1948,6 +1999,7 @@ function doSave(){
   try{
     const ok = slotWrite(DRAFT_KEY, {
       company: S.company, date: S.date, type: S.type, inspector: S.inspector,
+      replyDue: S.replyDue,
       majIdx: S.majIdx, ans: S.ans, savedAt: new Date().toISOString(),
       photoCount: S.photos.length
     }, S.photos);
@@ -1983,6 +2035,7 @@ function agoTxt(iso){
 function applyDraft(d){
   S.company   = d.company; S.date = d.date; S.type = d.type || '정기';
   S.inspector = d.inspector || ''; S.majIdx = d.majIdx || 0; S.ans = d.ans || {};
+  S.replyDue  = d.replyDue || '';
   S.photos    = d._photos || [];
   const sel = document.getElementById('sel-co');
   (CFG.companies || []).forEach((co, i) => { if(co.id === d.company.id) sel.value = i; });
