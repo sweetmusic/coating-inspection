@@ -6,11 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0f2744">
-<meta name="apple-mobile-web-app-title" content="도장점검">
 <title>도장 품질점검</title>
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════
@@ -86,21 +82,6 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 /* 정보입력 화면 */
 #sc-info{display:flex;flex-direction:column;height:100%;}
 .info-body{flex:1;overflow-y:auto;padding:20px 16px 100px;}
-.btn-restore{width:100%;margin-bottom:18px;padding:13px 14px;border-radius:10px;border:1.5px solid #f0b429;background:#fff8e6;color:#7a5200;font-size:13.5px;font-weight:700;text-align:left;line-height:1.5;cursor:pointer;}
-.dr-ts{color:var(--text2);font-size:12px;}
-.done-box{background:#eaf6ec;border:1.5px solid #7cb98a;border-radius:10px;padding:11px 13px;margin-bottom:12px;}
-.done-hd{font-size:12.5px;font-weight:700;color:#1e6b34;margin-bottom:6px;}
-.done-row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--navy);padding:2px 0;}
-.done-nm{font-weight:600;}
-.done-how{font-size:11.5px;color:#1e6b34;background:#d6ecdb;border-radius:9px;padding:1px 8px;white-space:nowrap;}
-.bak-list{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow-y:auto;}
-.bak-row{width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 13px;cursor:pointer;}
-.bak-nm{font-size:14px;font-weight:700;color:var(--navy);}
-.bak-sub{font-size:12px;color:var(--text2);line-height:1.55;}
-.btm-col{flex-direction:column;gap:7px;}
-.btm-row{display:flex;gap:6px;}
-.btn-next-co{width:100%;background:#1e6b34;color:#fff;font-size:14.5px;}
-.dr-info{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.75;color:var(--navy);margin-bottom:14px;}
 .fld{margin-bottom:18px;}
 .fld-label{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.04em;margin-bottom:7px;display:flex;align-items:center;gap:4px;}
 .req{color:var(--ng);font-size:14px;line-height:1;}
@@ -272,137 +253,16 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 .kakao-banner{background:var(--accent);color:var(--navy);padding:12px 40px 12px 16px;font-size:12px;font-weight:600;line-height:1.5;position:relative;flex-shrink:0;}
 .kakao-close{position:absolute;top:8px;right:12px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--navy);}
 
-/* ─── 사진 설명 ───────────────────────────────── */
-.photo-thumb img{cursor:pointer;}
-.photo-cap{
-  position:absolute;left:0;right:0;bottom:0;
-  background:rgba(15,39,68,.82);color:rgba(255,255,255,.72);
-  font-size:9px;line-height:1.3;padding:3px 5px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;
-}
-.photo-cap.has{color:#fff;}
-.photo-cap b{color:var(--accent2);font-family:"JetBrains Mono",monospace;font-size:8.5px;}
-.pe-preview{
-  width:100%;height:170px;border-radius:var(--r);overflow:hidden;
-  background:var(--mid-bg);margin-bottom:6px;
-}
-.pe-preview img{width:100%;height:100%;object-fit:contain;display:block;}
-.pe-no{font-size:11px;color:var(--text2);text-align:center;margin-bottom:10px;font-family:"JetBrains Mono",monospace;}
-.pe-label{display:block;font-size:11px;font-weight:700;color:var(--text);margin:0 0 4px;}
-.pe-input{
-  width:100%;border:1px solid var(--border);border-radius:9px;
-  padding:9px 11px;font-size:13px;font-family:inherit;color:var(--text);
-  background:var(--card);margin-bottom:10px;resize:none;
-}
-.pe-input:focus{outline:2px solid var(--navy3);outline-offset:1px;}
-
-/* ─── 보고서 화면 (앱 안에서 직접 렌더링 · iframe/새탭 사용 안 함) ─── */
-#report-overlay{position:fixed;top:0;right:0;bottom:0;left:0;z-index:9999;background:#fff;display:flex;flex-direction:column;}
-.rp-bar{display:flex;gap:6px;align-items:center;padding:10px 12px;background:var(--navy);flex-shrink:0;}
-.rp-bar-title{flex:1;min-width:0;color:#fff;font-size:11.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.rp-btn{padding:9px 12px;border:none;border-radius:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;flex-shrink:0;}
-.rp-btn-print{background:var(--accent2);color:var(--navy);}
-.rp-btn-html{background:#1e6b34;color:#fff;}
-.rp-btn-close{background:#f0f4f8;color:var(--text);}
-#report-view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#fff;color:#1a2a3a;font-size:11.5px;line-height:1.45;user-select:text;padding-bottom:40px;}
-
-#report-view .rp-cover{background:#0f2744;color:#fff;padding:16px 14px;}
-#report-view .rp-cover-label{font-size:9.5px;color:rgba(255,255,255,.55);letter-spacing:.08em;margin-bottom:4px;}
-#report-view .rp-cover-title{font-size:17px;font-weight:700;line-height:1.25;margin-bottom:12px;}
-#report-view .rp-cover-meta{display:flex;gap:16px;flex-wrap:wrap;}
-#report-view .rp-cover-meta div{font-size:11px;display:flex;flex-direction:column;gap:1px;}
-#report-view .rp-cover-meta b{color:#f5c842;font-size:11.5px;}
-#report-view .rp-cover-meta span{color:rgba(255,255,255,.65);font-size:9.5px;}
-#report-view .rp-main{padding:0 14px;}
-
-/* 결과 요약 */
-#report-view .rp-summary{display:flex;align-items:center;gap:18px;background:#f0f4f8;border-radius:10px;padding:11px 16px;margin:12px 0 6px;flex-wrap:wrap;}
-#report-view .rp-sum-score{display:flex;align-items:baseline;gap:9px;}
-#report-view .rp-sum-num{font-size:34px;font-weight:700;color:#0f2744;line-height:1;font-family:"JetBrains Mono",monospace;}
-#report-view .rp-sum-cap{font-size:10px;color:#5a7a9a;line-height:1.4;}
-#report-view .rp-sum-cap span{color:#9aa8b4;}
-#report-view .rp-sum-facts{display:flex;gap:20px;flex-wrap:wrap;margin-left:auto;}
-#report-view .rp-fact{display:flex;flex-direction:column;gap:1px;}
-#report-view .rp-fact-k{font-size:9.5px;color:#5a7a9a;}
-#report-view .rp-fact b{font-size:13px;font-weight:700;font-family:"JetBrains Mono",monospace;}
-#report-view .rp-disclaimer{font-size:9.5px;color:#7b8fa4;margin:0 0 4px;padding:0 2px;line-height:1.5;}
-
-#report-view h2{font-size:12.5px;font-weight:700;color:#0f2744;border-bottom:1.5px solid #0f2744;padding-bottom:4px;margin:14px 0 7px;}
-#report-view .rp-count{font-weight:500;color:#5a7a9a;font-size:10.5px;font-family:"JetBrains Mono",monospace;}
-
-#report-view table{width:100%;border-collapse:collapse;font-size:10px;table-layout:fixed;}
-#report-view th{background:#0f2744;color:#fff;padding:4px 6px;text-align:left;font-weight:600;font-size:9.5px;}
-#report-view td{padding:4px 6px;border-bottom:1px solid #e6ecf2;vertical-align:top;word-break:break-word;line-height:1.4;}
-#report-view tbody tr:nth-child(even) td:not(.rp-edit){background:#f8fafc;}
-#report-view .rp-num{font-family:"JetBrains Mono",monospace;font-variant-numeric:tabular-nums;}
-#report-view .rp-dim{color:#5a7a9a;}
-#report-view .rp-item-name{display:block;color:#9aa8b4;font-size:9px;margin-top:1px;}
-
-#report-view .rp-bar-wrap{width:56px;height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:6px;}
-#report-view .rp-bar-fill{height:100%;border-radius:3px;display:block;}
-#report-view .rp-pct{font-family:"JetBrains Mono",monospace;font-size:9.5px;}
-#report-view .rp-tag{display:inline-block;background:#eef3f8;color:#2c5282;border:1px solid #cfdbe8;padding:1px 4px;border-radius:3px;font-size:9px;font-weight:700;font-family:"JetBrains Mono",monospace;}
-#report-view .rp-ok{color:#1e8449;}
-#report-view .rp-ng{color:#c0392b;}
-
-#report-view .rp-note{font-size:10px;color:#5a7a9a;margin:6px 0 0;}
-#report-view .rp-note b{color:#c0392b;}
-#report-view .rp-ok-box{background:#eafaf1;color:#1e7a4d;border-radius:8px;padding:9px 12px;}
-
-/* 사진 */
-#report-view .rp-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-#report-view .rp-photo{border:1px solid #d1dce8;border-radius:6px;overflow:hidden;margin:0;break-inside:avoid;}
-#report-view .rp-photo img{width:100%;height:104px;object-fit:cover;display:block;}
-#report-view .rp-photo figcaption{padding:4px 6px;font-size:9px;color:#5a7a9a;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px;}
-#report-view .rp-photo-no{font-family:"JetBrains Mono",monospace;color:#9aa8b4;}
-#report-view .rp-photo-cap{flex:1 1 100%;color:#1a2a3a;line-height:1.35;}
-
-/* 전체 점검 체크시트 — 전 항목의 평가기준을 그대로 싣는다 */
-#report-view .rp-legend-txt{font-size:9.5px;color:#7b8fa4;margin:0 0 6px;line-height:1.5;}
-#report-view .rp-cs td{vertical-align:top;}
-#report-view .rp-cs-maj td{background:#0f2744!important;color:#fff;font-weight:700;font-size:9.5px;padding:3px 6px;}
-#report-view .rp-cs-maj .rp-num{color:#f5c842;}
-#report-view .rp-cs-item td{background:#eef3f8!important;color:#2c5282;font-weight:700;font-size:9px;padding:3px 6px;}
-#report-view .rp-opts{list-style:none;margin:0;padding:0;}
-#report-view .rp-opts li{display:flex;gap:4px;align-items:baseline;color:#7b8fa4;line-height:1.45;}
-#report-view .rp-opts li.on{color:#1a2a3a;font-weight:700;}
-#report-view .rp-mark{font-size:8.5px;flex:0 0 auto;color:#b6c3d0;}
-#report-view .rp-opts li.on .rp-mark{color:#0f2744;}
-#report-view .rp-osc{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:8.5px;color:#9aa8b4;}
-#report-view .rp-cs-ng td:not(.rp-edit){background:#fdf3f2!important;}
-#report-view .rp-cs-ng .rp-num{color:#c0392b;font-weight:700;}
-#report-view .rp-cs-miss td:not(.rp-edit){background:#fefaef!important;}
-#report-view .rp-cs-miss .rp-num{color:#9a6b12;font-weight:700;}
-/* 편집 가능한 칸 (앱 화면·내보낸 HTML 공통) */
-#report-view .rp-edit{background:#fffdf5!important;outline:1px dashed #d8c48a;outline-offset:-2px;min-height:14px;cursor:text;}
-#report-view .rp-edit:focus{background:#fff8e0!important;outline:1.5px solid #e8a020;}
-#report-view .rp-edit:empty::before{content:attr(data-ph);color:#c3ccd6;font-style:italic;}
-
-#report-view .rp-footer{margin-top:16px;font-size:9px;color:#9aa8b4;text-align:center;border-top:1px solid #e2e8f0;padding-top:8px;}
-
-/* 브라우저가 페이지 여백에 자동으로 찍는 머리글/바닥글(문서 제목·날짜·페이지 URL)을
-   없애려면 용지 여백이 0이어야 한다. 그래서 여백은 @page 가 아니라
-   #report-view 의 padding 으로 만든다. */
-@page{size:A4;margin:0;}
+/* ─── 신규: HTML 보고서 인쇄 스타일 ────────────────── */
 @media print{
-  html,body{height:auto!important;overflow:visible!important;}
-  #app{display:none!important;}
-  .overlay{display:none!important;}
-  #report-overlay{position:static!important;display:block!important;}
-  #report-overlay.hidden{display:none!important;}
-  .rp-bar{display:none!important;}
-  #report-view{overflow:visible!important;height:auto!important;padding:12mm 10mm!important;font-size:9.5px;}
-  #report-view .rp-main{padding:0;}
-  #report-view .rp-cover{margin-bottom:2px;}
-  #report-view h2{margin:11px 0 5px;break-after:avoid;}
-  #report-view table{font-size:8.8px;}
-  #report-view thead{display:table-header-group;}
-  #report-view tr{break-inside:avoid;}
-  #report-view .rp-photo img{height:88px;}
-  #report-view .rp-edit{background:transparent!important;outline:none!important;}
-  #report-view .rp-edit:empty::before{content:""!important;}
-  #report-view .rp-sum-num{font-size:30px;}
-  body{background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body *{visibility:hidden;}
+  #print-report,#print-report *{visibility:visible;}
+  #print-report{
+    position:fixed;inset:0;
+    background:#fff;
+    padding:0;margin:0;
+    width:210mm;min-height:297mm;
+  }
 }
 </style>
 </head>
@@ -431,10 +291,6 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
     <div class="hdr-meta" id="info-upd"></div>
   </div>
   <div class="info-body">
-    <!-- 오늘 마친 점검 목록 (하루 2~3곳 도는 경우 저장 누락 확인용) -->
-    <div id="done-today" class="done-box hidden"></div>
-    <!-- 치워둔 작업이 있을 때만 나타난다 -->
-    <button id="btn-restore" class="btn-restore hidden" onclick="restoreBak()"></button>
     <div class="fld">
       <div class="fld-label">협력사 <span class="req">*</span></div>
       <div class="sel-wrap">
@@ -513,13 +369,10 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
     </div>
   </div>
   <div class="scroll" id="res-body"></div>
-  <div class="btm btm-col">
-    <button class="btn btn-next-co" onclick="finishAndNext()">✓ 이 협력사 완료 — 다음 협력사 점검</button>
-    <div class="btm-row">
-      <button class="btn btn-gray" onclick="showScreen('sc-check')">‹ 수정</button>
-      <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:1.5">📊 저장</button>
-      <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.5">🖨️ 보고서</button>
-    </div>
+  <div class="btm" style="gap:6px;">
+    <button class="btn btn-gray" onclick="showScreen('sc-check')">‹ 수정</button>
+    <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:1.5">📊 저장</button>
+    <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.5">🖨️ 보고서</button>
   </div>
 </div>
 
@@ -557,52 +410,6 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
-<!-- 모달: 사진 설명 편집 -->
-<div id="modal-photo-edit" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-photo-edit')">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">📷 사진 설명</div>
-    <div class="pe-preview"><img id="pe-img" alt="선택한 사진"></div>
-    <div class="pe-no" id="pe-no"></div>
-    <label class="pe-label" for="pe-cap">사진 설명</label>
-    <textarea id="pe-cap" class="pe-input" rows="2" placeholder="예) 도장 전 오일 미제거 상태"></textarea>
-    <label class="pe-label" for="pe-link">관련 점검항목 (선택)</label>
-    <select id="pe-link" class="pe-input"></select>
-    <div class="sheet-btns" style="margin-top:12px;">
-      <button class="btn btn-navy" onclick="savePhotoEditor()">저장</button>
-      <button class="btn btn-gray" onclick="closeModal('modal-photo-edit')">취소</button>
-    </div>
-  </div>
-</div>
-
-<!-- 모달: 보관함에서 되살리기 -->
-<div id="modal-bak" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-bak')">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">↩ 저장된 이전 작업</div>
-    <div class="sheet-desc">되살릴 점검을 골라 주세요. 최근 5건까지 보관됩니다.</div>
-    <div id="bak-body" class="bak-list"></div>
-    <div class="sheet-btns" style="margin-top:12px;">
-      <button class="btn btn-gray" onclick="closeModal('modal-bak')">닫기</button>
-    </div>
-  </div>
-</div>
-
-<!-- 모달: 저장된 작업 이어하기 -->
-<div id="modal-draft" class="overlay hidden">
-  <div class="sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">💾 저장된 점검 작업이 있습니다</div>
-    <div class="sheet-desc">앱이 꺼져도 입력한 내용은 자동으로 보관됩니다.</div>
-    <div class="dr-info" id="dr-info"></div>
-    <div class="sheet-btns">
-      <button class="btn btn-navy" onclick="draftContinue()">▶ 이어서 점검하기</button>
-      <button class="btn btn-gray" onclick="draftInfo()">기본정보부터 확인</button>
-      <button class="btn btn-gray" onclick="draftLater()">나중에 (그대로 두기)</button>
-    </div>
-  </div>
-</div>
-
 <!-- 모달: 내보내기 (기존 + 보고서 버튼 추가) -->
 <div id="modal-exp" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-exp')">
   <div class="sheet">
@@ -618,18 +425,17 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   </div>
 </div>
 
+<!-- 신규: 인쇄용 HTML 보고서 (숨김, 인쇄 시 표시) -->
+<div id="print-report" class="hidden"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 /* ════════════════════════════════════════════════════════
    설정
 ════════════════════════════════════════════════════════ */
-const APP_BUILD = 'b12';   // 파일이 갱신됐는지 기기에서 눈으로 확인하는 용도
 const GH_URL  = 'https://sweetmusic.github.io/coating-inspection/app_config.json';
 const CFG_KEY = 'app_config';
 const DRAFT_KEY = 'inspection_draft';
-const BAK_KEY   = 'inspection_bak_list';    // 치워둔 작업 보관함(삭제 대신 여기로 옮긴다)
-const BAK_MAX   = 5;                        // 보관함에 남겨두는 최근 작업 수
-const DONE_KEY  = 'inspection_done_today';  // 오늘 완료한 협력사 이력
 const MAX_PHOTOS = 10;     // 최대 사진 수
 const MAX_PX     = 1200;   // 압축 기준 가로px
 
@@ -637,25 +443,12 @@ const MAX_PX     = 1200;   // 압축 기준 가로px
    전역 상태
 ════════════════════════════════════════════════════════ */
 let CFG = null;
-let _lastDoneCoId = null;   // 방금 마친 협력사 (협력사 변경을 잊는 사고 방지용)
 let S = {
   company: null, date: '', type: '정기', inspector: '',
   majIdx: 0, ans: {},
-  photos: [],  // ← 신규: [{dataUrl, name}]
-  replyDue: '' // 조치 회신 기한. 비어 있으면 '점검일 + reply_days' 로 자동 계산한다.
+  photos: [],  // [{dataUrl, name}]
+  remark: ''   // ← 신규: 종합 Remark
 };
-
-/* 조치 회신 기한 (YYYY-MM-DD).
-   기본값은 점검일 + 설정파일의 meta.reply_days(없으면 7일)이며,
-   결과 화면에서 직접 고치면 S.replyDue 에 담겨 보고서·메일·엑셀에 그대로 쓰인다. */
-function replyDefault(){
-  if(!S.date) return '';
-  const rd = new Date(S.date);
-  rd.setDate(rd.getDate() + (CFG?.meta?.reply_days || 7));
-  return rd.toISOString().slice(0, 10);
-}
-function replyDue(){ return S.replyDue || replyDefault(); }
-function replyDays(){ return CFG?.meta?.reply_days || 7; }
 
 /* ════════════════════════════════════════════════════════
    초기화
@@ -664,57 +457,11 @@ window.addEventListener('DOMContentLoaded', () => {
   if(isKakao()) showKakaoBanner();
   const cached = localStorage.getItem(CFG_KEY);
   if(cached){
-    try{
-      CFG = JSON.parse(cached);
-      boot();
-      refreshConfig();   // 저장된 설정으로 즉시 시작하고, 뒤에서 최신 설정을 확인
-      return;
-    }
+    try{ CFG = JSON.parse(cached); boot(); return; }
     catch(e){ localStorage.removeItem(CFG_KEY); }
   }
   loadGitHub();
 });
-
-/* 저장된 설정으로 앱을 띄운 뒤 백그라운드에서 최신 설정을 확인한다.
-   협력사·점검항목이 바뀌어도 점검자가 설정 메뉴를 직접 누를 필요가 없다.
-   단, 점검 도중에 채점 기준이 바뀌면 점수가 어긋나므로 점검 시작 전에만
-   즉시 반영하고, 진행 중이라면 저장만 해 두었다가 다음 실행 때 적용한다. */
-async function refreshConfig(){
-  try{
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 8000);
-    const r = await fetch(GH_URL + '?t=' + Date.now(), {signal: ctrl.signal, cache: 'no-store'});
-    clearTimeout(timer);
-    if(!r.ok) return;
-    const fresh = await r.json();
-    if(!fresh || !Array.isArray(fresh.checklist) || !Array.isArray(fresh.companies)) return;
-
-    // 내용 자체를 비교한다. updated_at 을 고치는 걸 잊고 협력사만 추가해도
-    // 정상적으로 반영되도록 하기 위함.
-    if(JSON.stringify(fresh) === JSON.stringify(CFG)) return;
-
-    localStorage.setItem(CFG_KEY, JSON.stringify(fresh));
-
-    const onInfoScreen = !document.getElementById('sc-info').classList.contains('hidden');
-    if(onInfoScreen && Object.keys(S.ans).length === 0){
-      CFG = fresh;
-      boot(true);
-      showInfoInd('🔄 최신 점검 설정으로 업데이트됨');
-    }else{
-      showInfoInd('🔄 새 점검 설정 있음 · 다시 열면 적용');
-    }
-  }catch(e){
-    /* 오프라인이거나 통신 실패: 저장된 설정을 그대로 사용한다 */
-  }
-}
-
-function showInfoInd(msg){
-  let el = document.getElementById('cfg-ind');
-  if(!el){ el = document.createElement('div'); el.id = 'cfg-ind'; el.className = 'save-ind'; el.style.background = 'rgba(44,82,130,.94)'; document.body.appendChild(el); }
-  el.textContent = msg; el.style.display = 'block';
-  clearTimeout(window._cit);
-  window._cit = setTimeout(() => { el.style.display = 'none'; }, 3000);
-}
 
 /* ════════════════════════════════════════════════════════
    설정 로드
@@ -768,23 +515,18 @@ function showErr(msg){
 /* ════════════════════════════════════════════════════════
    부팅
 ════════════════════════════════════════════════════════ */
-function boot(skipDraft){
+function boot(){
   const sel = document.getElementById('sel-co');
   sel.innerHTML = '<option value="">-- 협력사를 선택하세요 --</option>';
-  // active:false 인 협력사는 목록에서 제외한다 (거래 종료 등).
-  // value 에는 원본 배열의 인덱스를 그대로 넣어 선택 결과가 어긋나지 않게 한다.
   (CFG.companies || []).forEach((co, i) => {
-    if(co.active === false) return;
     const o = document.createElement('option'); o.value = i; o.textContent = co.name; sel.appendChild(o);
   });
   document.getElementById('inp-date').value = today();
   document.getElementById('inp-insp').value = CFG.meta?.inspector || '';
   document.getElementById('info-ver').textContent = CFG.meta?.version || '';
-  document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16) + ' · 앱 ' + APP_BUILD;
+  document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16);
   showScreen('sc-info');
-  refreshRestoreBtn();
-  refreshDoneList();
-  if(!skipDraft) setTimeout(checkDraft, 300);
+  setTimeout(checkDraft, 300);
 }
 
 /* ════════════════════════════════════════════════════════
@@ -816,51 +558,25 @@ function startCheck(){
   if(!ci)   { alert('협력사를 선택해 주세요.'); return; }
   if(!dt)   { alert('점검일자를 입력해 주세요.'); return; }
   if(!insp) { alert('점검자 이름을 입력해 주세요.'); return; }
-  // 진행 중이던 점검이 있으면 소리 없이 날리지 않는다.
-  const prev = slotRead(DRAFT_KEY);
-  if(prev && Object.keys(prev.ans || {}).length > 0){
-    if(!window.confirm('진행 중이던 점검이 있습니다.\n\n'
-      + '\u25b6 ' + prev.company.name + ' / ' + prev.date + ' / 입력 ' + Object.keys(prev.ans).length + '개\n\n'
-      + '이 내용을 접어두고 새 점검을 시작할까요?\n'
-      + '(접어둔 내용은 [\u21a9 저장된 이전 작업]으로 복구할 수 있습니다)')) return;
-    stashDraft();
-  }
-  const co = CFG.companies[parseInt(ci)];
-  // 하루에 여러 곳을 도는 동선에서 협력사 변경을 잊는 사고를 막는다.
-  const already = doneToday().items.find(x => x.companyId === co.id && x.date === dt);
-  if(already || _lastDoneCoId === co.id){
-    if(!window.confirm('\u26a0 협력사를 확인해 주세요.\n\n'
-      + '\u25b6 ' + co.name + '\n\n'
-      + (already ? '이 협력사는 오늘 이미 점검을 마친 것으로 기록돼 있습니다.\n'
-                 : '방금 점검을 마친 협력사와 같습니다.\n')
-      + '협력사를 바꾸지 않으셨다면 [취소]를 누르고 다시 선택해 주세요.\n\n'
-      + '이대로 진행할까요?')) return;
-  }
-  S.company  = co;
+  S.company  = CFG.companies[parseInt(ci)];
   S.date     = dt;
-  S.replyDue = '';
   S.inspector = insp;
   S.majIdx   = 0;
   S.ans      = {};
   S.photos   = [];  // 사진 초기화
+  S.remark   = '';   // remark 초기화
   buildTabs();
   renderMaj(0);
   showScreen('sc-check');
   refreshPhotoUI();
 }
 function goBack(){
-  if(Object.keys(S.ans).length > 0 || S.photos.length > 0){
-    // 내용은 지우지 않고 보관함으로 옮기므로, 실수로 눌러도 되살릴 수 있다.
-    if(!window.confirm('입력한 내용을 접어두고 처음 화면으로 돌아갑니다.\n\n'
-      + '내용은 지워지지 않습니다.\n'
-      + '기본정보 화면의 [\u21a9 저장된 이전 작업] 버튼으로\n언제든 이어서 할 수 있습니다.\n\n'
-      + '돌아갈까요?')) return;
-    doSave();   // 마지막 상태까지 반영한 뒤 보관
+  if(Object.keys(S.ans).length > 0){
+    if(!window.confirm('작성 중인 내용이 있습니다.\n처음으로 돌아갈까요?')) return;
   }
-  stashDraft();
-  S = {company:null, date:'', type:'정기', inspector:'', majIdx:0, ans:{}, photos:[], replyDue:''};
+  clearDraft();
+  S = {company:null, date:'', type:'정기', inspector:'', majIdx:0, ans:{}, photos:[]};
   showScreen('sc-info');
-  refreshRestoreBtn();
 }
 
 /* ════════════════════════════════════════════════════════
@@ -905,12 +621,8 @@ function renderMaj(idx){
     S.photos.forEach((p, pi) => {
       const wrap = document.createElement('div');
       wrap.className = 'photo-thumb';
-      wrap.innerHTML = '<img src="' + p.dataUrl + '" alt="사진' + (pi+1) + '" onclick="openPhotoEditor(' + pi + ')">'
-        + '<button class="photo-del" onclick="deletePhoto(' + pi + ')">×</button>'
-        + '<div class="photo-cap' + (p.caption || p.linkId ? ' has' : '') + '" onclick="openPhotoEditor(' + pi + ')">'
-        + (p.linkId ? '<b>' + p.linkId + '</b> ' : '')
-        + (p.caption ? escHtml(p.caption) : (p.linkId ? '' : '＋ 설명'))
-        + '</div>';
+      wrap.innerHTML = '<img src="' + p.dataUrl + '" alt="사진' + (pi+1) + '">'
+        + '<button class="photo-del" onclick="deletePhoto(' + pi + ')">×</button>';
       strip.appendChild(wrap);
     });
     if(S.photos.length < MAX_PHOTOS){
@@ -1014,21 +726,10 @@ function refreshProgress(){
   document.getElementById('prog-fill').style.width = pct + '%';
   const cur = curScore(), mx = maxScore(), norm = normScore();
   document.getElementById('chip-score').textContent = cur + '/' + mx + '점 (환산 ' + norm + '점)';
-  // 등급은 연말 종합평가로 결정되므로 점검 중에는 표시하지 않고 지적 건수를 보여준다
+  const gr = grade(norm);
   const gc = document.getElementById('chip-grade');
-  gc.textContent = done > 0 ? '지적 ' + countNg() + '건' : '입력 중';
-  gc.className   = 'chip chip-grade ' + (countNg() > 0 ? 'g-C' : 'g-none');
-}
-
-/* 감점(지적) 항목 수 */
-function countNg(){
-  let c = 0;
-  CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
-    if(s.id === '1-1-1' && S.type === '정기') return;
-    const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
-    if(a.score < Math.max(...s.options.map(o => o.score))) c++;
-  })));
-  return c;
+  gc.textContent = gr ? gr.grade + '등급·' + gr.label : '입력 중';
+  gc.className   = 'chip chip-grade ' + (gr ? 'g-' + gr.grade : 'g-none');
 }
 function refreshTabs(){
   CFG.checklist.forEach((maj, i) => {
@@ -1070,7 +771,7 @@ async function onPhotoCapture(ev){
   }
   for(const file of toProcess){
     const dataUrl = await compressImage(file, MAX_PX);
-    S.photos.push({ dataUrl, name: file.name, caption: '', linkId: '' });
+    S.photos.push({ dataUrl, name: file.name });
   }
   ev.target.value = '';
   refreshPhotoUI();
@@ -1107,51 +808,6 @@ function deletePhoto(idx){
   renderMaj(S.majIdx);
 }
 
-function escHtml(v){
-  return String(v == null ? '' : v)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-/* 사진 설명 편집 — 사진마다 설명과 관련 점검항목을 달아두면
-   보고서에서 "[5-4-1] 도장 전 오일 미제거" 형태로 캡션이 붙고,
-   지적사항 표에도 해당 사진 번호가 함께 표시된다. */
-function openPhotoEditor(idx){
-  const p = S.photos[idx]; if(!p) return;
-  window._photoIdx = idx;
-
-  // 관련 항목 후보: 감점된 항목을 위로 올려 고르기 쉽게 한다
-  const ng = [], ok = [];
-  CFG.checklist.forEach(maj => maj.items.forEach(it => it.subs.forEach(s => {
-    if(s.id === '1-1-1' && S.type === '정기') return;
-    const a = S.ans[s.id];
-    const mxSc = Math.max(...s.options.map(o => o.score));
-    const label = s.id + ' · ' + it.name;
-    if(a && a.optionIdx >= 0 && a.score < mxSc) ng.push({id: s.id, label});
-    else ok.push({id: s.id, label});
-  })));
-  const opt = o => '<option value="' + o.id + '"' + (p.linkId === o.id ? ' selected' : '') + '>' + escHtml(o.label) + '</option>';
-
-  document.getElementById('pe-img').src = p.dataUrl;
-  document.getElementById('pe-no').textContent = '사진 ' + (idx + 1) + ' / ' + S.photos.length;
-  document.getElementById('pe-cap').value = p.caption || '';
-  document.getElementById('pe-link').innerHTML =
-    '<option value="">— 연결 안 함 —</option>'
-    + (ng.length ? '<optgroup label="지적된 항목">' + ng.map(opt).join('') + '</optgroup>' : '')
-    + (ok.length ? '<optgroup label="그 외 항목">' + ok.map(opt).join('') + '</optgroup>' : '');
-  openModal('modal-photo-edit');
-}
-
-function savePhotoEditor(){
-  const idx = window._photoIdx;
-  const p = S.photos[idx]; if(!p) return;
-  p.caption = document.getElementById('pe-cap').value.trim();
-  p.linkId  = document.getElementById('pe-link').value;
-  closeModal('modal-photo-edit');
-  doSave();
-  renderMaj(S.majIdx);
-}
-
 function refreshPhotoUI(){
   const cnt   = S.photos.length;
   const badge = document.getElementById('fab-badge');
@@ -1173,23 +829,17 @@ function scrollToPhotos(){
 function buildResult(){
   const body = document.getElementById('res-body'); body.innerHTML = '';
   const cur = curScore(), mx = maxScore(), norm = normScore();
-  const ngCnt = countNg();
-  const rdStr = replyDue().replace(/-/g, '.');
+  const gr  = grade(norm);
   document.getElementById('res-date').textContent = S.date.replace(/-/g, '.');
-  // 등급은 연간 점검 이력·품질 문제를 종합해 연말에 별도 결정되므로 여기서는 표시하지 않는다
   const hero = document.createElement('div'); hero.className = 'result-hero';
   hero.innerHTML =
     '<div class="r-co">' + S.company.name + ' · ' + S.type + '</div>'
     + '<div class="r-score">' + norm + '</div>'
     + '<div class="r-raw">/ 100점 (원점수 ' + cur + '/' + mx + '점)</div>'
-    + '<div class="r-badge ' + (ngCnt > 0 ? 'g-C' : 'g-A') + '">'
-    + (ngCnt > 0 ? '지적사항 ' + ngCnt + '건' : '지적사항 없음') + '</div>'
-    + '<div class="r-note">' + (ngCnt > 0 ? '조치 회신 기한 <span id="r-reply-txt">' + rdStr + '</span>' : '금회 점검 지적사항 없음') + '</div>';
+    + '<div class="r-badge ' + (gr ? 'g-' + gr.grade : '') + '" style="' + (gr ? '' : 'background:rgba(255,255,255,.1)') + '">'
+    + (gr ? gr.grade + '등급 · ' + gr.label : '등급 산출 불가') + '</div>'
+    + '<div class="r-note">' + (gr?.note || '') + '</div>';
   body.appendChild(hero);
-
-  // 조치 회신 기한 — 자동 계산값을 그대로 쓰거나, 여기서 직접 고칠 수 있다.
-  // (지적사항이 없으면 회신받을 것이 없으므로 표시하지 않는다)
-  if(ngCnt > 0) body.appendChild(buildReplyBox());
 
   // 사진 카운트 요약
   if(S.photos.length > 0){
@@ -1265,7 +915,24 @@ function buildResult(){
     body.appendChild(s3);
   }
 
-  const sp = document.createElement('div'); sp.style.height = '78px'; body.appendChild(sp);
+  // ── Remark 입력 섹션 ──────────────────────────────
+  const remarkSec = document.createElement('div');
+  remarkSec.className = 'r-sec';
+  remarkSec.style.margin = '12px 12px 0';
+  remarkSec.innerHTML = '<div class="r-sec-title">📝 종합 Remark (특이사항)</div>';
+  const remarkWrap = document.createElement('div');
+  remarkWrap.style.cssText = 'padding:10px 14px;';
+  const remarkTa = document.createElement('textarea');
+  remarkTa.id = 'inp-remark';
+  remarkTa.style.cssText = 'width:100%;min-height:90px;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-family:"Noto Sans KR",sans-serif;font-size:12px;color:var(--text);background:var(--bg);resize:none;outline:none;line-height:1.6;';
+  remarkTa.placeholder = '협력사 전반적인 특이사항, 현장 분위기, 개선 권고사항 등을 자유롭게 입력하세요.';
+  remarkTa.value = S.remark || '';
+  remarkTa.oninput = () => { S.remark = remarkTa.value; doSave(); };
+  remarkWrap.appendChild(remarkTa);
+  remarkSec.appendChild(remarkWrap);
+  body.appendChild(remarkSec);
+
+  const sp = document.createElement('div'); sp.style.height = '16px'; body.appendChild(sp);
   showScreen('sc-result');
   // 내보내기 모달 desc 업데이트
   updateExpDesc();
@@ -1280,7 +947,7 @@ function updateExpDesc(){
   const miss = validSubs().filter(s => !S.ans[s.id] || S.ans[s.id].optionIdx < 0).length;
   document.getElementById('exp-desc').innerHTML =
     '<strong>' + S.company.name + '</strong> · ' + S.date + ' · ' + S.type + '<br>'
-    + '원점수: <strong>' + cur + '/' + mx + '점</strong> → 환산 <strong>' + norm + '점</strong> · 지적 <strong>' + countNg() + '건</strong>'
+    + '원점수: <strong>' + cur + '/' + mx + '점</strong> → 환산 <strong>' + norm + '점</strong> <strong>' + (gr ? gr.grade + '등급' : '-') + '</strong>'
     + (miss > 0 ? '<br>⚠ 미입력 ' + miss + '항목 있음' : '')
     + (S.photos.length > 0 ? '<br>📷 사진 ' + S.photos.length + '장 첨부됨' : '');
 }
@@ -1343,108 +1010,56 @@ function doExcel(){
     }
   })));
   if(r2.length === 4) r2.push(['','','지적사항 없음','','','']);
+  // Remark 추가
+  if(S.remark && S.remark.trim()){
+    r2.push([]);
+    r2.push(['종합 Remark','','','','','']);
+    r2.push([S.remark,'','','','','']);
+  }
   const ws2 = XLSX.utils.aoa_to_sheet(r2);
   ws2['!cols'] = [{wch:12},{wch:18},{wch:50},{wch:8},{wch:8},{wch:30}];
   XLSX.utils.book_append_sheet(wb, ws2, '지적사항요약');
 
-  /* ── 시트3: 참고사진 목록 (사진 설명·연결항목 포함) ─── */
+  /* ── 시트3: 참고사진 안내 ────────────────────────── */
   const r3 = [
-    ['참고사진 목록','','',''],
-    ['※ 사진 이미지가 포함된 보고서는 [보고서] 버튼 → [인쇄/PDF] 로 저장해 주세요','','',''],
+    ['참고사진','',''],
+    ['※ 사진이 포함된 보고서는 [보고서 출력] 버튼을 이용해 주세요 (브라우저 인쇄 → PDF 저장)','',''],
     [],
-    ['협력사', coNm, '점검일', S.date],
-    ['점검자', insp, '첨부 사진', S.photos.length + '장'],
-    [],
-    ['사진번호','연결 점검항목','사진 설명','파일명']
+    ['첨부된 사진 수 : ' + S.photos.length + '장','',''],
+    ['협력사','점검일','점검자'],
+    [coNm, S.date, insp]
   ];
-  S.photos.forEach((p, i) => {
-    r3.push(['사진 ' + (i+1), p.linkId || '', p.caption || '', p.name || '']);
-  });
-  if(S.photos.length === 0) r3.push(['','','첨부된 사진 없음','']);
   const ws3 = XLSX.utils.aoa_to_sheet(r3);
-  ws3['!cols'] = [{wch:10},{wch:16},{wch:46},{wch:24}];
-  XLSX.utils.book_append_sheet(wb, ws3, '참고사진목록');
+  ws3['!cols'] = [{wch:30},{wch:20},{wch:20}];
+  XLSX.utils.book_append_sheet(wb, ws3, '참고사진안내');
 
-  XLSX.writeFile(wb, '점검결과_' + coNm + '_' + date + '_' + S.type + '.xlsx');
-  markDone('엑셀');
+  // 파일명: 협력사명_YYYY-MM_점검결과.xlsx
+  const ym = S.date.slice(0, 7);  // "2025-03"
+  XLSX.writeFile(wb, coNm + '_' + ym + '_점검결과.xlsx');
   clearDraft();
 }
 
 /* ════════════════════════════════════════════════════════
    신규: HTML 보고서 출력 (사진 포함)
 ════════════════════════════════════════════════════════ */
-function esc(v){
-  return String(v == null ? '' : v)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-// 실패해도 아무 반응이 없으면 원인을 알 수 없으므로 오류를 화면에 표시한다.
 function doHtmlReport(){
-  try{
-    buildReportView();
-    markDone('보고서');
-  }catch(e){
-    alert('보고서 생성 중 오류가 발생했습니다.\n\n' + ((e && e.message) ? e.message : e));
+  // iOS Safari에서는 팝업 차단으로 새 탭 안 열릴 수 있음을 안내
+  const isIOSCheck = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if(isIOSCheck){
+    if(!confirm('보고서 파일이 생성됩니다.\n\n파일이 자동으로 열리지 않으면\n다운로드된 HTML 파일을 열어주세요.\n\n계속하시겠습니까?')) return;
   }
-}
-
-/* 결과 화면의 '조치 회신 기한' 편집 상자.
-   여기서 고친 날짜가 보고서·메일·엑셀에 그대로 들어간다. */
-function buildReplyBox(){
-  const box = document.createElement('div');
-  box.style.cssText = 'margin:12px 12px 0;padding:12px 14px;background:var(--mid-bg);border:1px solid var(--border);border-radius:var(--r);';
-  box.innerHTML =
-    '<div style="font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:8px;">📅 조치 회신 기한</div>'
-    + '<div style="display:flex;gap:8px;align-items:center;">'
-    + '<input type="date" id="inp-reply" class="fld-input" style="flex:1;margin:0;" value="' + replyDue() + '">'
-    + '<button type="button" id="btn-reply-reset" class="btn btn-gray" style="flex:0 0 auto;padding:10px 12px;font-size:12px;">기본값</button>'
-    + '</div>'
-    + '<div id="reply-hint" style="margin-top:7px;font-size:11.5px;line-height:1.5;color:var(--dim,#7a8794);"></div>';
-  bindReplyBox(box);
-  return box;
-}
-function bindReplyBox(box){
-  const inp  = box.querySelector('#inp-reply');
-  const btn  = box.querySelector('#btn-reply-reset');
-  const hint = box.querySelector('#reply-hint');
-  const paint = () => {
-    hint.innerHTML = S.replyDue
-      ? '직접 지정한 날짜입니다. (자동 계산값: ' + replyDefault().replace(/-/g, '.') + ')'
-      : '자동 계산: 점검일 ' + (S.date || '').replace(/-/g, '.') + ' + ' + replyDays() + '일';
-    const txt = document.getElementById('r-reply-txt');
-    if(txt) txt.textContent = replyDue().replace(/-/g, '.');
-  };
-  inp.onchange = () => {
-    S.replyDue = (inp.value && inp.value !== replyDefault()) ? inp.value : '';
-    inp.value = replyDue();
-    paint(); doSave();
-  };
-  btn.onclick = () => { S.replyDue = ''; inp.value = replyDue(); paint(); doSave(); };
-  paint();
-}
-
-function buildReportView(){
-  const cur = curScore(), mx = maxScore(), norm = normScore();
+  const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const coNm = S.company.name;
   const dateStr = S.date;
 
-  // 조치 회신 기한 (결과 화면에서 직접 고친 값이 있으면 그 값)
-  const replyStr = replyDue();
-
-  // 지적사항 (조치가 필요한 항목) — 보고서의 핵심
+  // 지적사항 목록
   const ngList = [];
   CFG.checklist.forEach(maj => maj.items.forEach(it => it.subs.forEach(s => {
     if(s.id === '1-1-1' && S.type === '정기') return;
     const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
     const mxSc = Math.max(...s.options.map(o => o.score));
-    if(a.score < mxSc) ngList.push({
-      id: s.id, major: maj.id + '. ' + maj.name, item: it.name,
-      text: s.options[a.optionIdx].text, memo: a.memo || '',
-      score: a.score, maxSc: mxSc, loss: mxSc - a.score
-    });
+    if(a.score < mxSc) ngList.push({id: s.id, major: maj.name, text: s.options[a.optionIdx].text, memo: a.memo || '', score: a.score, maxSc});
   })));
-  ngList.sort((a, b) => b.loss - a.loss);   // 감점이 큰 항목부터
 
   // 대분류별 점수
   const majScores = CFG.checklist.map(maj => {
@@ -1457,341 +1072,177 @@ function buildReportView(){
     return {name: maj.id + '. ' + maj.name, score: g, max: m, pct: m > 0 ? Math.round(g/m*100) : 0};
   });
 
-  // 전체 점검 체크시트 — 모든 항목의 평가기준을 그대로 싣는다.
-  // 협력사가 "어떤 기준으로 몇 점인지"를 보고서만으로 검증할 수 있어야 하므로
-  // 선택지를 전부 펼치고 점검자가 고른 것에 ● 를 표시한다.
-  let missCount = 0, subTotal = 0;
-  const sheetGroups = CFG.checklist.map(maj => {
-    let mg = 0, mm = 0;
-    const items = [];
-    maj.items.forEach(it => {
-      const rows = [];
-      it.subs.forEach(sub => {
-        if(sub.id === '1-1-1' && S.type === '정기') return;
-        const a = S.ans[sub.id];
-        const mxSc = Math.max(...sub.options.map(o => o.score));
-        const answered = a && a.optionIdx >= 0;
-        if(!answered) missCount++;
-        subTotal++;
-        mm += mxSc; mg += answered ? a.score : 0;
-        rows.push({
-          id: sub.id, maxSc: mxSc,
-          score: answered ? a.score : null,
-          memo: a && a.memo ? a.memo : '',
-          cls: !answered ? 'rp-cs-miss' : (a.score < mxSc ? 'rp-cs-ng' : ''),
-          options: sub.options.map((o, oi) => ({
-            text: o.text, score: o.score, on: answered && oi === a.optionIdx
-          }))
-        });
-      });
-      if(rows.length) items.push({name: it.name, rows});
-    });
-    return {name: maj.id + '. ' + maj.name, items, got: mg, max: mm};
-  }).filter(g => g.items.length > 0);
-
-  // 지적항목 → 연결된 사진 번호 (지적사항 표에서 "사진 3" 처럼 참조)
-  const photoRefs = {};
-  S.photos.forEach((p, i) => {
-    if(!p.linkId) return;
-    (photoRefs[p.linkId] = photoRefs[p.linkId] || []).push(i + 1);
-  });
-
+  // 사진 그리드 HTML
   const photosHtml = S.photos.length > 0
-    ? `<h2>참고 사진 <span class="rp-count">${S.photos.length}장</span></h2>
-       <div class="rp-photos">
-         ${S.photos.map((p, i) => `
-           <figure class="rp-photo">
-             <img src="${p.dataUrl}" alt="현장사진 ${i+1}">
-             <figcaption>
-               <span class="rp-photo-no">사진 ${i+1}</span>
-               ${p.linkId ? `<span class="rp-tag">${esc(p.linkId)}</span>` : ''}
-               <span class="rp-photo-cap rp-edit" contenteditable="true" data-photo="${i}" data-ph="사진 설명 입력">${esc(p.caption || '')}</span>
-             </figcaption>
-           </figure>`).join('')}
-       </div>` : '';
+    ? `<div style="margin-top:24px;page-break-before:always;">
+        <h2 style="font-size:16px;font-weight:700;color:#0f2744;border-bottom:2px solid #0f2744;padding-bottom:6px;margin-bottom:16px;">
+          📷 참고 사진 (${S.photos.length}장)
+        </h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          ${S.photos.map((p, i) => `
+            <div style="border:1px solid #d1dce8;border-radius:8px;overflow:hidden;">
+              <img src="${p.dataUrl}" style="width:100%;height:200px;object-fit:cover;display:block;">
+              <div style="padding:8px 10px;font-size:11px;color:#5a7a9a;min-height:28px;">
+                사진 ${i+1}
+              </div>
+            </div>`).join('')}
+        </div>
+        <p style="font-size:11px;color:#9aa8b4;margin-top:12px;">
+          ※ 사진 설명(캡션)은 PC 업로드 화면에서 추가할 수 있습니다.
+        </p>
+      </div>` : '';
 
-  const html = `
-<div class="rp-cover">
-  <div class="rp-cover-label">삼성중공업 도장QM · 사외 철의장 품질점검</div>
-  <div class="rp-cover-title">도장 협력사 품질점검 결과 보고서</div>
-  <div class="rp-cover-meta">
-    <div><span>협력사</span><b>${esc(coNm)}</b></div>
-    <div><span>점검일자</span><b>${esc(dateStr)}</b></div>
-    <div><span>점검유형</span><b>${esc(S.type)}</b></div>
-    <div><span>점검자</span><b>${esc(S.inspector)}</b></div>
+  const html = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>점검보고서_${coNm}_${dateStr}</title>
+<style>
+  @page { size: A4; margin: 15mm 12mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-size: 12px; color: #1a2a3a; background: #fff; }
+  .cover { background: #0f2744; color: #fff; padding: 32px 28px 28px; border-radius: 0 0 16px 16px; }
+  .cover-label { font-size: 11px; color: rgba(255,255,255,.55); letter-spacing:.1em; margin-bottom: 8px; }
+  .cover-title { font-size: 22px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
+  .cover-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .cover-meta div { font-size: 12px; }
+  .cover-meta b { color: #f5c842; }
+  .cover-meta span { color: rgba(255,255,255,.7); }
+  .score-box { display: flex; align-items: center; gap: 24px; background: #f0f4f8; border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
+  .score-num { font-size: 56px; font-weight: 700; color: #0f2744; line-height: 1; font-family: monospace; }
+  .score-sub { font-size: 13px; color: #5a7a9a; margin-top: 4px; }
+  .grade-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 16px; font-weight: 700; color: #fff; }
+  .g-A { background: #1e8449; } .g-B { background: #d68910; } .g-C { background: #c0392b; } .g-none { background: #718096; }
+  h2 { font-size: 14px; font-weight: 700; color: #0f2744; border-bottom: 2px solid #0f2744; padding-bottom: 6px; margin: 20px 0 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  th { background: #0f2744; color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; }
+  td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .bar-wrap { width: 80px; height: 7px; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; margin: 0 8px; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .ng-tag { display: inline-block; background: #fdecea; color: #e74c3c; border: 1px solid rgba(231,76,60,.25); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; font-family: monospace; }
+  .ok { color: #1e8449; } .ng { color: #c0392b; }
+  .footer { margin-top: 32px; font-size: 10px; color: #9aa8b4; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 10px; }
+  @media print {
+    .no-print { display: none; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 인쇄 버튼 -->
+<div class="no-print" style="position:fixed;top:12px;right:12px;display:flex;gap:8px;z-index:100;">
+  <button onclick="window.print()" style="padding:10px 20px;background:#0f2744;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">🖨️ 인쇄 / PDF 저장</button>
+  <button onclick="window.close()" style="padding:10px 16px;background:#f0f4f8;color:#1a2a3a;border:1px solid #d1dce8;border-radius:8px;font-size:13px;cursor:pointer;">닫기</button>
+</div>
+
+<!-- 표지 -->
+<div class="cover">
+  <div class="cover-label">삼성중공업 도장QM · 사외 철의장 품질점검 보고서</div>
+  <div class="cover-title">도장 협력사 품질점검<br>결과 보고서</div>
+  <div class="cover-meta">
+    <div><span>협력사</span><br><b>${coNm}</b></div>
+    <div><span>점검일자</span><br><b>${dateStr}</b></div>
+    <div><span>점검유형</span><br><b>${S.type}</b></div>
+    <div><span>점검자</span><br><b>${S.inspector}</b></div>
   </div>
 </div>
 
-<div class="rp-main">
-
-  <div class="rp-summary">
-    <div class="rp-sum-score">
-      <div class="rp-sum-num">${norm}</div>
-      <div class="rp-sum-cap">환산점수 / 100점<br><span>원점수 ${cur}/${mx}점</span></div>
-    </div>
-    <div class="rp-sum-facts">
-      <div class="rp-fact">
-        <span class="rp-fact-k">지적사항</span>
-        <b class="${ngList.length ? 'rp-ng' : 'rp-ok'}">${ngList.length}건</b>
-      </div>
-      <div class="rp-fact">
-        <span class="rp-fact-k">조치 회신 기한</span>
-        <b>${replyStr}</b>
-      </div>
-      ${missCount ? `<div class="rp-fact"><span class="rp-fact-k">미입력</span><b class="rp-ng">${missCount}건</b></div>` : ''}
-    </div>
+<!-- 종합점수 -->
+<div class="score-box">
+  <div>
+    <div class="score-num">${norm}</div>
+    <div class="score-sub">환산점수 / 100점<br><span style="font-size:11px;color:#9aa8b4;">원점수 ${cur}/${mx}점</span></div>
   </div>
-  <p class="rp-disclaimer">본 점수는 금회 점검 결과이며, 협력사 연간 등급은 연간 점검 이력과 품질 문제 등을 종합하여 연말에 별도 결정됩니다.</p>
-
-  <h2>조치 요구 사항 <span class="rp-count">${ngList.length}건</span></h2>
-  ${ngList.length > 0 ? `
-  <table class="rp-ng-table">
-    <thead><tr>
-      <th style="width:54px;">번호</th>
-      <th>지적 내용</th>
-      <th style="width:92px;">대분류</th>
-      <th style="width:46px;">감점</th>
-      <th style="width:52px;">사진</th>
-      <th style="width:20%;">점검자 코멘트 · 조치 계획</th>
-    </tr></thead>
-    <tbody>
-      ${ngList.map(n => `
-        <tr>
-          <td><span class="rp-tag">${esc(n.id)}</span></td>
-          <td>${esc(n.text)}<span class="rp-item-name">${esc(n.item)}</span></td>
-          <td class="rp-dim">${esc(n.major)}</td>
-          <td class="rp-ng rp-num">−${n.loss}</td>
-          <td class="rp-dim rp-num">${photoRefs[n.id] ? photoRefs[n.id].join(', ') : ''}</td>
-          <td class="rp-dim rp-edit" contenteditable="true" data-sub="${esc(n.id)}" data-ph="조치 계획 입력">${esc(n.memo || '')}</td>
-        </tr>`).join('')}
-    </tbody>
-  </table>
-  <p class="rp-note">위 항목에 대한 조치 결과를 <b>${replyStr}</b>까지 회신해 주시기 바랍니다.</p>
-  ` : '<p class="rp-note rp-ok-box">지적사항 없음 — 조치 요구 사항이 없습니다.</p>'}
-
-  <h2>대분류별 점수</h2>
-  <table class="rp-maj">
-    <thead><tr><th>대분류</th><th style="width:78px;">점수</th><th style="width:120px;">취득율</th></tr></thead>
-    <tbody>
-      ${majScores.map(m => `
-        <tr>
-          <td>${esc(m.name)}</td>
-          <td class="rp-num">${m.score}/${m.max}</td>
-          <td>
-            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:${m.pct}%;background:${m.pct>=90?'#2ecc71':m.pct>=70?'#f39c12':'#e74c3c'}"></span></span>
-            <span class="rp-pct ${m.pct>=90?'rp-ok':m.pct>=70?'':'rp-ng'}">${m.pct}%</span>
-          </td>
-        </tr>`).join('')}
-    </tbody>
-  </table>
-
-  <h2>전체 점검 체크시트 <span class="rp-count">${subTotal}항목</span></h2>
-  <p class="rp-legend-txt">
-    각 항목의 평가기준을 모두 실었으며, <b>&#9679;</b> 표시가 금회 점검에서 확인된 상태입니다.
-    감점 항목은 붉은 바탕${missCount ? ', 미입력 항목은 노란 바탕' : ''}으로 표시했습니다.
-    비고는 점검자 코멘트입니다.
-  </p>
-  <table class="rp-cs">
-    <thead><tr>
-      <th style="width:54px;">번호</th>
-      <th>점검항목 / 평가기준</th>
-      <th style="width:38px;">배점</th>
-      <th style="width:38px;">획득</th>
-      <th style="width:22%;">비고</th>
-    </tr></thead>
-    <tbody>
-      ${sheetGroups.map(g => `
-        <tr class="rp-cs-maj">
-          <td colspan="2">${esc(g.name)}</td>
-          <td class="rp-num">${g.max}</td>
-          <td class="rp-num">${g.got}</td>
-          <td></td>
-        </tr>
-        ${g.items.map(it => `
-          <tr class="rp-cs-item"><td colspan="5">${esc(it.name)}</td></tr>
-          ${it.rows.map(r => `
-            <tr class="${r.cls}">
-              <td><span class="rp-tag">${esc(r.id)}</span></td>
-              <td>
-                <ul class="rp-opts">
-                  ${r.options.map(o => `
-                    <li class="${o.on ? 'on' : ''}">
-                      <span class="rp-mark">${o.on ? '&#9679;' : '&#9675;'}</span>
-                      <span>${esc(o.text)}</span>
-                      <span class="rp-osc">${o.score}점</span>
-                    </li>`).join('')}
-                </ul>
-              </td>
-              <td class="rp-num">${r.maxSc}</td>
-              <td class="rp-num">${r.score === null ? '&ndash;' : r.score}</td>
-              <td class="rp-dim rp-edit" contenteditable="true" data-sub="${esc(r.id)}" data-ph="코멘트 입력">${esc(r.memo)}</td>
-            </tr>`).join('')}`).join('')}`).join('')}
-    </tbody>
-  </table>
-
-  ${photosHtml}
-
-  <div class="rp-footer">
-    삼성중공업㈜ 품질보증팀 도장QM · 점검자 ${esc(S.inspector)} · 생성 ${new Date().toLocaleString('ko-KR')} · 앱 ${APP_BUILD}
+  <div>
+    <span class="grade-badge ${gr ? 'g-' + gr.grade : 'g-none'}">${gr ? gr.grade + '등급' : '-'}</span>
+    <div style="font-size:12px;color:#5a7a9a;margin-top:6px;">${gr ? gr.label : ''}</div>
+    <div style="font-size:11px;color:#9aa8b4;margin-top:4px;">${gr?.note || ''}</div>
   </div>
-</div>`;
+</div>
 
-  showReportOverlay(html, '점검보고서 · ' + coNm + ' · ' + dateStr);
-}
+<!-- 대분류별 점수 -->
+<h2>대분류별 점수</h2>
+<table>
+  <thead><tr><th>대분류</th><th>점수</th><th style="width:100px;">취득율</th></tr></thead>
+  <tbody>
+    ${majScores.map(m => `
+      <tr>
+        <td>${m.name}</td>
+        <td>${m.score}/${m.max}점</td>
+        <td>
+          <div class="bar-wrap">
+            <div class="bar-fill" style="width:${m.pct}%;background:${m.pct>=90?'#2ecc71':m.pct>=70?'#f39c12':'#e74c3c'}"></div>
+          </div>
+          <span class="${m.pct>=90?'ok':m.pct>=70?'':'ng'}">${m.pct}%</span>
+        </td>
+      </tr>`).join('')}
+  </tbody>
+</table>
 
-/* 보고서를 새 탭/팝업/iframe 없이 현재 페이지 안에 그대로 그린다.
-   (새 탭·다운로드·팝업 방식은 PC Chrome에서는 조용한 다운로드로,
-    모바일 브라우저와 카카오톡 인앱 브라우저에서는 팝업 차단으로 막혀
-    "버튼을 눌러도 아무 일도 없는" 증상의 원인이었다. iframe(srcdoc) 역시
-    iOS Safari의 높이·스크롤 버그와 사진 첨부 시 수 MB 문자열 문제가 있어
-    사용하지 않는다. 일반 DOM 렌더링은 어떤 브라우저에서도 동일하게 동작한다.) */
-function showReportOverlay(html, title){
-  let ov = document.getElementById('report-overlay');
-  if(!ov){
-    ov = document.createElement('div');
-    ov.id = 'report-overlay';
-    ov.innerHTML =
-      '<div class="rp-bar">'
-      + '<span class="rp-bar-title" id="rp-title"></span>'
-      + '<button class="rp-btn rp-btn-html" id="rp-html">📤 HTML</button>'
-      + '<button class="rp-btn rp-btn-print" id="rp-print">🖨️ 인쇄/PDF</button>'
-      + '<button class="rp-btn rp-btn-close" id="rp-close">✕ 닫기</button>'
-      + '</div>'
-      + '<div id="report-view"></div>';
-    document.body.appendChild(ov);
-    document.getElementById('rp-close').onclick = () => { ov.classList.add('hidden'); };
-    document.getElementById('rp-print').onclick = () => { window.print(); };
-    document.getElementById('rp-html').onclick = () => { exportReportHtml(); };
+<!-- 지적사항 -->
+${ngList.length > 0 ? `
+<h2>지적사항 (${ngList.length}건)</h2>
+<table>
+  <thead><tr><th style="width:80px;">항목</th><th>지적 내용</th><th style="width:70px;">점수</th><th>비고</th></tr></thead>
+  <tbody>
+    ${ngList.map(n => `
+      <tr>
+        <td><span class="ng-tag">${n.id}</span><br><span style="font-size:10px;color:#5a7a9a;">${n.major}</span></td>
+        <td>${n.text}</td>
+        <td class="ng">${n.score}/${n.maxSc}점</td>
+        <td style="font-size:11px;color:#5a7a9a;">${n.memo || '-'}</td>
+      </tr>`).join('')}
+  </tbody>
+</table>` : '<h2>지적사항</h2><p style="padding:12px;color:#5a7a9a;font-size:12px;">지적사항 없음 ✅</p>'}
 
-    // 보고서 화면에서 고친 코멘트·사진설명을 앱 데이터에도 반영한다.
-    // (반영하지 않으면 타이핑한 내용이 화면을 닫는 순간 사라진다)
-    const view = document.getElementById('report-view');
-    view.addEventListener('focusout', e => {
-      const el = e.target;
-      if(!el.classList || !el.classList.contains('rp-edit')) return;
-      const txt = el.textContent.trim();
-      if(el.dataset.sub){
-        ensureAns(el.dataset.sub);
-        S.ans[el.dataset.sub].memo = txt;
-        // 같은 항목이 조치요구사항 표와 체크시트 양쪽에 있으므로 함께 맞춘다
-        view.querySelectorAll('.rp-edit[data-sub="' + el.dataset.sub + '"]').forEach(o => {
-          if(o !== el) o.textContent = txt;
-        });
-      }else if(el.dataset.photo !== undefined){
-        const pi = parseInt(el.dataset.photo);
-        if(S.photos[pi]) S.photos[pi].caption = txt;
-      }else return;
-      doSave();
-    });
+<!-- Remark -->
+${S.remark && S.remark.trim() ? `
+<h2 style="margin-top:20px;">📝 종합 Remark</h2>
+<div style="background:#f8fafc;border:1px solid #d1dce8;border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.8;color:#1a2a3a;white-space:pre-wrap;">${S.remark.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : ''}
+
+<!-- 참고 사진 -->
+${photosHtml}
+
+<div class="footer">
+  삼성중공업㈜ 품질보증팀 도장QM · 점검자: ${S.inspector} · 생성일시: ${new Date().toLocaleString('ko-KR')}
+</div>
+
+</body>
+</html>`;
+
+  // Blob URL 생성 → 모바일/PC 모두 안정적으로 동작
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const blobUrl = URL.createObjectURL(blob);
+
+  // 1순위: 새 탭에서 열기
+  const a = document.createElement('a');
+  a.href = blobUrl;
+  a.target = '_blank';
+  a.rel   = 'noopener';
+
+  // iOS Safari: download 속성 없이 열기
+  // Android/PC: download 속성 있으면 저장
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if(!isIOS){
+    const ymH = S.date.slice(0, 7);
+    a.download = coNm + '_' + ymH + '_점검보고서.html';
   }
-  document.getElementById('rp-title').textContent = title || '점검보고서';
-  const view = document.getElementById('report-view');
-  view.innerHTML = html;
-  view.scrollTop = 0;
-  ov.classList.remove('hidden');
-}
 
-/* ════════════════════════════════════════════════════════
-   보고서를 "고칠 수 있는" HTML 파일로 내보내기
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 
-   PDF 는 한 번 뽑으면 문구 하나 고치려 해도 방법이 없다.
-   그렇다고 원본 HTML 을 메모장으로 고치라고 하면 태그를 알아야 하고,
-   사진이 base64 로 들어가 파일이 수 MB 라 실질적으로 불가능하다.
-   그래서 "열면 그 자리에서 고쳐지는" HTML 을 내보낸다.
-   PC 크롬에서 열어 노란 칸을 클릭해 타이핑하고 [수정본 저장] 을 누르면
-   고친 내용이 반영된 HTML 이 새로 저장된다. 인쇄/PDF 도 그 화면에서 한다.
-════════════════════════════════════════════════════════ */
-/* 페이지 스타일시트에서 보고서에 필요한 규칙만 골라 복사한다.
-   (내보낸 파일이 앱 없이 혼자서도 똑같이 보여야 한다) */
-function collectReportCss(){
-  const out = [];
-  for(const sheet of document.styleSheets){
-    let rules;
-    try{ rules = sheet.cssRules; }catch(e){ continue; }   // 외부 폰트 CSS 등
-    if(!rules) continue;
-    for(const r of rules){
-      if(r.type === CSSRule.STYLE_RULE){
-        if(/#report-view|\.rp-|#report-overlay/.test(r.selectorText)) out.push(r.cssText);
-      }else if(r.type === CSSRule.MEDIA_RULE && /print/.test(r.conditionText || r.media.mediaText)){
-        out.push(r.cssText);
-      }else if(r.type === CSSRule.PAGE_RULE){
-        out.push(r.cssText);
-      }
-    }
+  // iOS에서 새 탭 차단 시 안내
+  if(isIOS){
+    setTimeout(() => {
+      // 탭이 열렸으면 아무것도 안 함, 안 열렸으면 안내
+    }, 500);
   }
-  return out.join('\n');
-}
 
-function exportReportHtml(){
-  const view = document.getElementById('report-view');
-  if(!view || !view.innerHTML.trim()){ alert('먼저 보고서를 열어 주세요.'); return; }
-  try{
-    const title = '점검보고서_' + S.company.name + '_' + S.date + '_' + S.type;
-    const css   = collectReportCss();
-
-    // 내보낸 파일 안에서 동작할 스크립트. 앱과 무관하게 혼자 돌아간다.
-    const inner = [
-      "var BAR=document.getElementById('xbar');",
-      "document.getElementById('xprint').onclick=function(){window.print();};",
-      "document.getElementById('xsave').onclick=function(){",
-      "  var clone=document.documentElement.cloneNode(true);",
-      // 저장 직전 현재 화면의 편집 내용을 복제본에 반영
-      "  var src=document.querySelectorAll('.rp-edit'), dst=clone.querySelectorAll('.rp-edit');",
-      "  for(var i=0;i<src.length;i++){ dst[i].textContent=src[i].textContent; }",
-      "  var html='<!DOCTYPE html>'+String.fromCharCode(10)+clone.outerHTML;",
-      "  var blob=new Blob([html],{type:'text/html;charset=utf-8'});",
-      "  var a=document.createElement('a');",
-      "  a.href=URL.createObjectURL(blob);",
-      "  a.download=document.title.replace(/[\\/:*?\"<>|]/g,'_')+'.html';",
-      "  document.body.appendChild(a); a.click();",
-      "  setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},1500);",
-      "  var m=document.getElementById('xmsg');",
-      "  m.style.display='inline'; setTimeout(function(){m.style.display='none';},2500);",
-      "};"
-    ].join('\n');
-
-    const doc =
-'<html lang="ko"><head><meta charset="UTF-8">'
-+ '<meta name="viewport" content="width=device-width, initial-scale=1">'
-+ '<title>' + esc(title) + '</title>'
-+ '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">'
-+ '<style>\n'
-+ 'body{margin:0;background:#fff;font-family:"Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif;}\n'
-+ '#report-view{max-width:840px;margin:0 auto;background:#fff;color:#1a2a3a;font-size:11.5px;line-height:1.45;}\n'
-+ '#xbar{position:sticky;top:0;z-index:9;display:flex;gap:8px;align-items:center;'
-+ 'padding:10px 14px;background:#0f2744;color:#fff;font-size:12px;}\n'
-+ '#xbar .xt{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}\n'
-+ '#xbar button{padding:8px 13px;border:none;border-radius:8px;font-size:12.5px;font-weight:700;'
-+ 'font-family:inherit;cursor:pointer;}\n'
-+ '#xsave{background:#1e6b34;color:#fff;} #xprint{background:#f5c842;color:#0f2744;}\n'
-+ '#xmsg{display:none;color:#f5c842;font-size:11.5px;font-weight:700;}\n'
-+ '#xhelp{background:#fffdf5;border-bottom:1px solid #e8dcb8;color:#7a5200;'
-+ 'font-size:11.5px;padding:9px 14px;line-height:1.6;}\n'
-+ '#xhelp b{color:#5a3d00;}\n'
-+ css + '\n'
-+ '@media print{#xbar,#xhelp{display:none!important;} #report-view{max-width:none;}}\n'
-+ '</style></head><body>'
-+ '<div id="xbar"><span class="xt">' + esc(title) + '</span>'
-+ '<span id="xmsg">저장했습니다</span>'
-+ '<button id="xsave">\ud83d\udcbe 수정본 저장</button>'
-+ '<button id="xprint">\ud83d\udda8\ufe0f 인쇄/PDF</button></div>'
-+ '<div id="xhelp">노란색 칸(<b>비고 · 조치 계획 · 사진 설명</b>)은 <b>클릭해서 바로 고칠 수 있습니다.</b> '
-+ '다 고친 뒤 <b>[\ud83d\udcbe 수정본 저장]</b>을 누르면 고친 내용이 담긴 HTML 파일이 새로 저장됩니다. '
-+ 'PDF가 필요하면 <b>[\ud83d\udda8\ufe0f 인쇄/PDF]</b>를 누르세요.</div>'
-+ '<div id="report-view">' + view.innerHTML + '</div>'
-+ '<script>' + inner + '<\/script></body></html>';
-
-    const blob = new Blob(['<!DOCTYPE html>\n' + doc], {type: 'text/html;charset=utf-8'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = title.replace(/[\/:*?"<>|]/g, '_') + '.html';
-    document.body.appendChild(a); a.click();
-    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-    markDone('HTML');
-    showInfoInd('\ud83d\udce4 HTML 보고서를 저장했습니다');
-  }catch(e){
-    alert('HTML 내보내기 중 오류가 발생했습니다.\n\n' + ((e && e.message) ? e.message : e));
-  }
+  // URL 해제 (약간 딜레이)
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
 }
 
 /* ════════════════════════════════════════════════════════
@@ -1800,7 +1251,8 @@ function exportReportHtml(){
 function doMail(){
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const insp = S.inspector;
-  const rdStr = replyDue().replace(/-/g, '.');
+  const rd = new Date(S.date); rd.setDate(rd.getDate() + (CFG.meta?.reply_days || 7));
+  const rdStr = rd.toISOString().slice(0, 10).replace(/-/g, '.');
   const ngLines = [];
   CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
     if(s.id === '1-1-1' && S.type === '정기') return;
@@ -1816,8 +1268,7 @@ function doMail(){
     }));
     return ' ' + m.id + '. ' + m.name + ': ' + g + '/' + mx2 + '점';
   });
-  // 메일은 협력사에게 직접 발송되므로 등급을 쓰지 않는다 (등급은 연말 종합평가에서 결정)
-  const subj = encodeURIComponent('[도장품질점검] ' + S.company.name + '_' + S.date.replace(/-/g, '.') + '_' + S.type + '_' + norm + '점' + (ngLines.length ? ' / 지적 ' + ngLines.length + '건' : ''));
+  const subj = encodeURIComponent('[도장품질점검] ' + S.company.name + '_' + S.date.replace(/-/g, '.') + '_' + S.type + '_' + norm + '점(' + (gr ? gr.grade + '등급' : '-') + ')');
   const body = encodeURIComponent(
     '안녕하세요. 삼성중공업 도장QM ' + insp + '입니다.\n\n'
     + '금일 실시한 도장 품질점검 결과를 송부드립니다.\n\n'
@@ -1828,8 +1279,7 @@ function doMail(){
     + '━━ 종합 결과 ━━━━━━━━━━━━━━━━\n'
     + ' 원점수: ' + cur + ' / ' + mx + '점\n'
     + ' 환산점수(100점 기준): ' + norm + '점\n'
-    + ' 지적사항: ' + ngLines.length + '건\n'
-    + ' ※ 본 점수는 금회 점검 결과이며, 연간 등급은 연말 종합평가로 별도 결정됩니다.\n\n'
+    + ' 등급: ' + (gr ? gr.grade + '등급 · ' + gr.label : '-') + '\n\n'
     + '━━ 대분류별 점수 ━━━━━━━━━━━━━\n'
     + majLines.join('\n') + '\n'
     + (ngLines.length > 0 ? '\n━━ 주요 지적사항 (' + ngLines.length + '건) ━━━━━━━\n' + ngLines.join('\n') + '\n' : '')
@@ -1838,9 +1288,6 @@ function doMail(){
     + '상세 점검결과는 첨부 파일을 확인해 주시기 바랍니다.\n\n'
     + '감사합니다.\n삼성중공업 도장QM ' + insp
   );
-  _allowLeave = true;   // 메일 앱 전환은 종료가 아니므로 경고창을 띄우지 않는다
-  setTimeout(() => { _allowLeave = false; }, 5000);
-  doSave();
   window.location.href = 'mailto:?subject=' + subj + '&body=' + body;
   closeModal('modal-exp');
 }
@@ -1848,265 +1295,64 @@ function doMail(){
 /* ════════════════════════════════════════════════════════
    자동저장
 ════════════════════════════════════════════════════════ */
-/* 저장 슬롯 공통 처리.
-   draft = 지금 진행 중인 작업 / bak = 치워둔 작업 보관함.
-   점검자가 실수로 화면을 나가더라도 내용이 사라지지 않도록,
-   이 앱은 "삭제"를 하지 않고 항상 bak 으로 옮겨만 둔다. */
-function slotWrite(key, obj, photos){
-  localStorage.setItem(key, JSON.stringify(obj));
-  try{
-    localStorage.setItem(key + '_photos', JSON.stringify(photos || []));
-    return true;
-  }catch(e){
-    // 용량 초과: 사진만 저장 실패. 점검 내용 자체는 위에서 이미 저장됐다.
-    localStorage.removeItem(key + '_photos');
-    return false;
-  }
-}
-function slotRead(key){
-  try{
-    const raw = localStorage.getItem(key); if(!raw) return null;
-    const d = JSON.parse(raw);
-    if(!d || !d.company || !d.date) return null;
-    try{ d._photos = JSON.parse(localStorage.getItem(key + '_photos') || '[]'); }
-    catch(e){ d._photos = []; }
-    return d;
-  }catch(e){ return null; }
-}
-function slotDrop(key){
-  localStorage.removeItem(key);
-  localStorage.removeItem(key + '_photos');
-}
-
-/* ── 보관함(최근 BAK_MAX건) ───────────────────────────────
-   하루에 협력사 2~3곳을 도는 동선에서, 앞 협력사 작업이
-   뒤 협력사 작업에 덮이지 않도록 여러 칸을 유지한다.
-   목록은 BAK_KEY 한 곳에, 사진은 건별 키에 따로 담는다. */
-function bakList(){
-  try{ const a = JSON.parse(localStorage.getItem(BAK_KEY) || '[]'); return Array.isArray(a) ? a : []; }
-  catch(e){ return []; }
-}
-function bakPhotoKey(id){ return 'inspection_bak_' + id + '_photos'; }
-function bakPhotos(id){
-  try{ return JSON.parse(localStorage.getItem(bakPhotoKey(id)) || '[]'); }catch(e){ return []; }
-}
-function bakPut(d, photos){
-  const list = bakList();
-  const id = 'b' + Date.now().toString(36);
-  // 같은 협력사·같은 날짜 건은 최신 것만 남긴다 (같은 작업이 여러 칸을 먹지 않도록)
-  const dup = list.filter(e => e.companyId === d.company.id && e.date === d.date);
-  dup.forEach(e => localStorage.removeItem(bakPhotoKey(e.id)));
-  let next = list.filter(e => !(e.companyId === d.company.id && e.date === d.date));
-  next.unshift({
-    id, companyId: d.company.id, companyName: d.company.name,
-    date: d.date, type: d.type, inspector: d.inspector,
-    majIdx: d.majIdx || 0, ans: d.ans || {},
-    savedAt: d.savedAt || new Date().toISOString(),
-    ansCount: Object.keys(d.ans || {}).length, photoCount: (photos || []).length
-  });
-  // 오래된 것부터 버린다
-  while(next.length > BAK_MAX){
-    const drop = next.pop();
-    localStorage.removeItem(bakPhotoKey(drop.id));
-  }
-  try{ localStorage.setItem(bakPhotoKey(id), JSON.stringify(photos || [])); }
-  catch(e){ localStorage.removeItem(bakPhotoKey(id)); next[0].photoCount = 0; }
-  try{ localStorage.setItem(BAK_KEY, JSON.stringify(next)); }
-  catch(e){
-    // 용량이 모자라면 가장 오래된 건의 사진부터 비우고 다시 시도한다
-    for(let k = next.length - 1; k >= 1; k--){
-      localStorage.removeItem(bakPhotoKey(next[k].id)); next[k].photoCount = 0;
-      try{ localStorage.setItem(BAK_KEY, JSON.stringify(next)); return; }catch(e2){}
-    }
-  }
-}
-/* 진행 중 작업을 치운다. 지우지 않고 보관함으로 옮긴다. */
-function stashDraft(){
-  const d = slotRead(DRAFT_KEY);
-  if(d) bakPut(d, d._photos);
-  slotDrop(DRAFT_KEY);
-  refreshRestoreBtn();
-}
-// 기존 호출부(내보내기 완료 등) 호환용 - 이제는 삭제가 아니라 보관이다.
-function clearDraft(){ stashDraft(); }
-
-/* ── 오늘 완료한 협력사 이력 ──────────────────────────────
-   저장(엑셀)·보고서 출력·[완료 후 다음 협력사]에서 기록한다.
-   날짜가 바뀌면 자동으로 비워진다. */
-function doneToday(){
-  try{
-    const d = JSON.parse(localStorage.getItem(DONE_KEY) || 'null');
-    if(!d || d.date !== today()) return { date: today(), items: [] };
-    return d;
-  }catch(e){ return { date: today(), items: [] }; }
-}
-function markDone(how){
-  if(!S.company) return;
-  const d = doneToday();
-  const hit = d.items.find(x => x.companyId === S.company.id && x.date === S.date);
-  if(hit){
-    if(hit.how.indexOf(how) < 0) hit.how += '/' + how;
-    hit.at = new Date().toISOString();
-  } else {
-    d.items.push({
-      companyId: S.company.id, companyName: S.company.name,
-      date: S.date, type: S.type, how: how,
-      ansCount: Object.keys(S.ans).length, photoCount: S.photos.length,
-      at: new Date().toISOString()
-    });
-  }
-  try{ localStorage.setItem(DONE_KEY, JSON.stringify(d)); }catch(e){}
-  refreshDoneList();
-}
-function refreshDoneList(){
-  const el = document.getElementById('done-today'); if(!el) return;
-  const d = doneToday();
-  if(!d.items.length){ el.classList.add('hidden'); return; }
-  el.classList.remove('hidden');
-  el.innerHTML = '<div class="done-hd">\u2713 오늘 마친 점검 ' + d.items.length + '곳</div>'
-    + d.items.map(x =>
-        '<div class="done-row"><span class="done-nm">' + escHtml(x.companyName) + '</span>'
-        + '<span class="done-how">' + escHtml(x.how) + '</span></div>').join('');
-}
-
-/* 결과 화면 -> 다음 협력사 점검으로 (하루 2~3곳 동선의 정식 경로) */
-function finishAndNext(){
-  const done = Object.keys(S.ans).length;
-  if(!window.confirm('이 협력사 점검을 마치고 다음 협력사 점검을 시작합니다.\n\n'
-    + '\u25b6 ' + S.company.name + ' / 입력 ' + done + '개 / 사진 ' + S.photos.length + '장\n\n'
-    + '\u26a0 결과 파일([\ud83d\udcca 저장] 또는 [\ud83d\udda8\ufe0f 보고서])을 아직 받지 않았다면\n'
-    + '   먼저 저장해 주세요. (내용은 보관함에 남으므로 되살릴 수 있습니다)\n\n'
-    + '계속할까요?')) return;
-  doSave();
-  markDone('완료처리');
-  stashDraft();
-  _lastDoneCoId = S.company.id;
-  const keepDate = S.date, keepInsp = S.inspector, keepType = S.type;
-  S = {company:null, date:'', type:keepType, inspector:'', majIdx:0, ans:{}, photos:[], replyDue:''};
-  _photoQuotaWarned = false;
-  // 협력사만 비우고 점검일·점검자는 그대로 둔다 (같은 날 이어서 도는 경우가 대부분)
-  document.getElementById('sel-co').value = '';
-  document.getElementById('inp-date').value = keepDate;
-  document.getElementById('inp-insp').value = keepInsp;
-  showScreen('sc-info');
-  refreshRestoreBtn();
-  refreshDoneList();
-}
-
-let _photoQuotaWarned = false;
 function doSave(){
-  if(!S.company) return;   // 아직 시작 전이면 저장할 것이 없다
   try{
-    const ok = slotWrite(DRAFT_KEY, {
+    // 사진은 용량이 크므로 별도 키에 저장
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({
       company: S.company, date: S.date, type: S.type, inspector: S.inspector,
-      replyDue: S.replyDue,
       majIdx: S.majIdx, ans: S.ans, savedAt: new Date().toISOString(),
-      photoCount: S.photos.length
-    }, S.photos);
-    if(!ok && S.photos.length > 0 && !_photoQuotaWarned){
-      // 조용히 사진이 사라지면 나중에 원인을 알 수 없으므로 한 번은 알린다.
-      _photoQuotaWarned = true;
-      setTimeout(() => alert(
-        '\u26a0 저장 공간이 부족해 사진은 임시보관되지 않습니다.\n'
-        + '점검 항목과 비고는 정상 저장됩니다.\n\n'
-        + '앱을 껐다 켜면 사진이 사라질 수 있으니,\n'
-        + '지금 [결과 보기] 화면에서 [보고서 출력]으로 한 번 저장해 주세요.'), 100);
-    }
+      photoCount: S.photos.length, remark: S.remark
+    }));
+    // 사진 dataUrl은 별도 키로 저장 (용량 한도 주의)
+    try{
+      localStorage.setItem(DRAFT_KEY + '_photos', JSON.stringify(S.photos));
+    }catch(e){ /* 용량 초과 시 사진만 제외 */ }
     showSaveInd();
   }catch(e){}
+}
+function clearDraft(){
+  localStorage.removeItem(DRAFT_KEY);
+  localStorage.removeItem(DRAFT_KEY + '_photos');
 }
 function showSaveInd(){
   let el = document.getElementById('save-ind');
   if(!el){ el = document.createElement('div'); el.id = 'save-ind'; el.className = 'save-ind'; document.body.appendChild(el); }
-  el.textContent = '\ud83d\udcbe 자동저장됨'; el.style.display = 'block';
+  el.textContent = '💾 자동저장됨'; el.style.display = 'block';
   clearTimeout(window._sit);
   window._sit = setTimeout(() => { el.style.display = 'none'; }, 1500);
 }
-
-/* 저장 시각을 "N분 전" 으로 */
-function agoTxt(iso){
-  const diff = Math.max(0, Math.floor((Date.now() - new Date(iso)) / 60000));
-  if(diff < 1)  return '방금 전';
-  if(diff < 60) return diff + '분 전';
-  return Math.floor(diff / 60) + '시간 ' + (diff % 60) + '분 전';
-}
-
-/* 저장 데이터를 화면/상태에 반영 */
-function applyDraft(d){
-  S.company   = d.company; S.date = d.date; S.type = d.type || '정기';
-  S.inspector = d.inspector || ''; S.majIdx = d.majIdx || 0; S.ans = d.ans || {};
-  S.replyDue  = d.replyDue || '';
-  S.photos    = d._photos || [];
-  const sel = document.getElementById('sel-co');
-  (CFG.companies || []).forEach((co, i) => { if(co.id === d.company.id) sel.value = i; });
-  document.getElementById('inp-date').value = d.date;
-  document.getElementById('inp-insp').value = d.inspector || '';
-  document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('on', b.dataset.t === S.type));
-}
-
-/* 앱 시작 시 진행 중 작업이 있으면 이어하기 안내 */
 function checkDraft(){
-  refreshRestoreBtn();
-  const d = slotRead(DRAFT_KEY);
-  if(!d) return;
-  const done = Object.keys(d.ans || {}).length;
-  document.getElementById('dr-info').innerHTML =
-    '<b>' + escHtml(d.company.name) + '</b><br>'
-    + '점검일 ' + escHtml(d.date) + ' \u00b7 ' + escHtml(d.type || '') + ' \u00b7 점검자 ' + escHtml(d.inspector || '-') + '<br>'
-    + '입력한 항목 <b>' + done + '개</b> \u00b7 사진 <b>' + (d._photos ? d._photos.length : 0) + '장</b><br>'
-    + '<span class="dr-ts">마지막 저장: ' + agoTxt(d.savedAt) + '</span>';
-  window._draft = d;
-  openModal('modal-draft');
-}
-function draftContinue(){
-  closeModal('modal-draft');
-  applyDraft(window._draft);
-  buildTabs(); renderMaj(S.majIdx); showScreen('sc-check'); refreshPhotoUI();
-}
-function draftInfo(){
-  closeModal('modal-draft');
-  applyDraft(window._draft);
-  showScreen('sc-info');
-}
-function draftLater(){ closeModal('modal-draft'); }   // 그대로 둔다 (다음에 켜도 또 뜬다)
-
-/* 보관함 버튼 (최근 BAK_MAX건 중에서 골라 되살린다) */
-function refreshRestoreBtn(){
-  const b = document.getElementById('btn-restore'); if(!b) return;
-  const list = bakList();
-  b.classList.toggle('hidden', list.length === 0);
-  if(list.length){
-    const t = list[0];
-    b.innerHTML = '\u21a9 저장된 이전 작업 ' + list.length + '건 \u2014 되살리기<br>'
-      + '<span style="font-weight:500;font-size:12.5px;">'
-      + '최근: ' + escHtml(t.companyName) + ' \u00b7 ' + escHtml(t.date)
-      + ' \u00b7 입력 ' + t.ansCount + '개 \u00b7 사진 ' + t.photoCount + '장</span>';
-  }
-}
-function restoreBak(){
-  const list = bakList();
-  if(!list.length){ alert('되살릴 작업이 없습니다.'); refreshRestoreBtn(); return; }
-  const body = document.getElementById('bak-body');
-  body.innerHTML = list.map(e =>
-      '<button class="bak-row" onclick="restorePick(\'' + e.id + '\')">'
-      + '<div class="bak-nm">' + escHtml(e.companyName) + '</div>'
-      + '<div class="bak-sub">' + escHtml(e.date) + ' \u00b7 ' + escHtml(e.type || '')
-      + ' \u00b7 점검자 ' + escHtml(e.inspector || '-') + '</div>'
-      + '<div class="bak-sub">입력 ' + e.ansCount + '개 \u00b7 사진 ' + e.photoCount + '장 \u00b7 '
-      + agoTxt(e.savedAt) + '</div></button>').join('');
-  openModal('modal-bak');
-}
-function restorePick(id){
-  const e = bakList().find(x => x.id === id);
-  if(!e){ closeModal('modal-bak'); return; }
-  // 진행 중인 작업이 있으면 그것도 보관함에 넣고 바꾼다 (덮어쓰지 않는다)
-  if(S.company && (Object.keys(S.ans).length > 0 || S.photos.length > 0)){ doSave(); stashDraft(); }
-  closeModal('modal-bak');
-  const co = (CFG.companies || []).find(c => c.id === e.companyId) || {id: e.companyId, name: e.companyName};
-  applyDraft({ company: co, date: e.date, type: e.type, inspector: e.inspector,
-               majIdx: e.majIdx, ans: e.ans, _photos: bakPhotos(e.id) });
-  buildTabs(); renderMaj(S.majIdx); showScreen('sc-check'); refreshPhotoUI();
-  doSave();
+  try{
+    const raw = localStorage.getItem(DRAFT_KEY); if(!raw) return;
+    const d = JSON.parse(raw); if(!d.company || !d.date) return;
+    const diff = Math.floor((Date.now() - new Date(d.savedAt)) / 60000);
+    const ts   = diff < 60 ? diff + '분 전' : Math.floor(diff / 60) + '시간 ' + diff % 60 + '분 전';
+    const photoMsg = d.photoCount > 0 ? '\n사진: ' + d.photoCount + '장' : '';
+    const msg = '저장된 점검 작업이 있습니다.\n\n협력사: ' + d.company.name + '\n점검일: ' + d.date + '\n점검자: ' + (d.inspector || '-') + photoMsg + '\n저장: ' + ts + '\n\n이어서 작업하시겠습니까?';
+    if(window.confirm(msg)){
+      S.company   = d.company; S.date = d.date; S.type = d.type;
+      S.inspector = d.inspector; S.majIdx = d.majIdx || 0; S.ans = d.ans || {};
+      S.remark    = d.remark || '';
+      // 사진 복구
+      try{
+        const photoRaw = localStorage.getItem(DRAFT_KEY + '_photos');
+        S.photos = photoRaw ? JSON.parse(photoRaw) : [];
+      }catch(e){ S.photos = []; }
+      const sel = document.getElementById('sel-co');
+      CFG.companies.forEach((co, i) => { if(co.id === d.company.id) sel.value = i; });
+      document.getElementById('inp-date').value  = d.date;
+      document.getElementById('inp-insp').value  = d.inspector || '';
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('on', b.dataset.t === d.type));
+      S.type = d.type;
+      if(window.confirm('기본정보 화면에서 시작할까요?\n(아니오: 점검 화면으로 바로 이동)')){
+        showScreen('sc-info');
+      } else {
+        buildTabs(); renderMaj(S.majIdx); showScreen('sc-check'); refreshPhotoUI();
+      }
+    } else {
+      if(window.confirm('저장된 작업을 삭제할까요?')) clearDraft();
+    }
+  }catch(e){ localStorage.removeItem(DRAFT_KEY); }
 }
 
 /* ════════════════════════════════════════════════════════
@@ -2119,44 +1365,6 @@ document.getElementById('modal-exp').addEventListener('click', function(e){
 /* ════════════════════════════════════════════════════════
    유틸
 ════════════════════════════════════════════════════════ */
-/* 안드로이드 하드웨어 뒤로가기 / 브라우저 뒤로가기로 앱이 통째로 닫히는 것을 막는다.
-   히스토리에 항상 한 칸을 남겨두고, 뒤로가기를 앱 안쪽 이동으로 바꿔 처리한다. */
-function initBackGuard(){
-  try{ history.pushState({app:1}, ''); }catch(e){ return; }
-  window.addEventListener('popstate', () => {
-    try{ history.pushState({app:1}, ''); }catch(e){}
-    // 1순위: 열려 있는 모달부터 닫는다
-    const open = document.querySelector('.overlay:not(.hidden)');
-    if(open){ open.classList.add('hidden'); return; }
-    const rp = document.getElementById('report-overlay');
-    if(rp && !rp.classList.contains('hidden')){ rp.classList.add('hidden'); return; }
-    // 2순위: 결과 화면 -> 점검 화면
-    if(!document.getElementById('sc-result').classList.contains('hidden')){
-      showScreen('sc-check'); return;
-    }
-    // 3순위: 점검 화면 -> 확인 후 처음으로
-    if(!document.getElementById('sc-check').classList.contains('hidden')){
-      goBack(); return;
-    }
-  });
-}
-
-/* 화면이 가려지거나(홈 버튼·전화 수신·앱 전환) 닫히기 직전에 한 번 더 저장한다. */
-let _allowLeave = false;
-function initExitGuard(){
-  document.addEventListener('visibilitychange', () => {
-    if(document.visibilityState === 'hidden') doSave();
-  });
-  window.addEventListener('pagehide', () => { doSave(); });
-  window.addEventListener('beforeunload', (e) => {
-    doSave();
-    if(!_allowLeave && S.company && (Object.keys(S.ans).length > 0 || S.photos.length > 0)){
-      e.preventDefault(); e.returnValue = '';   // 브라우저 기본 종료 확인창
-    }
-  });
-}
-window.addEventListener('DOMContentLoaded', () => { initBackGuard(); initExitGuard(); });
-
 function today(){ return new Date().toISOString().slice(0, 10); }
 function isKakao(){ const ua = navigator.userAgent.toLowerCase(); return ua.includes('kakaotalk') || ua.includes('kakao'); }
 function showKakaoBanner(){
