@@ -370,9 +370,9 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   </div>
   <div class="scroll" id="res-body"></div>
   <div class="btm" style="gap:6px;">
-    <button class="btn btn-gray" onclick="showScreen('sc-check')">‹ 수정</button>
-    <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:1.5">📊 저장</button>
-    <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.5">🖨️ 보고서</button>
+    <button class="btn btn-gray" onclick="showScreen('sc-check')" style="flex:0.8">‹ 수정</button>
+    <button class="btn btn-accent" onclick="doSaveAll()" style="flex:1.8;font-size:13px;">💾 저장</button>
+    <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:0.8;font-size:12px;">⋯ 옵션</button>
   </div>
 </div>
 
@@ -417,8 +417,17 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
     <div class="sheet-title">📊 결과 저장 및 발송</div>
     <div class="sheet-desc" id="exp-desc"></div>
     <div class="sheet-btns">
-      <button class="btn btn-ok" onclick="closeModal('modal-exp');doExcel()">📥 Excel 다운로드 (데이터용)</button>
-      <button class="btn btn-accent" onclick="closeModal('modal-exp');doHtmlReport()">🖨️ 보고서 출력 (사진 포함)</button>
+      <button class="btn btn-accent" onclick="doSaveAll()" style="font-size:14px;">
+        💾 Excel + 보고서 동시 저장
+      </button>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-ok" onclick="closeModal('modal-exp');doExcel()" style="flex:1;font-size:12px;">
+          📊 Excel만
+        </button>
+        <button class="btn btn-report" onclick="closeModal('modal-exp');doHtmlReport()" style="flex:1;font-size:12px;">
+          🖨️ 보고서만
+        </button>
+      </div>
       <button class="btn btn-navy" onclick="closeModal('modal-exp');doMail()">✉ 메일 앱 열기</button>
       <button class="btn btn-gray" onclick="closeModal('modal-exp')">닫기</button>
     </div>
@@ -1043,11 +1052,6 @@ function doExcel(){
    신규: HTML 보고서 출력 (사진 포함)
 ════════════════════════════════════════════════════════ */
 function doHtmlReport(){
-  // iOS Safari에서는 팝업 차단으로 새 탭 안 열릴 수 있음을 안내
-  const isIOSCheck = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  if(isIOSCheck){
-    if(!confirm('보고서 파일이 생성됩니다.\n\n파일이 자동으로 열리지 않으면\n다운로드된 HTML 파일을 열어주세요.\n\n계속하시겠습니까?')) return;
-  }
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const coNm = S.company.name;
   const dateStr = S.date;
@@ -1243,6 +1247,19 @@ ${photosHtml}
 
   // URL 해제 (약간 딜레이)
   setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+}
+
+/* ════════════════════════════════════════════════════════
+   동시 저장 (Excel + HTML 보고서)
+════════════════════════════════════════════════════════ */
+function doSaveAll(){
+  closeModal('modal-exp');
+  // Excel 먼저 저장
+  doExcel();
+  // 500ms 딜레이 후 HTML 보고서 (브라우저가 두 다운로드를 동시에 받을 수 있도록)
+  setTimeout(() => {
+    doHtmlReport();
+  }, 600);
 }
 
 /* ════════════════════════════════════════════════════════
