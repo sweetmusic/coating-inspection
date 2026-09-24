@@ -371,8 +371,8 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   <div class="scroll" id="res-body"></div>
   <div class="btm" style="gap:6px;">
     <button class="btn btn-gray" onclick="showScreen('sc-check')" style="flex:0.8">‹ 수정</button>
-    <button class="btn btn-accent" onclick="doSaveAll()" style="flex:1.8;font-size:13px;">💾 저장</button>
-    <button class="btn btn-report" onclick="updateExpDesc();openModal('modal-exp')" style="flex:0.8;font-size:12px;">⋯ 옵션</button>
+    <button class="btn btn-accent" onclick="doSaveAll()" style="flex:2;font-size:14px;">💾 저장</button>
+    <button class="btn btn-navy" onclick="openModal('modal-mail')" style="flex:0.9;font-size:12px;">✉ 메일</button>
   </div>
 </div>
 
@@ -411,25 +411,14 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 </div>
 
 <!-- 모달: 내보내기 (기존 + 보고서 버튼 추가) -->
-<div id="modal-exp" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-exp')">
+<div id="modal-mail" class="overlay hidden" onclick="if(event.target===this)closeModal('modal-mail')">
   <div class="sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">📊 결과 저장 및 발송</div>
-    <div class="sheet-desc" id="exp-desc"></div>
+    <div class="sheet-title">✉ 메일 발송</div>
+    <div class="sheet-desc" id="mail-desc"></div>
     <div class="sheet-btns">
-      <button class="btn btn-accent" onclick="doSaveAll()" style="font-size:14px;">
-        💾 Excel + 보고서 동시 저장
-      </button>
-      <div style="display:flex;gap:8px;">
-        <button class="btn btn-ok" onclick="closeModal('modal-exp');doExcel()" style="flex:1;font-size:12px;">
-          📊 Excel만
-        </button>
-        <button class="btn btn-report" onclick="closeModal('modal-exp');doHtmlReport()" style="flex:1;font-size:12px;">
-          🖨️ 보고서만
-        </button>
-      </div>
-      <button class="btn btn-navy" onclick="closeModal('modal-exp');doMail()">✉ 메일 앱 열기</button>
-      <button class="btn btn-gray" onclick="closeModal('modal-exp')">닫기</button>
+      <button class="btn btn-navy" onclick="closeModal('modal-mail');doMail()">✉ 메일 앱으로 발송</button>
+      <button class="btn btn-gray" onclick="closeModal('modal-mail')">닫기</button>
     </div>
   </div>
 </div>
@@ -943,20 +932,21 @@ function buildResult(){
 
   const sp = document.createElement('div'); sp.style.height = '16px'; body.appendChild(sp);
   showScreen('sc-result');
-  // 내보내기 모달 desc 업데이트
-  updateExpDesc();
+  // 메일 모달 desc 업데이트
+  updateMailDesc();
 }
 function makeSec(title){
   const s = document.createElement('div'); s.className = 'r-sec';
   s.innerHTML = '<div class="r-sec-title">' + title + '</div>';
   return s;
 }
-function updateExpDesc(){
+function updateMailDesc(){
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const miss = validSubs().filter(s => !S.ans[s.id] || S.ans[s.id].optionIdx < 0).length;
-  document.getElementById('exp-desc').innerHTML =
+  const el = document.getElementById('mail-desc');
+  if(el) el.innerHTML =
     '<strong>' + S.company.name + '</strong> · ' + S.date + ' · ' + S.type + '<br>'
-    + '원점수: <strong>' + cur + '/' + mx + '점</strong> → 환산 <strong>' + norm + '점</strong> <strong>' + (gr ? gr.grade + '등급' : '-') + '</strong>'
+    + '환산 <strong>' + norm + '점</strong> <strong>' + (gr ? gr.grade + '등급' : '-') + '</strong>'
     + (miss > 0 ? '<br>⚠ 미입력 ' + miss + '항목 있음' : '')
     + (S.photos.length > 0 ? '<br>📷 사진 ' + S.photos.length + '장 첨부됨' : '');
 }
@@ -1253,13 +1243,12 @@ ${photosHtml}
    동시 저장 (Excel + HTML 보고서)
 ════════════════════════════════════════════════════════ */
 function doSaveAll(){
-  closeModal('modal-exp');
-  // Excel 먼저 저장
+  // Excel 저장
   doExcel();
-  // 500ms 딜레이 후 HTML 보고서 (브라우저가 두 다운로드를 동시에 받을 수 있도록)
+  // 800ms 딜레이 후 HTML 보고서 (브라우저 다운로드 처리 간격 확보)
   setTimeout(() => {
     doHtmlReport();
-  }, 600);
+  }, 800);
 }
 
 /* ════════════════════════════════════════════════════════
