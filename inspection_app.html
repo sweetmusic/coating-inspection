@@ -964,7 +964,7 @@ function doExcel(){
   const r1 = [];
   r1.push(['(운반선) 사외 의장품 도장 협력사 종합평가_품질점검 체크시트','','','','','','']);
   r1.push(['점검유형',
-    S.type === '정기' ? '□ 정기 기본품질점검 ☑ 상/하반기 종합평가' : '☑ 정기 기본품질점검 □ 상/하반기 종합평가',
+    S.type === '정기' ? '☑ 정기 기본품질점검 □ 상/하반기 종합평가' : '□ 정기 기본품질점검 ☑ 상/하반기 종합평가',
     '점검일자', S.date, '점검자', '', insp]);
   r1.push(['협력사', coNm, '원점수', cur + '/' + mx + '점', '환산점수(100점)', '', norm + '점']);
   r1.push(['평가등급', gr ? gr.grade + '등급 (' + gr.label + ')' : '-', '','','','','']);
@@ -1224,19 +1224,24 @@ ${photosHtml}
     a.download = coNm + '_' + ymH + '_점검보고서.html';
   }
 
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-
-  // iOS에서 새 탭 차단 시 안내
+  // target="_blank"와 download 속성 동시 사용 시 충돌 방지
+  // PC/Android: download 속성으로 파일 저장
+  // iOS: target="_blank"로 새 탭에서 열기
   if(isIOS){
-    setTimeout(() => {
-      // 탭이 열렸으면 아무것도 안 함, 안 열렸으면 안내
-    }, 500);
+    a.target = '_blank';
+    a.rel    = 'noopener';
+  } else {
+    const ymH2 = S.date.slice(0, 7);
+    a.download = S.company.name + '_' + ymH2 + '_점검보고서.html';
   }
 
-  // URL 해제 (약간 딜레이)
-  setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+  // body에 추가 후 클릭, 즉시 제거하면 새탭 차단되므로 딜레이 적용
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(blobUrl);
+  }, 1000);
 }
 
 /* ════════════════════════════════════════════════════════
