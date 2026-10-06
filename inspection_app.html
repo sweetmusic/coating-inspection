@@ -557,18 +557,29 @@ function startCheck(){
   if(!ci)   { alert('협력사를 선택해 주세요.'); return; }
   if(!dt)   { alert('점검일자를 입력해 주세요.'); return; }
   if(!insp) { alert('점검자 이름을 입력해 주세요.'); return; }
+  // 임시저장 복구 후 기본정보 화면에서 시작한 경우: 작성 내용 유지 여부 확인
+  const done = Object.values(S.ans).filter(a => a.optionIdx >= 0).length;
+  const hasWork = done > 0 || S.photos.length > 0 || (S.remark || '').trim() !== '';
+  const keep = hasWork && window.confirm('작성 중인 점검 내용이 있습니다.\n(입력 ' + done + '항목, 사진 ' + S.photos.length + '장)\n\n이어서 작성할까요?\n(취소: 모두 지우고 새로 시작)');
   S.company  = CFG.companies[parseInt(ci)];
   S.date     = dt;
   S.inspector = insp;
-  S.uid      = newUid();
-  S.majIdx   = 0;
-  S.ans      = {};
-  S.photos   = [];  // 사진 초기화
-  S.remark   = '';   // remark 초기화
+  if(keep){
+    S.uid = S.uid || newUid();
+  } else {
+    S.uid      = newUid();
+    S.majIdx   = 0;
+    S.ans      = {};
+    S.photos   = [];  // 사진 초기화
+    S.remark   = '';   // remark 초기화
+    clearDraft();      // 이전 임시저장 삭제
+  }
   buildTabs();
-  renderMaj(0);
+  renderMaj(keep ? (S.majIdx || 0) : 0);
+  refreshTabs();
   showScreen('sc-check');
   refreshPhotoUI();
+  if(keep) doSave();  // 변경된 기본정보 반영
 }
 function goBack(){
   if(Object.keys(S.ans).length > 0){
