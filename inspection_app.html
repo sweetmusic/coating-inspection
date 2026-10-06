@@ -371,7 +371,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   <div class="scroll" id="res-body"></div>
   <div class="btm" style="gap:6px;">
     <button class="btn btn-gray" onclick="showScreen('sc-check')" style="flex:0.8;font-size:12px;">‹ 수정</button>
-    <button class="btn btn-accent" onclick="doExcel()" style="flex:1.2;font-size:12px;">📊 엑셀</button>
+    <button class="btn btn-accent" id="btn-excel" onclick="doExcel()" style="flex:1.2;font-size:12px;">📊 엑셀</button>
     <button class="btn btn-accent" onclick="doHtmlReport().catch(err => alert('보고서 생성 중 오류가 발생했습니다.\n' + err.message))" style="flex:1.2;font-size:12px;">📄 보고서</button>
     <button class="btn btn-navy" onclick="openModal('modal-mail')" style="flex:0.9;font-size:12px;">✉ 메일</button>
   </div>
@@ -456,7 +456,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if(isKakao()) showKakaoBanner();
   const cached = localStorage.getItem(CFG_KEY);
   if(cached){
-    try{ CFG = JSON.parse(cached); boot(); return; }
+    try{ CFG = JSON.parse(cached); boot(); refreshConfigQuietly(cached); return; }
     catch(e){ localStorage.removeItem(CFG_KEY); }
   }
   loadGitHub();
@@ -483,6 +483,24 @@ async function loadGitHub(){
       : '설정 파일 로드 실패: ' + e.message + '\n\n직접 불러오기 버튼을 이용해 주세요.';
     showErr(msg);
   }
+}
+// 저장된 설정으로 시작한 뒤 GitHub 최신 설정을 백그라운드로 확인.
+// 화면 스위치(show_excel)는 즉시 반영, 체크시트 등 나머지는 다음 실행부터 적용 (작성 중 점검 보호)
+async function refreshConfigQuietly(cached){
+  try{
+    const r = await fetch(GH_URL + '?t=' + Date.now());
+    if(!r.ok) return;
+    const latest = await r.json();
+    const text = JSON.stringify(latest);
+    if(text === cached) return;
+    localStorage.setItem(CFG_KEY, text);
+    CFG.meta = {...CFG.meta, show_excel: latest.meta?.show_excel};
+    applyUiSwitches();
+  }catch(e){ /* 오프라인 등: 저장된 설정 그대로 사용 */ }
+}
+function applyUiSwitches(){
+  const ex = document.getElementById('btn-excel');
+  if(ex) ex.style.display = CFG.meta?.show_excel === false ? 'none' : '';
 }
 function triggerFile(){ document.getElementById('file-input').click(); }
 function onFileLoad(ev){
@@ -524,6 +542,7 @@ function boot(){
   document.getElementById('inp-insp').value = CFG.meta?.inspector || '';
   document.getElementById('info-ver').textContent = CFG.meta?.version || '';
   document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16);
+  applyUiSwitches();
   showScreen('sc-info');
   setTimeout(checkDraft, 300);
 }
@@ -1315,6 +1334,7 @@ ${photosHtml}
   }
   document.body.appendChild(a);
   a.click();
+  clearDraft();
   setTimeout(() => {
     document.body.removeChild(a);
     URL.revokeObjectURL(blobUrl);
