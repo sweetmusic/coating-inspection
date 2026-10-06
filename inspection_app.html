@@ -370,8 +370,9 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   </div>
   <div class="scroll" id="res-body"></div>
   <div class="btm" style="gap:6px;">
-    <button class="btn btn-gray" onclick="showScreen('sc-check')" style="flex:0.8">‹ 수정</button>
-    <button class="btn btn-accent" onclick="doSaveAll()" style="flex:2;font-size:14px;">💾 저장</button>
+    <button class="btn btn-gray" onclick="showScreen('sc-check')" style="flex:0.8;font-size:12px;">‹ 수정</button>
+    <button class="btn btn-accent" onclick="doExcel()" style="flex:1.2;font-size:12px;">📊 엑셀</button>
+    <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.2;font-size:12px;">📄 보고서</button>
     <button class="btn btn-navy" onclick="openModal('modal-mail')" style="flex:0.9;font-size:12px;">✉ 메일</button>
   </div>
 </div>
@@ -945,7 +946,7 @@ function updateMailDesc(){
   const miss = validSubs().filter(s => !S.ans[s.id] || S.ans[s.id].optionIdx < 0).length;
   const el = document.getElementById('mail-desc');
   if(el) el.innerHTML =
-    '<strong>' + S.company.name + '</strong> · ' + S.date + ' · ' + S.type + '<br>'
+    '<strong>' + escHtml(S.company.name) + '</strong> · ' + S.date + ' · ' + S.type + '<br>'
     + '환산 <strong>' + norm + '점</strong> <strong>' + (gr ? gr.grade + '등급' : '-') + '</strong>'
     + (miss > 0 ? '<br>⚠ 미입력 ' + miss + '항목 있음' : '')
     + (S.photos.length > 0 ? '<br>📷 사진 ' + S.photos.length + '장 첨부됨' : '');
@@ -1022,7 +1023,7 @@ function doExcel(){
   /* ── 시트3: 참고사진 안내 ────────────────────────── */
   const r3 = [
     ['참고사진','',''],
-    ['※ 사진이 포함된 보고서는 [보고서 출력] 버튼을 이용해 주세요 (브라우저 인쇄 → PDF 저장)','',''],
+    ['※ 사진이 포함된 보고서는 결과 화면의 [📄 보고서] 버튼으로 받아 주세요 (보고서 열기 → 인쇄 → PDF 저장 가능)','',''],
     [],
     ['첨부된 사진 수 : ' + S.photos.length + '장','',''],
     ['협력사','점검일','점검자'],
@@ -1041,10 +1042,15 @@ function doExcel(){
 /* ════════════════════════════════════════════════════════
    신규: HTML 보고서 출력 (사진 포함)
 ════════════════════════════════════════════════════════ */
+function escHtml(v){
+  return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
 function doHtmlReport(){
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
   const coNm = S.company.name;
   const dateStr = S.date;
+  const e = escHtml;
 
   // 지적사항 목록
   const ngList = [];
@@ -1052,7 +1058,7 @@ function doHtmlReport(){
     if(s.id === '1-1-1' && S.type === '정기') return;
     const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
     const mxSc = Math.max(...s.options.map(o => o.score));
-    if(a.score < mxSc) ngList.push({id: s.id, major: maj.name, text: s.options[a.optionIdx].text, memo: a.memo || '', score: a.score, maxSc});
+    if(a.score < mxSc) ngList.push({id: s.id, major: maj.name, text: s.options[a.optionIdx].text, memo: a.memo || '', score: a.score, maxSc: mxSc});
   })));
 
   // 대분류별 점수
@@ -1081,16 +1087,13 @@ function doHtmlReport(){
               </div>
             </div>`).join('')}
         </div>
-        <p style="font-size:11px;color:#9aa8b4;margin-top:12px;">
-          ※ 사진 설명(캡션)은 PC 업로드 화면에서 추가할 수 있습니다.
-        </p>
       </div>` : '';
 
   const html = `<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>점검보고서_${coNm}_${dateStr}</title>
+<title>점검보고서_${e(coNm)}_${e(dateStr)}</title>
 <style>
   @page { size: A4; margin: 15mm 12mm; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1136,10 +1139,10 @@ function doHtmlReport(){
   <div class="cover-label">삼성중공업 도장QM · 사외 철의장 품질점검 보고서</div>
   <div class="cover-title">도장 협력사 품질점검<br>결과 보고서</div>
   <div class="cover-meta">
-    <div><span>협력사</span><br><b>${coNm}</b></div>
-    <div><span>점검일자</span><br><b>${dateStr}</b></div>
-    <div><span>점검유형</span><br><b>${S.type}</b></div>
-    <div><span>점검자</span><br><b>${S.inspector}</b></div>
+    <div><span>협력사</span><br><b>${e(coNm)}</b></div>
+    <div><span>점검일자</span><br><b>${e(dateStr)}</b></div>
+    <div><span>점검유형</span><br><b>${e(S.type)}</b></div>
+    <div><span>점검자</span><br><b>${e(S.inspector)}</b></div>
   </div>
 </div>
 
@@ -1163,7 +1166,7 @@ function doHtmlReport(){
   <tbody>
     ${majScores.map(m => `
       <tr>
-        <td>${m.name}</td>
+        <td>${e(m.name)}</td>
         <td>${m.score}/${m.max}점</td>
         <td>
           <div class="bar-wrap">
@@ -1183,10 +1186,10 @@ ${ngList.length > 0 ? `
   <tbody>
     ${ngList.map(n => `
       <tr>
-        <td><span class="ng-tag">${n.id}</span><br><span style="font-size:10px;color:#5a7a9a;">${n.major}</span></td>
-        <td>${n.text}</td>
+        <td><span class="ng-tag">${e(n.id)}</span><br><span style="font-size:10px;color:#5a7a9a;">${e(n.major)}</span></td>
+        <td>${e(n.text)}</td>
         <td class="ng">${n.score}/${n.maxSc}점</td>
-        <td style="font-size:11px;color:#5a7a9a;">${n.memo || '-'}</td>
+        <td style="font-size:11px;color:#5a7a9a;">${e(n.memo) || '-'}</td>
       </tr>`).join('')}
   </tbody>
 </table>` : '<h2>지적사항</h2><p style="padding:12px;color:#5a7a9a;font-size:12px;">지적사항 없음 ✅</p>'}
@@ -1194,66 +1197,35 @@ ${ngList.length > 0 ? `
 <!-- Remark -->
 ${S.remark && S.remark.trim() ? `
 <h2 style="margin-top:20px;">📝 종합 Remark</h2>
-<div style="background:#f8fafc;border:1px solid #d1dce8;border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.8;color:#1a2a3a;white-space:pre-wrap;">${S.remark.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : ''}
+<div style="background:#f8fafc;border:1px solid #d1dce8;border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.8;color:#1a2a3a;white-space:pre-wrap;">${e(S.remark)}</div>` : ''}
 
 <!-- 참고 사진 -->
 ${photosHtml}
 
 <div class="footer">
-  삼성중공업㈜ 품질보증팀 도장QM · 점검자: ${S.inspector} · 생성일시: ${new Date().toLocaleString('ko-KR')}
+  삼성중공업㈜ 품질보증팀 도장QM · 점검자: ${e(S.inspector)} · 생성일시: ${new Date().toLocaleString('ko-KR')}
 </div>
 
 </body>
 </html>`;
 
-  // Blob URL 생성 → 모바일/PC 모두 안정적으로 동작
+  // Blob URL 생성 → 파일로 저장 (Android/PC: download 속성, iOS: 새 탭에서 열기)
   const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
   const blobUrl = URL.createObjectURL(blob);
-
-  // 1순위: 새 탭에서 열기
   const a = document.createElement('a');
   a.href = blobUrl;
-  a.target = '_blank';
-  a.rel   = 'noopener';
-
-  // iOS Safari: download 속성 없이 열기
-  // Android/PC: download 속성 있으면 저장
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  if(!isIOS){
-    const ymH = S.date.slice(0, 7);
-    a.download = coNm + '_' + ymH + '_점검보고서.html';
-  }
-
-  // target="_blank"와 download 속성 동시 사용 시 충돌 방지
-  // PC/Android: download 속성으로 파일 저장
-  // iOS: target="_blank"로 새 탭에서 열기
-  if(isIOS){
+  if(/iPad|iPhone|iPod/.test(navigator.userAgent)){
     a.target = '_blank';
     a.rel    = 'noopener';
   } else {
-    const ymH2 = S.date.slice(0, 7);
-    a.download = S.company.name + '_' + ymH2 + '_점검보고서.html';
+    a.download = coNm + '_' + dateStr.slice(0, 7) + '_점검보고서.html';
   }
-
-  // body에 추가 후 클릭, 즉시 제거하면 새탭 차단되므로 딜레이 적용
   document.body.appendChild(a);
   a.click();
   setTimeout(() => {
     document.body.removeChild(a);
     URL.revokeObjectURL(blobUrl);
   }, 1000);
-}
-
-/* ════════════════════════════════════════════════════════
-   동시 저장 (Excel + HTML 보고서)
-════════════════════════════════════════════════════════ */
-function doSaveAll(){
-  // Excel 저장
-  doExcel();
-  // 800ms 딜레이 후 HTML 보고서 (브라우저 다운로드 처리 간격 확보)
-  setTimeout(() => {
-    doHtmlReport();
-  }, 800);
 }
 
 /* ════════════════════════════════════════════════════════
@@ -1300,7 +1272,6 @@ function doMail(){
     + '감사합니다.\n삼성중공업 도장QM ' + insp
   );
   window.location.href = 'mailto:?subject=' + subj + '&body=' + body;
-  closeModal('modal-exp');
 }
 
 /* ════════════════════════════════════════════════════════
@@ -1365,13 +1336,6 @@ function checkDraft(){
     }
   }catch(e){ localStorage.removeItem(DRAFT_KEY); }
 }
-
-/* ════════════════════════════════════════════════════════
-   결과 화면 버튼 연결
-════════════════════════════════════════════════════════ */
-document.getElementById('modal-exp').addEventListener('click', function(e){
-  if(e.target === this) closeModal('modal-exp');
-});
 
 /* ════════════════════════════════════════════════════════
    유틸
