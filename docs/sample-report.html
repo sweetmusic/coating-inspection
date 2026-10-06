@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="generator" content="coating-inspection">
-<meta name="inspection-data-sha256" content="b1a32d597abcc9912174d3a1602325fcc701396c3b03c2a7899cad123b2a9745">
-<title>점검보고서_샘플협력사_2026-10-06</title>
-<script type="application/json" id="inspection-data">{
+<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="coating-inspection"><meta name="inspection-data-sha256" content="787f35f4e63c7c6847dd7c82b0f9ba7047d3e9983108f3e158ea884f13183eac"><title>점검보고서_샘플협력사_2026-10-06_정기</title><script type="application/json" id="inspection-data">{
   "schema": "coating-inspection/1",
-  "inspection_uid": "62712365-dd0b-4254-9156-e65da27cb295",
-  "generated_at": "2026-10-06T13:31:40+09:00",
+  "inspection_uid": "4698ef73-8ab5-4dfa-ae84-56dd7221c104",
+  "generated_at": "2026-10-06T14:14:47+09:00",
+  "edited_at": null,
+  "app_build": "b13",
   "checklist": {
     "version": "v1.0",
     "updated_at": "2026-03-29 17:55:48"
@@ -21,18 +17,17 @@
     "date": "2026-10-06",
     "type": "정기",
     "inspector": "홍길동",
-    "remark": "샘플 보고서입니다. 실제 점검 결과가 아닙니다."
+    "reply_due": "2026-10-13",
+    "remark": "샘플 보고서입니다. 실제 점검 결과가 아닙니다.\n표면처리 공정 관리 강화를 권고합니다."
   },
   "summary": {
-    "raw_score": 83,
+    "raw_score": 93,
     "max_score": 105,
-    "normalized_score": 79,
-    "grade": "C",
-    "grade_label": "개선보완필요",
-    "answered": 45,
-    "unanswered": 5,
+    "normalized_score": 89,
+    "answered": 50,
+    "unanswered": 0,
     "excluded": 1,
-    "findings": 6,
+    "findings": 7,
     "photos": 1
   },
   "majors": [
@@ -67,23 +62,23 @@
     {
       "id": "5",
       "name": "도장품질관리",
-      "score": 33,
+      "score": 35,
       "max_score": 40,
-      "pct": 83
+      "pct": 88
     },
     {
       "id": "6",
       "name": "안전관리",
-      "score": 0,
+      "score": 3,
       "max_score": 4,
-      "pct": 0
+      "pct": 75
     },
     {
       "id": "7",
       "name": "기타 외 가/감점",
-      "score": 0,
+      "score": 5,
       "max_score": 5,
-      "pct": 0
+      "pct": 100
     }
   ],
   "answers": [
@@ -1237,10 +1232,10 @@
       "major_name": "도장품질관리",
       "item_id": "5-7",
       "item_name": "완성품 관리상태",
-      "status": "unanswered",
-      "selected_index": null,
-      "selected_text": null,
-      "score": null,
+      "status": "answered",
+      "selected_index": 0,
+      "selected_text": "완성품 보호 커버링 실시 완료",
+      "score": 1,
       "max_score": 1,
       "finding": false,
       "memo": "",
@@ -1261,10 +1256,10 @@
       "major_name": "도장품질관리",
       "item_id": "5-7",
       "item_name": "완성품 관리상태",
-      "status": "unanswered",
-      "selected_index": null,
-      "selected_text": null,
-      "score": null,
+      "status": "answered",
+      "selected_index": 0,
+      "selected_text": "완성품 자체검검 완료 후 자주 검사 스티커 부착",
+      "score": 1,
       "max_score": 1,
       "finding": false,
       "memo": "",
@@ -1285,10 +1280,10 @@
       "major_name": "안전관리",
       "item_id": "6-1",
       "item_name": "작업자 안전장비 착용상태",
-      "status": "unanswered",
-      "selected_index": null,
-      "selected_text": null,
-      "score": null,
+      "status": "answered",
+      "selected_index": 0,
+      "selected_text": "안전보호구 착용 100%",
+      "score": 3,
       "max_score": 3,
       "finding": false,
       "memo": "",
@@ -1317,13 +1312,13 @@
       "major_name": "안전관리",
       "item_id": "6-2",
       "item_name": "소화기 점검",
-      "status": "unanswered",
-      "selected_index": null,
-      "selected_text": null,
-      "score": null,
+      "status": "answered",
+      "selected_index": 1,
+      "selected_text": "소화기 월간 점검 누락",
+      "score": 0,
       "max_score": 1,
-      "finding": false,
-      "memo": "",
+      "finding": true,
+      "memo": "샘플 메모: 현장 확인 필요",
       "options": [
         {
           "text": "월별 소화기 점검 실시",
@@ -1341,10 +1336,10 @@
       "major_name": "기타 외 가/감점",
       "item_id": "7-1",
       "item_name": "Traceability는 유지 및 점검",
-      "status": "unanswered",
-      "selected_index": null,
-      "selected_text": null,
-      "score": null,
+      "status": "answered",
+      "selected_index": 0,
+      "selected_text": "공정중 Tag No, 편칭, 스티커 부착, 마스킹 점검 및 관리되고 있는가",
+      "score": 5,
       "max_score": 5,
       "finding": false,
       "memo": "",
@@ -1359,231 +1354,1596 @@
   "photos": [
     {
       "id": "P01",
+      "no": 1,
       "file": "sample.jpg",
       "mime": "image/jpeg",
       "width": 800,
       "height": 600,
       "bytes": 9852,
       "sha256": "4f545d922c234143bc94f11e0385d4dadfd9393e4142f5f54f3f87417503d138",
-      "added_at": "2026-10-06T13:31:40+09:00",
-      "linked_to": null
+      "added_at": "2026-10-06T14:14:46+09:00",
+      "caption": "샘플 사진 설명",
+      "linked_to": "2-4-1"
     }
   ]
-}</script>
-<style>
-  @page { size: A4; margin: 15mm 12mm; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; font-size: 12px; color: #1a2a3a; background: #fff; }
-  .cover { background: #0f2744; color: #fff; padding: 32px 28px 28px; border-radius: 0 0 16px 16px; }
-  .cover-label { font-size: 11px; color: rgba(255,255,255,.55); letter-spacing:.1em; margin-bottom: 8px; }
-  .cover-title { font-size: 22px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
-  .cover-meta { display: flex; gap: 24px; flex-wrap: wrap; }
-  .cover-meta div { font-size: 12px; }
-  .cover-meta b { color: #f5c842; }
-  .cover-meta span { color: rgba(255,255,255,.7); }
-  .score-box { display: flex; align-items: center; gap: 24px; background: #f0f4f8; border-radius: 12px; padding: 20px 24px; margin: 20px 0; }
-  .score-num { font-size: 56px; font-weight: 700; color: #0f2744; line-height: 1; font-family: monospace; }
-  .score-sub { font-size: 13px; color: #5a7a9a; margin-top: 4px; }
-  .grade-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 16px; font-weight: 700; color: #fff; }
-  .g-A { background: #1e8449; } .g-B { background: #d68910; } .g-C { background: #c0392b; } .g-D { background: #7b241c; } .g-none { background: #718096; }
-  h2 { font-size: 14px; font-weight: 700; color: #0f2744; border-bottom: 2px solid #0f2744; padding-bottom: 6px; margin: 20px 0 12px; }
-  table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
-  th { background: #0f2744; color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; }
-  td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
-  tr:nth-child(even) td { background: #f8fafc; }
-  .bar-wrap { width: 80px; height: 7px; background: #e2e8f0; border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; margin: 0 8px; }
-  .bar-fill { height: 100%; border-radius: 4px; }
-  .ng-tag { display: inline-block; background: #fdecea; color: #e74c3c; border: 1px solid rgba(231,76,60,.25); padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; font-family: monospace; }
-  .ok { color: #1e8449; } .ng { color: #c0392b; }
-  .footer { margin-top: 32px; font-size: 10px; color: #9aa8b4; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 10px; }
-  @media print {
-    .no-print { display: none; }
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  }
-</style>
-</head>
-<body>
-
-<!-- 인쇄 버튼 -->
-<div class="no-print" style="position:fixed;top:12px;right:12px;display:flex;gap:8px;z-index:100;">
-  <button onclick="window.print()" style="padding:10px 20px;background:#0f2744;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">🖨️ 인쇄 / PDF 저장</button>
-  <button onclick="window.close()" style="padding:10px 16px;background:#f0f4f8;color:#1a2a3a;border:1px solid #d1dce8;border-radius:8px;font-size:13px;cursor:pointer;">닫기</button>
-</div>
-
-<!-- 표지 -->
-<div class="cover">
-  <div class="cover-label">삼성중공업 도장QM · 사외 철의장 품질점검 보고서</div>
-  <div class="cover-title">도장 협력사 품질점검<br>결과 보고서</div>
-  <div class="cover-meta">
-    <div><span>협력사</span><br><b>샘플협력사</b></div>
-    <div><span>점검일자</span><br><b>2026-10-06</b></div>
-    <div><span>점검유형</span><br><b>정기</b></div>
-    <div><span>점검자</span><br><b>홍길동</b></div>
+}</script><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"><style>
+body{margin:0;background:#fff;font-family:"Noto Sans KR",-apple-system,"Malgun Gothic",sans-serif;}
+#report-view{max-width:840px;margin:0 auto;background:#fff;color:#1a2a3a;font-size:11.5px;line-height:1.45;}
+#xbar{position:sticky;top:0;z-index:9;display:flex;gap:8px;align-items:center;padding:10px 14px;background:#0f2744;color:#fff;font-size:12px;}
+#xbar .xt{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#xbar button{padding:8px 13px;border:none;border-radius:8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;}
+#xsave{background:#1e6b34;color:#fff;} #xprint{background:#f5c842;color:#0f2744;}
+#xmsg{display:none;color:#f5c842;font-size:11.5px;font-weight:700;}
+#xhelp{background:#fffdf5;border-bottom:1px solid #e8dcb8;color:#7a5200;font-size:11.5px;padding:9px 14px;line-height:1.6;}
+#xhelp b{color:#5a3d00;}
+#report-overlay { position: fixed; inset: 0px; z-index: 9999; background: rgb(255, 255, 255); display: flex; flex-direction: column; }
+.rp-bar { display: flex; gap: 6px; align-items: center; padding: 10px 12px; background: var(--navy); flex-shrink: 0; }
+.rp-bar-title { flex: 1 1 0%; min-width: 0px; color: rgb(255, 255, 255); font-size: 11.5px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rp-btn { padding: 9px 12px; border: none; border-radius: 8px; font-size: 12.5px; font-weight: 700; font-family: inherit; cursor: pointer; flex-shrink: 0; }
+.rp-btn-print { background: var(--accent2); color: var(--navy); }
+.rp-btn-html { background: rgb(30, 107, 52); color: rgb(255, 255, 255); }
+.rp-btn-close { background: rgb(240, 244, 248); color: var(--text); }
+#report-view { flex: 1 1 0%; overflow-y: auto; background: rgb(255, 255, 255); color: rgb(26, 42, 58); font-size: 11.5px; line-height: 1.45; user-select: text; padding-bottom: 40px; }
+#report-view .rp-cover { background: rgb(15, 39, 68); color: rgb(255, 255, 255); padding: 16px 14px; }
+#report-view .rp-cover-label { font-size: 9.5px; color: rgba(255, 255, 255, 0.55); letter-spacing: 0.08em; margin-bottom: 4px; }
+#report-view .rp-cover-title { font-size: 17px; font-weight: 700; line-height: 1.25; margin-bottom: 12px; }
+#report-view .rp-cover-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+#report-view .rp-cover-meta div { font-size: 11px; display: flex; flex-direction: column; gap: 1px; }
+#report-view .rp-cover-meta b { color: rgb(245, 200, 66); font-size: 11.5px; }
+#report-view .rp-cover-meta span { color: rgba(255, 255, 255, 0.65); font-size: 9.5px; }
+#report-view .rp-main { padding: 0px 14px; }
+#report-view .rp-summary { display: flex; align-items: center; gap: 18px; background: rgb(240, 244, 248); border-radius: 10px; padding: 11px 16px; margin: 12px 0px 6px; flex-wrap: wrap; }
+#report-view .rp-sum-score { display: flex; align-items: baseline; gap: 9px; }
+#report-view .rp-sum-num { font-size: 34px; font-weight: 700; color: rgb(15, 39, 68); line-height: 1; font-family: "JetBrains Mono", monospace; }
+#report-view .rp-sum-cap { font-size: 10px; color: rgb(90, 122, 154); line-height: 1.4; }
+#report-view .rp-sum-cap span { color: rgb(154, 168, 180); }
+#report-view .rp-sum-facts { display: flex; gap: 20px; flex-wrap: wrap; margin-left: auto; }
+#report-view .rp-fact { display: flex; flex-direction: column; gap: 1px; }
+#report-view .rp-fact-k { font-size: 9.5px; color: rgb(90, 122, 154); }
+#report-view .rp-fact b { font-size: 13px; font-weight: 700; font-family: "JetBrains Mono", monospace; }
+#report-view .rp-disclaimer { font-size: 9.5px; color: rgb(123, 143, 164); margin: 0px 0px 4px; padding: 0px 2px; line-height: 1.5; }
+#report-view h2 { font-size: 12.5px; font-weight: 700; color: rgb(15, 39, 68); border-bottom: 1.5px solid rgb(15, 39, 68); padding-bottom: 4px; margin: 14px 0px 7px; }
+#report-view .rp-count { font-weight: 500; color: rgb(90, 122, 154); font-size: 10.5px; font-family: "JetBrains Mono", monospace; }
+#report-view table { width: 100%; border-collapse: collapse; font-size: 10px; table-layout: fixed; }
+#report-view th { background: rgb(15, 39, 68); color: rgb(255, 255, 255); padding: 4px 6px; text-align: left; font-weight: 600; font-size: 9.5px; }
+#report-view td { padding: 4px 6px; border-bottom: 1px solid rgb(230, 236, 242); vertical-align: top; word-break: break-word; line-height: 1.4; }
+#report-view tbody tr:nth-child(2n) td:not(.rp-edit) { background: rgb(248, 250, 252); }
+#report-view .rp-num { font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
+#report-view .rp-dim { color: rgb(90, 122, 154); }
+#report-view .rp-item-name { display: block; color: rgb(154, 168, 180); font-size: 9px; margin-top: 1px; }
+#report-view .rp-bar-wrap { width: 56px; height: 5px; background: rgb(226, 232, 240); border-radius: 3px; overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 6px; }
+#report-view .rp-bar-fill { height: 100%; border-radius: 3px; display: block; }
+#report-view .rp-pct { font-family: "JetBrains Mono", monospace; font-size: 9.5px; }
+#report-view .rp-tag { display: inline-block; background: rgb(238, 243, 248); color: rgb(44, 82, 130); border: 1px solid rgb(207, 219, 232); padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 700; font-family: "JetBrains Mono", monospace; }
+#report-view .rp-ok { color: rgb(30, 132, 73); }
+#report-view .rp-ng { color: rgb(192, 57, 43); }
+#report-view .rp-note { font-size: 10px; color: rgb(90, 122, 154); margin: 6px 0px 0px; }
+#report-view .rp-remark { white-space: pre-wrap; border: 1px solid rgb(209, 220, 232); border-radius: 6px; padding: 9px 11px; font-size: 11px; line-height: 1.7; }
+#report-view .rp-note b { color: rgb(192, 57, 43); }
+#report-view .rp-ok-box { background: rgb(234, 250, 241); color: rgb(30, 122, 77); border-radius: 8px; padding: 9px 12px; }
+#report-view .rp-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+#report-view .rp-photo { border: 1px solid rgb(209, 220, 232); border-radius: 6px; overflow: hidden; margin: 0px; break-inside: avoid; }
+#report-view .rp-photo img { width: 100%; height: 104px; object-fit: cover; display: block; }
+#report-view .rp-photo figcaption { padding: 4px 6px; font-size: 9px; color: rgb(90, 122, 154); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
+#report-view .rp-photo-no { font-family: "JetBrains Mono", monospace; color: rgb(154, 168, 180); }
+#report-view .rp-photo-cap { flex: 1 1 100%; color: rgb(26, 42, 58); line-height: 1.35; }
+#report-view .rp-legend-txt { font-size: 9.5px; color: rgb(123, 143, 164); margin: 0px 0px 6px; line-height: 1.5; }
+#report-view .rp-cs td { vertical-align: top; }
+#report-view .rp-cs-maj td { color: rgb(255, 255, 255); font-weight: 700; font-size: 9.5px; padding: 3px 6px; background: rgb(15, 39, 68) !important; }
+#report-view .rp-cs-maj .rp-num { color: rgb(245, 200, 66); }
+#report-view .rp-cs-item td { color: rgb(44, 82, 130); font-weight: 700; font-size: 9px; padding: 3px 6px; background: rgb(238, 243, 248) !important; }
+#report-view .rp-opts { list-style: none; margin: 0px; padding: 0px; }
+#report-view .rp-opts li { display: flex; gap: 4px; align-items: baseline; color: rgb(123, 143, 164); line-height: 1.45; }
+#report-view .rp-opts li.on { color: rgb(26, 42, 58); font-weight: 700; }
+#report-view .rp-mark { font-size: 8.5px; flex: 0 0 auto; color: rgb(182, 195, 208); }
+#report-view .rp-opts li.on .rp-mark { color: rgb(15, 39, 68); }
+#report-view .rp-osc { flex: 0 0 auto; font-family: "JetBrains Mono", monospace; font-size: 8.5px; color: rgb(154, 168, 180); }
+#report-view .rp-cs-ng td:not(.rp-edit) { background: rgb(253, 243, 242) !important; }
+#report-view .rp-cs-ng .rp-num { color: rgb(192, 57, 43); font-weight: 700; }
+#report-view .rp-cs-miss td:not(.rp-edit) { background: rgb(254, 250, 239) !important; }
+#report-view .rp-cs-miss .rp-num { color: rgb(154, 107, 18); font-weight: 700; }
+#report-view .rp-edit { outline: rgb(216, 196, 138) dashed 1px; outline-offset: -2px; min-height: 14px; cursor: text; background: rgb(255, 253, 245) !important; }
+#report-view .rp-edit:focus { outline: rgb(232, 160, 32) solid 1.5px; background: rgb(255, 248, 224) !important; }
+#report-view .rp-edit:empty::before { content: attr(data-ph); color: rgb(195, 204, 214); font-style: italic; }
+#report-view .rp-footer { margin-top: 16px; font-size: 9px; color: rgb(154, 168, 180); text-align: center; border-top: 1px solid rgb(226, 232, 240); padding-top: 8px; }
+@page { size: a4; margin: 0px; }
+@media print {
+  html, body { height: auto !important; overflow: visible !important; }
+  #app { display: none !important; }
+  .overlay { display: none !important; }
+  #report-overlay { position: static !important; display: block !important; }
+  #report-overlay.hidden { display: none !important; }
+  .rp-bar { display: none !important; }
+  #report-view { font-size: 9.5px; overflow: visible !important; height: auto !important; padding: 12mm 10mm !important; }
+  #report-view .rp-main { padding: 0px; }
+  #report-view .rp-cover { margin-bottom: 2px; }
+  #report-view h2 { margin: 11px 0px 5px; break-after: avoid; }
+  #report-view table { font-size: 8.8px; }
+  #report-view thead { display: table-header-group; }
+  #report-view tr { break-inside: avoid; }
+  #report-view .rp-photo img { height: 88px; }
+  #report-view .rp-edit { background: transparent !important; outline: none !important; }
+  #report-view .rp-edit:empty::before { content: "" !important; }
+  #report-view .rp-sum-num { font-size: 30px; }
+  body { print-color-adjust: exact; background: rgb(255, 255, 255) !important; }
+}
+@media print{#xbar,#xhelp{display:none!important;} #report-view{max-width:none;}}
+</style></head><body><div id="xbar"><span class="xt">점검보고서_샘플협력사_2026-10-06_정기</span><span id="xmsg">저장했습니다</span><button id="xsave">💾 수정본 저장</button><button id="xprint">🖨️ 인쇄/PDF</button></div><div id="xhelp">노란색 칸(<b>비고 · 조치 계획 · 사진 설명 · Remark</b>)은 <b>클릭해서 바로 고칠 수 있습니다.</b> 다 고친 뒤 <b>[💾 수정본 저장]</b>을 누르면 고친 내용이 담긴 HTML 파일이 새로 저장됩니다. PDF가 필요하면 <b>[🖨️ 인쇄/PDF]</b>를 누르세요.</div><div id="report-view">
+<div class="rp-cover">
+  <div class="rp-cover-label">삼성중공업 도장QM · 사외 철의장 품질점검</div>
+  <div class="rp-cover-title">도장 협력사 품질점검 결과 보고서</div>
+  <div class="rp-cover-meta">
+    <div><span>협력사</span><b>샘플협력사</b></div>
+    <div><span>점검일자</span><b>2026-10-06</b></div>
+    <div><span>점검유형</span><b>정기</b></div>
+    <div><span>점검자</span><b>홍길동</b></div>
   </div>
 </div>
 
-<!-- 종합점수 -->
-<div class="score-box">
-  <div>
-    <div class="score-num">79</div>
-    <div class="score-sub">환산점수 / 100점<br><span style="font-size:11px;color:#9aa8b4;">원점수 83/105점</span></div>
-  </div>
-  <div>
-    <span class="grade-badge g-C">C등급</span>
-    <div style="font-size:12px;color:#5a7a9a;margin-top:6px;">개선보완필요</div>
-    <div style="font-size:11px;color:#9aa8b4;margin-top:4px;">주요 부적합 사항 즉시 조치 요청</div>
-  </div>
-</div>
+<div class="rp-main">
 
-<!-- 대분류별 점수 -->
-<h2>대분류별 점수</h2>
-<table>
-  <thead><tr><th>대분류</th><th>점수</th><th style="width:100px;">취득율</th></tr></thead>
-  <tbody>
-    
-      <tr>
-        <td>1. 품질조직</td>
-        <td>3/3점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:100%;background:#2ecc71"></div>
-          </div>
-          <span class="ok">100%</span>
-        </td>
-      </tr>
-      <tr>
-        <td>2. 품질문서관리</td>
-        <td>26/28점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:93%;background:#2ecc71"></div>
-          </div>
-          <span class="ok">93%</span>
-        </td>
-      </tr>
-      <tr>
-        <td>3. 작업환경관리</td>
-        <td>15/17점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:88%;background:#f39c12"></div>
-          </div>
-          <span class="">88%</span>
-        </td>
-      </tr>
-      <tr>
-        <td>4. 표면처리 품질관리</td>
-        <td>6/8점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:75%;background:#f39c12"></div>
-          </div>
-          <span class="">75%</span>
-        </td>
-      </tr>
-      <tr>
-        <td>5. 도장품질관리</td>
-        <td>33/40점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:83%;background:#f39c12"></div>
-          </div>
-          <span class="">83%</span>
-        </td>
-      </tr>
-      <tr>
-        <td>6. 안전관리</td>
-        <td>0/4점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:0%;background:#e74c3c"></div>
-          </div>
-          <span class="ng">0%</span>
-        </td>
-      </tr>
-      <tr>
-        <td>7. 기타 외 가/감점</td>
-        <td>0/5점</td>
-        <td>
-          <div class="bar-wrap">
-            <div class="bar-fill" style="width:0%;background:#e74c3c"></div>
-          </div>
-          <span class="ng">0%</span>
-        </td>
-      </tr>
-  </tbody>
-</table>
-
-<!-- 지적사항 -->
-
-<h2>지적사항 (6건)</h2>
-<table>
-  <thead><tr><th style="width:80px;">항목</th><th>지적 내용</th><th style="width:70px;">점수</th><th>비고</th></tr></thead>
-  <tbody>
-    
-      <tr>
-        <td><span class="ng-tag">2-4-1</span><br><span style="font-size:10px;color:#5a7a9a;">품질문서관리</span></td>
-        <td>검사 장비 LIST 등 서류 미작성</td>
-        <td class="ng">0/2점</td>
-        <td style="font-size:11px;color:#5a7a9a;">샘플 메모: 현장 확인 필요</td>
-      </tr>
-      <tr>
-        <td><span class="ng-tag">3-2-2</span><br><span style="font-size:10px;color:#5a7a9a;">작업환경관리</span></td>
-        <td>도료 사용 기간 경과 도료 보관</td>
-        <td class="ng">0/2점</td>
-        <td style="font-size:11px;color:#5a7a9a;">샘플 메모: 현장 확인 필요</td>
-      </tr>
-      <tr>
-        <td><span class="ng-tag">4-1-1</span><br><span style="font-size:10px;color:#5a7a9a;">표면처리 품질관리</span></td>
-        <td>요구되는 표면처리 Grade 불만족</td>
-        <td class="ng">0/2점</td>
-        <td style="font-size:11px;color:#5a7a9a;">샘플 메모: 현장 확인 필요</td>
-      </tr>
-      <tr>
-        <td><span class="ng-tag">5-3-1</span><br><span style="font-size:10px;color:#5a7a9a;">도장품질관리</span></td>
-        <td>일부 HOLE T/UP 적용 미완</td>
-        <td class="ng">0/1점</td>
-        <td style="font-size:11px;color:#5a7a9a;">샘플 메모: 현장 확인 필요</td>
-      </tr>
-      <tr>
-        <td><span class="ng-tag">5-4-4</span><br><span style="font-size:10px;color:#5a7a9a;">도장품질관리</span></td>
-        <td>도장 전 Foreign material 수정 미흡</td>
-        <td class="ng">0/2점</td>
-        <td style="font-size:11px;color:#5a7a9a;">샘플 메모: 현장 확인 필요</td>
-      </tr>
-      <tr>
-        <td><span class="ng-tag">5-6-1</span><br><span style="font-size:10px;color:#5a7a9a;">도장품질관리</span></td>
-        <td>사양서에 명시된 도막 미달</td>
-        <td class="ng">0/2점</td>
-        <td style="font-size:11px;color:#5a7a9a;">샘플 메모: 현장 확인 필요</td>
-      </tr>
-  </tbody>
-</table>
-
-<!-- Remark -->
-
-<h2 style="margin-top:20px;">📝 종합 Remark</h2>
-<div style="background:#f8fafc;border:1px solid #d1dce8;border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.8;color:#1a2a3a;white-space:pre-wrap;">샘플 보고서입니다. 실제 점검 결과가 아닙니다.</div>
-
-<!-- 참고 사진 -->
-<div style="margin-top:24px;page-break-before:always;">
-        <h2 style="font-size:16px;font-weight:700;color:#0f2744;border-bottom:2px solid #0f2744;padding-bottom:6px;margin-bottom:16px;">
-          📷 참고 사진 (1장)
-        </h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          
-            <div style="border:1px solid #d1dce8;border-radius:8px;overflow:hidden;">
-              <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAJYAyADASIAAhEBAxEB/8QAHAABAQADAQEBAQAAAAAAAAAAAAcEBggFAwIB/8QATxABAAEDAgQBBwMPCQYHAQAAAAECAwQFEQYHEiExE0FRYXF0shQ2gQgWGDI1N1VWgpGUobPB0hUiUmJyc3Wx0RcjQpKTwyQzZoOEpOPC/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAIBAwT/xAAjEQEBAAICAgIDAAMAAAAAAAAAAQIRAyESMTJBEyJRM0Jx/9oADAMBAAIRAxEAPwDwgHveMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/Z" data-photo-id="P01" style="width:100%;height:200px;object-fit:cover;display:block;">
-              <div style="padding:8px 10px;font-size:11px;color:#5a7a9a;min-height:28px;">
-                사진 P01
-              </div>
-            </div>
-        </div>
+  <div class="rp-summary">
+    <div class="rp-sum-score">
+      <div class="rp-sum-num">89</div>
+      <div class="rp-sum-cap">환산점수 / 100점<br><span>원점수 93/105점</span></div>
+    </div>
+    <div class="rp-sum-facts">
+      <div class="rp-fact">
+        <span class="rp-fact-k">지적사항</span>
+        <b class="rp-ng">7건</b>
       </div>
+      <div class="rp-fact">
+        <span class="rp-fact-k">조치 회신 기한</span>
+        <b>2026-10-13</b>
+      </div>
+      
+    </div>
+  </div>
+  <p class="rp-disclaimer">본 점수는 금회 점검 결과이며, 협력사 연간 등급은 연간 점검 이력과 품질 문제 등을 종합하여 연말에 별도 결정됩니다.</p>
 
-<div class="footer">
-  삼성중공업㈜ 품질보증팀 도장QM · 점검자: 홍길동 · 생성일시: 2026. 10. 6. 오후 1:31:40
-</div>
+  <h2>조치 요구 사항 <span class="rp-count">7건</span></h2>
+  
+  <table class="rp-ng-table">
+    <thead><tr>
+      <th style="width:54px;">번호</th>
+      <th>지적 내용</th>
+      <th style="width:92px;">대분류</th>
+      <th style="width:46px;">감점</th>
+      <th style="width:52px;">사진</th>
+      <th style="width:20%;">점검자 코멘트 · 조치 계획</th>
+    </tr></thead>
+    <tbody>
+      
+        <tr>
+          <td><span class="rp-tag">2-4-1</span></td>
+          <td>검사 장비 LIST 등 서류 미작성<span class="rp-item-name">검사 장비 / 검교정 성적서 관리 상태</span></td>
+          <td class="rp-dim">2. 품질문서관리</td>
+          <td class="rp-ng rp-num">−2</td>
+          <td class="rp-dim rp-num">1</td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-4-1" data-ph="조치 계획 입력">샘플 메모: 현장 확인 필요</td>
+        </tr>
+        <tr>
+          <td><span class="rp-tag">3-2-2</span></td>
+          <td>도료 사용 기간 경과 도료 보관<span class="rp-item-name">도료관리 상태(도료창고/작업장)</span></td>
+          <td class="rp-dim">3. 작업환경관리</td>
+          <td class="rp-ng rp-num">−2</td>
+          <td class="rp-dim rp-num"></td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-2-2" data-ph="조치 계획 입력">샘플 메모: 현장 확인 필요</td>
+        </tr>
+        <tr>
+          <td><span class="rp-tag">4-1-1</span></td>
+          <td>요구되는 표면처리 Grade 불만족<span class="rp-item-name">표면처리 상태 Spec 및 규정 준수 여부</span></td>
+          <td class="rp-dim">4. 표면처리 품질관리</td>
+          <td class="rp-ng rp-num">−2</td>
+          <td class="rp-dim rp-num"></td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="4-1-1" data-ph="조치 계획 입력">샘플 메모: 현장 확인 필요</td>
+        </tr>
+        <tr>
+          <td><span class="rp-tag">5-4-4</span></td>
+          <td>도장 전 Foreign material 수정 미흡<span class="rp-item-name">도장작업 前 Cleaning 및 이물질 (Oil, Dust 등) 제거 상태</span></td>
+          <td class="rp-dim">5. 도장품질관리</td>
+          <td class="rp-ng rp-num">−2</td>
+          <td class="rp-dim rp-num"></td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-4-4" data-ph="조치 계획 입력">샘플 메모: 현장 확인 필요</td>
+        </tr>
+        <tr>
+          <td><span class="rp-tag">5-6-1</span></td>
+          <td>사양서에 명시된 도막 미달<span class="rp-item-name">규정도막 준수 (호선별 Spec에 명시된 건조도막두께)</span></td>
+          <td class="rp-dim">5. 도장품질관리</td>
+          <td class="rp-ng rp-num">−2</td>
+          <td class="rp-dim rp-num"></td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-6-1" data-ph="조치 계획 입력">샘플 메모: 현장 확인 필요</td>
+        </tr>
+        <tr>
+          <td><span class="rp-tag">5-3-1</span></td>
+          <td>일부 HOLE T/UP 적용 미완<span class="rp-item-name">취약부위 Stripe coat 실시 상태</span></td>
+          <td class="rp-dim">5. 도장품질관리</td>
+          <td class="rp-ng rp-num">−1</td>
+          <td class="rp-dim rp-num"></td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-3-1" data-ph="조치 계획 입력">샘플 메모: 현장 확인 필요</td>
+        </tr>
+        <tr>
+          <td><span class="rp-tag">6-2-1</span></td>
+          <td>소화기 월간 점검 누락<span class="rp-item-name">소화기 점검</span></td>
+          <td class="rp-dim">6. 안전관리</td>
+          <td class="rp-ng rp-num">−1</td>
+          <td class="rp-dim rp-num"></td>
+          <td class="rp-dim rp-edit" contenteditable="true" data-sub="6-2-1" data-ph="조치 계획 입력">샘플 메모: 현장 확인 필요</td>
+        </tr>
+    </tbody>
+  </table>
+  <p class="rp-note">위 항목에 대한 조치 결과를 <b>2026-10-13</b>까지 회신해 주시기 바랍니다.</p>
+  
 
-</body>
-</html>
+  
+  <h2>종합 Remark</h2>
+  <div class="rp-remark rp-edit" contenteditable="true" data-remark="1" data-ph="종합 Remark 입력">샘플 보고서입니다. 실제 점검 결과가 아닙니다.
+표면처리 공정 관리 강화를 권고합니다.</div>
+
+  <h2>대분류별 점수</h2>
+  <table class="rp-maj">
+    <thead><tr><th>대분류</th><th style="width:78px;">점수</th><th style="width:120px;">취득율</th></tr></thead>
+    <tbody>
+      
+        <tr>
+          <td>1. 품질조직</td>
+          <td class="rp-num">3/3</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:100%;background:#2ecc71"></span></span>
+            <span class="rp-pct rp-ok">100%</span>
+          </td>
+        </tr>
+        <tr>
+          <td>2. 품질문서관리</td>
+          <td class="rp-num">26/28</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:93%;background:#2ecc71"></span></span>
+            <span class="rp-pct rp-ok">93%</span>
+          </td>
+        </tr>
+        <tr>
+          <td>3. 작업환경관리</td>
+          <td class="rp-num">15/17</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:88%;background:#f39c12"></span></span>
+            <span class="rp-pct ">88%</span>
+          </td>
+        </tr>
+        <tr>
+          <td>4. 표면처리 품질관리</td>
+          <td class="rp-num">6/8</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:75%;background:#f39c12"></span></span>
+            <span class="rp-pct ">75%</span>
+          </td>
+        </tr>
+        <tr>
+          <td>5. 도장품질관리</td>
+          <td class="rp-num">35/40</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:88%;background:#f39c12"></span></span>
+            <span class="rp-pct ">88%</span>
+          </td>
+        </tr>
+        <tr>
+          <td>6. 안전관리</td>
+          <td class="rp-num">3/4</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:75%;background:#f39c12"></span></span>
+            <span class="rp-pct ">75%</span>
+          </td>
+        </tr>
+        <tr>
+          <td>7. 기타 외 가/감점</td>
+          <td class="rp-num">5/5</td>
+          <td>
+            <span class="rp-bar-wrap"><span class="rp-bar-fill" style="width:100%;background:#2ecc71"></span></span>
+            <span class="rp-pct rp-ok">100%</span>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <h2>전체 점검 체크시트 <span class="rp-count">50항목</span></h2>
+  <p class="rp-legend-txt">
+    각 항목의 평가기준을 모두 실었으며, <b>●</b> 표시가 금회 점검에서 확인된 상태입니다.
+    감점 항목은 붉은 바탕으로 표시했습니다.
+    비고는 점검자 코멘트입니다.
+  </p>
+  <table class="rp-cs">
+    <thead><tr>
+      <th style="width:54px;">번호</th>
+      <th>점검항목 / 평가기준</th>
+      <th style="width:38px;">배점</th>
+      <th style="width:38px;">획득</th>
+      <th style="width:22%;">비고</th>
+    </tr></thead>
+    <tbody>
+      
+        <tr class="rp-cs-maj">
+          <td colspan="2">1. 품질조직</td>
+          <td class="rp-num">3</td>
+          <td class="rp-num">3</td>
+          <td></td>
+        </tr>
+        
+          <tr class="rp-cs-item"><td colspan="5">도장 자격 보유 및 활동</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">1-2-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장자격 보유</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장경력 5년↑</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장경력 5년↓</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="1-2-1" data-ph="코멘트 입력"></td>
+            </tr>
+        <tr class="rp-cs-maj">
+          <td colspan="2">2. 품질문서관리</td>
+          <td class="rp-num">28</td>
+          <td class="rp-num">26</td>
+          <td></td>
+        </tr>
+        
+          <tr class="rp-cs-item"><td colspan="5">문서(도면, Spec, 절차서) 개정/폐기 관리 현황</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">2-1-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>문서 관리 대장 작성(개정/폐기 이력)</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>문서 관리 대장 미작성</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-1-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">2-1-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>문서 최신본 보유 및 관리 양호</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>최신본 사용중이나 이전 문서 미폐기</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>문서 최신본 미보유</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-1-2" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">DAILY REPORT 관리 현황</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">2-2-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>호선별·품목별 DAILY REPORT 작성</span>
+                      <span class="rp-osc">5점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>작성 중이나 일부 기록 누락(Batch No. 싸인 등)</span>
+                      <span class="rp-osc">4점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>최근 작성 누락 or 일부 호선/품목의 REPORT 미작성</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>DAILY REPORT 미작성</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">5</td>
+              <td class="rp-num">5</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-2-1" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">작업자 교육 및 유지 관리 / 정기적 교육실시 및 기록 상태</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">2-3-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 교육 연간 계획서 작성</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 교육 연간 계획서 미작성</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-3-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">2-3-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>월간 교육 실시 및 기관관리 양호</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>교육 미실시(1개월)</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>교육 미실시(1개월 이상)</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-3-2" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">검사 장비 / 검교정 성적서 관리 상태</td></tr>
+          
+            <tr class="rp-cs-ng">
+              <td><span class="rp-tag">2-4-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>각 종 도장 검사 장비 LIST 작성 및 검교정 및 기록 관리</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>검사 장비 LIST 등 서류 미작성</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">0</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-4-1" data-ph="코멘트 입력">샘플 메모: 현장 확인 필요</td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">2-4-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>각 종 도장 검사 장비 기한 내 검교정 완료</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 검사 장비 검교정 미실시 1건</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 검사 장비 검교정 미실시 1건 이상</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-4-2" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">자주점검 CHECK SHEET 작업단계별 활용 및 관리</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">2-5-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>검사 ITEM 별 자주점검 CHECK SHEET 작성 양호</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>일부 점검 항목/ ITEM CHECK SHEET 작성 누락</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>자주점검 CHECK SHEET 미작성</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-5-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">2-5-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>자주점검 CHECK SHEET에 준한 작업 실시</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>일부 현장 작업이 자주점검 CHECK SHEET 내용과 상이</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-5-2" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">작업장 도장조건 기록 관리</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">2-6-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>3회 이상 기록</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>2회 기록</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>1회 기록</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>미기록</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="2-6-1" data-ph="코멘트 입력"></td>
+            </tr>
+        <tr class="rp-cs-maj">
+          <td colspan="2">3. 작업환경관리</td>
+          <td class="rp-num">17</td>
+          <td class="rp-num">15</td>
+          <td></td>
+        </tr>
+        
+          <tr class="rp-cs-item"><td colspan="5">품질게시판 제작 및 활용</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">3-1-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>반기별 교체</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>반기 초과</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>품질내용 無</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-1-1" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">도료관리 상태(도료창고/작업장)</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">3-2-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>지정 구역 도료 보관 및 도료사별 도료 정리 실시</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>임의 장소 도료 보관 및 도료사별 도료 정리 상태 미흡</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-2-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="rp-cs-ng">
+              <td><span class="rp-tag">3-2-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도료 사용 기간 경과 도료 無</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도료 사용 기간 경과 도료 보관</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">0</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-2-2" data-ph="코멘트 입력">샘플 메모: 현장 확인 필요</td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">3-2-3</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>동/하절기 도료 구분관리 실시</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>동/하절기 도료 구분관리 미실시</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-2-3" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">3-2-4</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>T/UP용 도료 관리 양호</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>T/UP용 도료관련 관리 불량</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-2-4" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">3-2-5</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도료 불출 대장 기록 관리</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도료 불출 대장 기록 미실시</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-2-5" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">3-2-6</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>MSDS &amp; TDS 보관 및 활용</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>MSDS &amp; TDS 미보관</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-2-6" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">공장 내 정리정돈 및 청결상태</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">3-3-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>완성품/각 종 도표캔 및 자재 정리 양호</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>정리 정돈 미흡하여 개선 요구됨</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-3-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">3-3-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>공장 시설 상태 및 유지 보수 상태 양호</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>시설 보완 필요(빗물유입, 창문파손 등)</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="3-3-2" data-ph="코멘트 입력"></td>
+            </tr>
+        <tr class="rp-cs-maj">
+          <td colspan="2">4. 표면처리 품질관리</td>
+          <td class="rp-num">8</td>
+          <td class="rp-num">6</td>
+          <td></td>
+        </tr>
+        
+          <tr class="rp-cs-item"><td colspan="5">표면처리 상태 Spec 및 규정 준수 여부</td></tr>
+          
+            <tr class="rp-cs-ng">
+              <td><span class="rp-tag">4-1-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>호선별/ITEM 별 표면처리 규정 만족</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>요구되는 표면처리 Grade 불만족</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">0</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="4-1-1" data-ph="코멘트 입력">샘플 메모: 현장 확인 필요</td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">4-1-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 작업 전 BLOW HOLE 수정 완료</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>BLOW HOLE 수정 미흡상태 도장 진행</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="4-1-2" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">4-1-3</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 작업 전 NOTCH 수정 완료</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 작업 전 NOTCH 수정 미완료</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="4-1-3" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">4-1-4</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 작업 전 SPATTER 수정 완료</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 작업 전 SPATTER 수정 미완료</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="4-1-4" data-ph="코멘트 입력"></td>
+            </tr>
+        <tr class="rp-cs-maj">
+          <td colspan="2">5. 도장품질관리</td>
+          <td class="rp-num">40</td>
+          <td class="rp-num">35</td>
+          <td></td>
+        </tr>
+        
+          <tr class="rp-cs-item"><td colspan="5">작업장내 도장조건 (도장작업 시 직접측정)</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">5-1-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 작업 中 조건 만족 (RH 85% 이하/DP&amp;ST 3℃이상)</span>
+                      <span class="rp-osc">5점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 조건 불만족 상태 도장 작업 실시</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">5</td>
+              <td class="rp-num">5</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-1-1" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">규정된 도료 사용법 준수</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">5-2-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도료 혼합 비율 준수</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도료 혼합 비율 미준수</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-2-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-2-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>규정 신나 사용 준수</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>규정 신나 미사용</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-2-2" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">취약부위 Stripe coat 실시 상태</td></tr>
+          
+            <tr class="rp-cs-ng">
+              <td><span class="rp-tag">5-3-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>각 종 HOLE T/UP 실시 完</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>일부 HOLE T/UP 적용 미완</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">0</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-3-1" data-ph="코멘트 입력">샘플 메모: 현장 확인 필요</td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-3-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>용접선 T/UP 실시 完</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>용접선 T/UP 적용 누락</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-3-2" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-3-3</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>모서리 및 코너부 T/UP 실시 完</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>모서리 및 코너부 T/UP 적용 미완</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-3-3" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-3-4</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>평면 HOLIDAY T/UP 적용 완료</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>평면 HOLIDAY T/UP 적용 미완</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-3-4" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">도장작업 前 Cleaning 및 이물질 (Oil, Dust 등) 제거 상태</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">5-4-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 전 OIL 제거 완료</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 전 OIL 제거 미흡</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-4-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-4-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 전 습기 제거 완료</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 전 습기 제거 미흡</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-4-2" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-4-3</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 전 DUST 크리닝 완료</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 전 DUST 제거 미흡</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-4-3" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="rp-cs-ng">
+              <td><span class="rp-tag">5-4-4</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 전 Foreign material 제거 완료</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장 전 Foreign material 수정 미흡</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">0</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-4-4" data-ph="코멘트 입력">샘플 메모: 현장 확인 필요</td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-4-5</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>근접 도장 중인 타도료 오염 방지 실시 완료(방진막, 커버링)</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장 오염 방지 활동 미실시</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-4-5" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">도장면 결함 여부 (도장누락, 녹발생, 핀홀, 박리, 변색 등)</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">5-5-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장품 도장 누락 無</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장품 일부 구역 도장 누락</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-5-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-5-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장품 녹발생 無</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장품 녹발생으로 인하여 재작업 필요</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-5-2" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-5-3</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장면 핀홀 발생 無</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장면 핀홀 발생 有</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-5-3" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-5-4</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도장면 박리 발생 無</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도장품 부착 불량에 의한 박리 발생</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-5-4" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-5-5</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>그 외 기타 도장 결함 발생 無</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>그 외 기타 도장 결함으로 수정 작업 필요</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">2</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-5-5" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">규정도막 준수 (호선별 Spec에 명시된 건조도막두께)</td></tr>
+          
+            <tr class="rp-cs-ng">
+              <td><span class="rp-tag">5-6-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>사양서에 명시된 도막 범위 만족</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>사양서에 명시된 도막 미달</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">2</td>
+              <td class="rp-num">0</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-6-1" data-ph="코멘트 입력">샘플 메모: 현장 확인 필요</td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-6-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>도료별 TDS 명시된 과도막 범위 만족</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>도료별 TDS에 명시된 과도막 범위 초과</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-6-2" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">완성품 관리상태</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">5-7-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>완성품 운반 중 발생한 데미지 수정 완료</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>운반 데미지 수정 미실시</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-7-1" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-7-2</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>완성품 조립 중 발생한 데미지 수정 완료</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>조립 중 발생 데미지 수정 필요</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-7-2" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-7-3</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>완성품 보호 커버링 실시 완료</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>완성품 커버링 불량으로 오염</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-7-3" data-ph="코멘트 입력"></td>
+            </tr>
+            <tr class="">
+              <td><span class="rp-tag">5-7-4</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>완성품 자체검검 완료 후 자주 검사 스티커 부착</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>자주 검사 스티커 미부착</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">1</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="5-7-4" data-ph="코멘트 입력"></td>
+            </tr>
+        <tr class="rp-cs-maj">
+          <td colspan="2">6. 안전관리</td>
+          <td class="rp-num">4</td>
+          <td class="rp-num">3</td>
+          <td></td>
+        </tr>
+        
+          <tr class="rp-cs-item"><td colspan="5">작업자 안전장비 착용상태</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">6-1-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>안전보호구 착용 100%</span>
+                      <span class="rp-osc">3점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>보호구 미착용 인원 1名</span>
+                      <span class="rp-osc">2점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>보호구 미착용 인원 2名</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>보호구 미착용 인원 2名 이상</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">3</td>
+              <td class="rp-num">3</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="6-1-1" data-ph="코멘트 입력"></td>
+            </tr>
+          <tr class="rp-cs-item"><td colspan="5">소화기 점검</td></tr>
+          
+            <tr class="rp-cs-ng">
+              <td><span class="rp-tag">6-2-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="">
+                      <span class="rp-mark">○</span>
+                      <span>월별 소화기 점검 실시</span>
+                      <span class="rp-osc">1점</span>
+                    </li>
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>소화기 월간 점검 누락</span>
+                      <span class="rp-osc">0점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">1</td>
+              <td class="rp-num">0</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="6-2-1" data-ph="코멘트 입력">샘플 메모: 현장 확인 필요</td>
+            </tr>
+        <tr class="rp-cs-maj">
+          <td colspan="2">7. 기타 외 가/감점</td>
+          <td class="rp-num">5</td>
+          <td class="rp-num">5</td>
+          <td></td>
+        </tr>
+        
+          <tr class="rp-cs-item"><td colspan="5">Traceability는 유지 및 점검</td></tr>
+          
+            <tr class="">
+              <td><span class="rp-tag">7-1-1</span></td>
+              <td>
+                <ul class="rp-opts">
+                  
+                    <li class="on">
+                      <span class="rp-mark">●</span>
+                      <span>공정중 Tag No, 편칭, 스티커 부착, 마스킹 점검 및 관리되고 있는가</span>
+                      <span class="rp-osc">5점</span>
+                    </li>
+                </ul>
+              </td>
+              <td class="rp-num">5</td>
+              <td class="rp-num">5</td>
+              <td class="rp-dim rp-edit" contenteditable="true" data-sub="7-1-1" data-ph="코멘트 입력"></td>
+            </tr>
+    </tbody>
+  </table>
+
+  <h2>참고 사진 <span class="rp-count">1장</span></h2>
+       <div class="rp-photos">
+         
+           <figure class="rp-photo">
+             <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCAJYAyADASIAAhEBAxEB/8QAHAABAQADAQEBAQAAAAAAAAAAAAcEBggFAwIB/8QATxABAAEDAgQBBwMPCQYHAQAAAAECAwQFEQYHEiExE0FRYXF0shQ2gQgWGDI1N1VWgpGUobPB0hUiUmJyc3Wx0RcjQpKTwyQzZoOEpOPC/8QAGAEBAQEBAQAAAAAAAAAAAAAAAAIBAwT/xAAjEQEBAAICAgIDAAMAAAAAAAAAAQIRAyESMTJBEyJRM0Jx/9oADAMBAAIRAxEAPwDwgHveMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/Z" alt="현장사진 1" data-photo-id="P01">
+             <figcaption>
+               <span class="rp-photo-no">사진 1</span>
+               <span class="rp-tag">2-4-1</span>
+               <span class="rp-photo-cap rp-edit" contenteditable="true" data-photo="0" data-ph="사진 설명 입력">샘플 사진 설명</span>
+             </figcaption>
+           </figure>
+       </div>
+
+  <div class="rp-footer">
+    삼성중공업㈜ 품질보증팀 도장QM · 점검자 홍길동 · 생성 2026. 10. 6. 오후 2:14:46 · 앱 b13
+  </div>
+</div></div><script>(function reportFileScript(){
+  var view = document.getElementById('report-view');
+  document.getElementById('xprint').onclick = function(){ window.print(); };
+
+  // 같은 항목이 조치요구사항 표와 체크시트 양쪽에 있으므로 고친 쪽에 맞춘다
+  view.addEventListener('focusout', function(e){
+    var el = e.target, id = el.getAttribute && el.getAttribute('data-sub');
+    if(!id) return;
+    var twins = view.querySelectorAll('.rp-edit[data-sub="' + id + '"]');
+    for(var i = 0; i < twins.length; i++) if(twins[i] !== el) twins[i].textContent = el.textContent;
+  });
+
+  function isoNow(){
+    var d = new Date(), o = -d.getTimezoneOffset();
+    var p = function(n){ n = Math.floor(Math.abs(n)); return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds())
+      + (o >= 0 ? '+' : '-') + p(o / 60) + ':' + p(o % 60);
+  }
+
+  // 화면에서 고친 비고·사진설명·Remark를 데이터 블록에도 반영하고 해시를 다시 계산한다
+  function syncData(clone){
+    var el = clone.querySelector('#inspection-data');
+    var meta = clone.querySelector('meta[name="inspection-data-sha256"]');
+    if(!el) return Promise.resolve();
+    var data = JSON.parse(el.textContent), i, k;
+    var subs = view.querySelectorAll('.rp-edit[data-sub]');
+    for(i = 0; i < subs.length; i++){
+      for(k = 0; k < data.answers.length; k++){
+        if(data.answers[k].id === subs[i].getAttribute('data-sub')) data.answers[k].memo = subs[i].textContent.trim();
+      }
+    }
+    var ph = view.querySelectorAll('.rp-edit[data-photo]');
+    for(i = 0; i < ph.length; i++){
+      var pi = parseInt(ph[i].getAttribute('data-photo'), 10);
+      if(data.photos[pi]) data.photos[pi].caption = ph[i].textContent.trim();
+    }
+    var rm = view.querySelector('.rp-edit[data-remark]');
+    if(rm) data.inspection.remark = rm.innerText.trim();
+    data.edited_at = isoNow();
+    var txt = JSON.stringify(data, null, 2).replace(/</g, '\\u003c');
+    el.textContent = txt;
+    if(!(window.crypto && crypto.subtle && window.TextEncoder)){
+      if(meta) meta.setAttribute('content', '');
+      return Promise.resolve();
+    }
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt)).then(function(buf){
+      var b = new Uint8Array(buf), h = '';
+      for(var j = 0; j < b.length; j++) h += (b[j] < 16 ? '0' : '') + b[j].toString(16);
+      if(meta) meta.setAttribute('content', h);
+    });
+  }
+
+  document.getElementById('xsave').onclick = function(){
+    var clone = document.documentElement.cloneNode(true);
+    // 저장 직전 현재 화면의 편집 내용을 복제본에 반영
+    var src = document.querySelectorAll('.rp-edit'), dst = clone.querySelectorAll('.rp-edit');
+    for(var i = 0; i < src.length; i++){
+      dst[i].textContent = src[i].hasAttribute('data-remark') ? src[i].innerText : src[i].textContent;
+    }
+    syncData(clone).then(function(){
+      var html = '<!DOCTYPE html>' + String.fromCharCode(10) + clone.outerHTML;
+      var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = document.title.replace(/[\/:*?"<>|]/g, '_') + '.html';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+      var m = document.getElementById('xmsg');
+      m.style.display = 'inline'; setTimeout(function(){ m.style.display = 'none'; }, 2500);
+    })['catch'](function(err){ alert('저장 중 오류가 발생했습니다.\n' + err); });
+  };
+})();</script></body></html>
