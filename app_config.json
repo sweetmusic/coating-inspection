@@ -129,6 +129,8 @@
           "subs": [
             {
               "id": "1-1-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "품질관리자 전담 有",
@@ -148,6 +150,8 @@
           "subs": [
             {
               "id": "1-2-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장자격 보유",
@@ -177,6 +181,8 @@
           "subs": [
             {
               "id": "2-1-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "문서 관리 대장 작성(개정/폐기 이력)",
@@ -190,6 +196,8 @@
             },
             {
               "id": "2-1-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "문서 최신본 보유 및 관리 양호",
@@ -213,6 +221,8 @@
           "subs": [
             {
               "id": "2-2-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "호선별·품목별 DAILY REPORT 작성",
@@ -240,6 +250,8 @@
           "subs": [
             {
               "id": "2-3-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 교육 연간 계획서 작성",
@@ -253,6 +265,8 @@
             },
             {
               "id": "2-3-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "월간 교육 실시 및 기관관리 양호",
@@ -276,6 +290,8 @@
           "subs": [
             {
               "id": "2-4-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "각 종 도장 검사 장비 LIST 작성 및 검교정 및 기록 관리",
@@ -289,6 +305,8 @@
             },
             {
               "id": "2-4-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "각 종 도장 검사 장비 기한 내 검교정 완료",
@@ -312,6 +330,8 @@
           "subs": [
             {
               "id": "2-5-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "검사 ITEM 별 자주점검 CHECK SHEET 작성 양호",
@@ -329,6 +349,8 @@
             },
             {
               "id": "2-5-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "자주점검 CHECK SHEET에 준한 작업 실시",
@@ -348,6 +370,8 @@
           "subs": [
             {
               "id": "2-6-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "3회 이상 기록",
@@ -381,6 +405,8 @@
           "subs": [
             {
               "id": "3-1-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "반기별 교체",
@@ -404,6 +430,8 @@
           "subs": [
             {
               "id": "3-2-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "지정 구역 도료 보관 및 도료사별 도료 정리 실시",
@@ -417,6 +445,8 @@
             },
             {
               "id": "3-2-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도료 사용 기간 경과 도료 無",
@@ -430,6 +460,8 @@
             },
             {
               "id": "3-2-3",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "동/하절기 도료 구분관리 실시",
@@ -443,6 +475,8 @@
             },
             {
               "id": "3-2-4",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "T/UP용 도료 관리 양호",
@@ -456,6 +490,8 @@
             },
             {
               "id": "3-2-5",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도료 불출 대장 기록 관리",
@@ -469,6 +505,8 @@
             },
             {
               "id": "3-2-6",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "MSDS & TDS 보관 및 활용",
@@ -488,6 +526,8 @@
           "subs": [
             {
               "id": "3-3-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "완성품/각 종 도표캔 및 자재 정리 양호",
@@ -501,6 +541,8 @@
             },
             {
               "id": "3-3-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "공장 시설 상태 및 유지 보수 상태 양호",
@@ -526,6 +568,8 @@
           "subs": [
             {
               "id": "4-1-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "호선별/ITEM 별 표면처리 규정 만족",
@@ -539,6 +583,8 @@
             },
             {
               "id": "4-1-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 작업 전 BLOW HOLE 수정 완료",
@@ -552,6 +598,8 @@
             },
             {
               "id": "4-1-3",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 작업 전 NOTCH 수정 완료",
@@ -565,6 +613,8 @@
             },
             {
               "id": "4-1-4",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 작업 전 SPATTER 수정 완료",
@@ -590,6 +640,8 @@
           "subs": [
             {
               "id": "5-1-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 작업 中 조건 만족 (RH 85% 이하/DP&ST 3℃이상)",
@@ -609,6 +661,8 @@
           "subs": [
             {
               "id": "5-2-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도료 혼합 비율 준수",
@@ -622,6 +676,8 @@
             },
             {
               "id": "5-2-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "규정 신나 사용 준수",
@@ -641,6 +697,8 @@
           "subs": [
             {
               "id": "5-3-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "각 종 HOLE T/UP 실시 完",
@@ -654,6 +712,8 @@
             },
             {
               "id": "5-3-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "용접선 T/UP 실시 完",
@@ -667,6 +727,8 @@
             },
             {
               "id": "5-3-3",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "모서리 및 코너부 T/UP 실시 完",
@@ -680,6 +742,8 @@
             },
             {
               "id": "5-3-4",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "평면 HOLIDAY T/UP 적용 완료",
@@ -699,6 +763,8 @@
           "subs": [
             {
               "id": "5-4-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 전 OIL 제거 완료",
@@ -712,6 +778,8 @@
             },
             {
               "id": "5-4-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 전 습기 제거 완료",
@@ -725,6 +793,8 @@
             },
             {
               "id": "5-4-3",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 전 DUST 크리닝 완료",
@@ -738,6 +808,8 @@
             },
             {
               "id": "5-4-4",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장 전 Foreign material 제거 완료",
@@ -751,6 +823,8 @@
             },
             {
               "id": "5-4-5",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "근접 도장 중인 타도료 오염 방지 실시 완료(방진막, 커버링)",
@@ -770,6 +844,8 @@
           "subs": [
             {
               "id": "5-5-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장품 도장 누락 無",
@@ -783,6 +859,8 @@
             },
             {
               "id": "5-5-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장품 녹발생 無",
@@ -796,6 +874,8 @@
             },
             {
               "id": "5-5-3",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장면 핀홀 발생 無",
@@ -809,6 +889,8 @@
             },
             {
               "id": "5-5-4",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도장면 박리 발생 無",
@@ -822,6 +904,8 @@
             },
             {
               "id": "5-5-5",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "그 외 기타 도장 결함 발생 無",
@@ -841,6 +925,8 @@
           "subs": [
             {
               "id": "5-6-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "사양서에 명시된 도막 범위 만족",
@@ -854,6 +940,8 @@
             },
             {
               "id": "5-6-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "도료별 TDS 명시된 과도막 범위 만족",
@@ -873,6 +961,8 @@
           "subs": [
             {
               "id": "5-7-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "완성품 운반 중 발생한 데미지 수정 완료",
@@ -886,6 +976,8 @@
             },
             {
               "id": "5-7-2",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "완성품 조립 중 발생한 데미지 수정 완료",
@@ -899,6 +991,8 @@
             },
             {
               "id": "5-7-3",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "완성품 보호 커버링 실시 완료",
@@ -912,6 +1006,8 @@
             },
             {
               "id": "5-7-4",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "완성품 자체검검 완료 후 자주 검사 스티커 부착",
@@ -937,6 +1033,8 @@
           "subs": [
             {
               "id": "6-1-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "안전보호구 착용 100%",
@@ -964,6 +1062,8 @@
           "subs": [
             {
               "id": "6-2-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "월별 소화기 점검 실시",
@@ -989,6 +1089,8 @@
           "subs": [
             {
               "id": "7-1-1",
+              "active": true,
+              "since": "v1.0",
               "options": [
                 {
                   "text": "공정중 Tag No, 편칭, 스티커 부착, 마스킹 점검 및 관리되고 있는가",
