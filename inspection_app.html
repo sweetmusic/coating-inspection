@@ -52,7 +52,7 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
 .chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;font-family:"JetBrains Mono",monospace;}
 .chip-cur{background:rgba(255,255,255,.15);color:var(--accent2);}
 .chip-grade{color:#fff;}
-.g-A{background:#1e8449}.g-B{background:#d68910}.g-C{background:#c0392b}.g-none{background:rgba(255,255,255,.1);color:rgba(255,255,255,.4);}
+.g-A{background:#1e8449}.g-B{background:#d68910}.g-C{background:#c0392b}.g-D{background:#7b241c}.g-none{background:rgba(255,255,255,.1);color:rgba(255,255,255,.4);}
 
 /* 스크롤 영역 */
 .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:90px;min-height:0;}
@@ -371,8 +371,8 @@ body{font-family:"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text
   <div class="scroll" id="res-body"></div>
   <div class="btm" style="gap:6px;">
     <button class="btn btn-gray" onclick="showScreen('sc-check')" style="flex:0.8;font-size:12px;">‹ 수정</button>
-    <button class="btn btn-accent" onclick="doExcel()" style="flex:1.2;font-size:12px;">📊 엑셀</button>
-    <button class="btn btn-accent" onclick="doHtmlReport()" style="flex:1.2;font-size:12px;">📄 보고서</button>
+    <button class="btn btn-accent" id="btn-excel" onclick="doExcel()" style="flex:1.2;font-size:12px;">📊 엑셀</button>
+    <button class="btn btn-accent" onclick="doHtmlReport().catch(err => alert('보고서 생성 중 오류가 발생했습니다.\n' + err.message))" style="flex:1.2;font-size:12px;">📄 보고서</button>
     <button class="btn btn-navy" onclick="openModal('modal-mail')" style="flex:0.9;font-size:12px;">✉ 메일</button>
   </div>
 </div>
@@ -456,7 +456,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if(isKakao()) showKakaoBanner();
   const cached = localStorage.getItem(CFG_KEY);
   if(cached){
-    try{ CFG = JSON.parse(cached); boot(); return; }
+    try{ CFG = JSON.parse(cached); boot(); refreshConfigQuietly(cached); return; }
     catch(e){ localStorage.removeItem(CFG_KEY); }
   }
   loadGitHub();
@@ -483,6 +483,24 @@ async function loadGitHub(){
       : '설정 파일 로드 실패: ' + e.message + '\n\n직접 불러오기 버튼을 이용해 주세요.';
     showErr(msg);
   }
+}
+// 저장된 설정으로 시작한 뒤 GitHub 최신 설정을 백그라운드로 확인.
+// 화면 스위치(show_excel)는 즉시 반영, 체크시트 등 나머지는 다음 실행부터 적용 (작성 중 점검 보호)
+async function refreshConfigQuietly(cached){
+  try{
+    const r = await fetch(GH_URL + '?t=' + Date.now());
+    if(!r.ok) return;
+    const latest = await r.json();
+    const text = JSON.stringify(latest);
+    if(text === cached) return;
+    localStorage.setItem(CFG_KEY, text);
+    CFG.meta = {...CFG.meta, show_excel: latest.meta?.show_excel};
+    applyUiSwitches();
+  }catch(e){ /* 오프라인 등: 저장된 설정 그대로 사용 */ }
+}
+function applyUiSwitches(){
+  const ex = document.getElementById('btn-excel');
+  if(ex) ex.style.display = CFG.meta?.show_excel === false ? 'none' : '';
 }
 function triggerFile(){ document.getElementById('file-input').click(); }
 function onFileLoad(ev){
@@ -524,6 +542,7 @@ function boot(){
   document.getElementById('inp-insp').value = CFG.meta?.inspector || '';
   document.getElementById('info-ver').textContent = CFG.meta?.version || '';
   document.getElementById('info-upd').textContent = '업데이트: ' + (CFG.meta?.updated_at || '').slice(0, 16);
+  applyUiSwitches();
   showScreen('sc-info');
   setTimeout(checkDraft, 300);
 }
@@ -557,17 +576,29 @@ function startCheck(){
   if(!ci)   { alert('협력사를 선택해 주세요.'); return; }
   if(!dt)   { alert('점검일자를 입력해 주세요.'); return; }
   if(!insp) { alert('점검자 이름을 입력해 주세요.'); return; }
+  // 임시저장 복구 후 기본정보 화면에서 시작한 경우: 작성 내용 유지 여부 확인
+  const done = Object.values(S.ans).filter(a => a.optionIdx >= 0).length;
+  const hasWork = done > 0 || S.photos.length > 0 || (S.remark || '').trim() !== '';
+  const keep = hasWork && window.confirm('작성 중인 점검 내용이 있습니다.\n(입력 ' + done + '항목, 사진 ' + S.photos.length + '장)\n\n이어서 작성할까요?\n(취소: 모두 지우고 새로 시작)');
   S.company  = CFG.companies[parseInt(ci)];
   S.date     = dt;
   S.inspector = insp;
-  S.majIdx   = 0;
-  S.ans      = {};
-  S.photos   = [];  // 사진 초기화
-  S.remark   = '';   // remark 초기화
+  if(keep){
+    S.uid = S.uid || newUid();
+  } else {
+    S.uid      = newUid();
+    S.majIdx   = 0;
+    S.ans      = {};
+    S.photos   = [];  // 사진 초기화
+    S.remark   = '';   // remark 초기화
+    clearDraft();      // 이전 임시저장 삭제
+  }
   buildTabs();
-  renderMaj(0);
+  renderMaj(keep ? (S.majIdx || 0) : 0);
+  refreshTabs();
   showScreen('sc-check');
   refreshPhotoUI();
+  if(keep) doSave();  // 변경된 기본정보 반영
 }
 function goBack(){
   if(Object.keys(S.ans).length > 0){
@@ -636,11 +667,12 @@ function renderMaj(idx){
   }
 
   // ── 점검 항목 렌더 ──────────────────────────────────
-  maj.items.forEach(item => {
+  maj.items.filter(isActive).forEach(item => {
+    if(!item.subs.some(isActive)) return;
     const sec = document.createElement('div'); sec.className = 'mid-sec';
     sec.innerHTML = '<div class="mid-hdr"><span class="mid-num">' + item.id + '</span><span class="mid-name">' + item.name + '</span></div>';
     item.subs.forEach(sub => {
-      if(sub.id === '1-1-1' && S.type === '정기') return;
+      if(!isActive(sub) || isExcluded(sub)) return;
       const subEl = document.createElement('div'); subEl.className = 'sub'; subEl.id = 'sub-' + sub.id;
       const maxSc = Math.max(...sub.options.map(o => o.score));
       subEl.innerHTML = '<div class="sub-num">' + sub.id + '</div>';
@@ -696,18 +728,23 @@ function pickOpt(sub, oi, score, maxSc){
 /* ════════════════════════════════════════════════════════
    진행률
 ════════════════════════════════════════════════════════ */
+/* 체크시트 필터: active:false 항목은 사용 중지, 정기점검 시 1-1-1 제외 */
+function isActive(x){ return x.active !== false; }
+function isExcluded(sub){ return sub.id === '1-1-1' && S.type === '정기'; }
+function subMax(sub){ return Math.max(...sub.options.map(o => o.score)); }
+// 점수에 반영되는 세부항목 [{maj, item, sub}] (maj 지정 시 해당 대분류만)
+function scoredEntries(maj){
+  return (maj ? [maj] : CFG.checklist).flatMap(m => m.items.filter(isActive).flatMap(it =>
+    it.subs.filter(sub => isActive(sub) && !isExcluded(sub)).map(sub => ({maj: m, item: it, sub}))));
+}
 function validSubs(){
-  return CFG.checklist.flatMap(m => m.items.flatMap(i => i.subs))
-    .filter(s => !(s.id === '1-1-1' && S.type === '정기'));
+  return scoredEntries().map(e => e.sub);
 }
 function curScore(){
-  return Object.entries(S.ans).reduce((a, [id, v]) => {
-    if(id === '1-1-1' && S.type === '정기') return a;
-    return a + (v.score || 0);
-  }, 0);
+  return validSubs().reduce((a, s) => a + (S.ans[s.id]?.score || 0), 0);
 }
 function maxScore(){
-  return validSubs().reduce((a, s) => a + Math.max(...s.options.map(o => o.score)), 0) || CFG.max_score || 109;
+  return validSubs().reduce((a, s) => a + subMax(s), 0) || CFG.max_score || 109;
 }
 function normScore(){
   const mx = maxScore(); return mx > 0 ? Math.round(curScore() / mx * 100) : 0;
@@ -733,11 +770,11 @@ function refreshProgress(){
 function refreshTabs(){
   CFG.checklist.forEach((maj, i) => {
     const tab = document.getElementById('tab-' + i); if(!tab) return;
-    const subs = maj.items.flatMap(it => it.subs).filter(s => !(s.id === '1-1-1' && S.type === '정기'));
+    const subs = scoredEntries(maj).map(e => e.sub);
     const done  = subs.filter(s => S.ans[s.id]?.optionIdx >= 0);
     const hasNg = subs.some(s => {
       const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return false;
-      return a.score < Math.max(...s.options.map(o => o.score));
+      return a.score < subMax(s);
     });
     tab.classList.toggle('ng', hasNg);
     tab.classList.toggle('done', done.length === subs.length && subs.length > 0);
@@ -770,7 +807,7 @@ async function onPhotoCapture(ev){
   }
   for(const file of toProcess){
     const dataUrl = await compressImage(file, MAX_PX);
-    S.photos.push({ dataUrl, name: file.name });
+    S.photos.push({ dataUrl, name: file.name, addedAt: localIso() });
   }
   ev.target.value = '';
   refreshPhotoUI();
@@ -852,11 +889,10 @@ function buildResult(){
   const s1 = makeSec('📊 대분류별 점수');
   CFG.checklist.forEach(maj => {
     let g = 0, m = 0;
-    maj.items.forEach(it => it.subs.forEach(s => {
-      if(s.id === '1-1-1' && S.type === '정기') return;
-      m += Math.max(...s.options.map(o => o.score));
+    scoredEntries(maj).forEach(({sub: s}) => {
+      m += subMax(s);
       g += S.ans[s.id]?.score || 0;
-    }));
+    });
     const bp = m > 0 ? Math.round(g / m * 100) : 0;
     const bc = bp >= 90 ? 'var(--ok)' : bp >= 70 ? 'var(--mid)' : 'var(--ng)';
     const row = document.createElement('div'); row.className = 'r-row';
@@ -869,12 +905,10 @@ function buildResult(){
 
   // 지적사항
   const ngList = [];
-  CFG.checklist.forEach(maj => maj.items.forEach(it => it.subs.forEach(s => {
-    if(s.id === '1-1-1' && S.type === '정기') return;
+  scoredEntries().forEach(({sub: s}) => {
     const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
-    const mx2 = Math.max(...s.options.map(o => o.score));
-    if(a.score < mx2) ngList.push({id: s.id, text: s.options[a.optionIdx].text, memo: a.memo || ''});
-  })));
+    if(a.score < subMax(s)) ngList.push({id: s.id, text: s.options[a.optionIdx].text, memo: a.memo || ''});
+  });
   if(ngList.length > 0){
     const s2 = makeSec('⚠ 지적사항 (' + ngList.length + '건)');
     ngList.forEach(ng => {
@@ -887,12 +921,11 @@ function buildResult(){
   }
 
   // 미입력
-  const miss = validSubs().filter(s => !S.ans[s.id] || S.ans[s.id].optionIdx < 0);
+  const miss = scoredEntries().filter(e => !S.ans[e.sub.id] || S.ans[e.sub.id].optionIdx < 0);
   if(miss.length > 0){
     const s3 = makeSec('❓ 미입력 항목 (' + miss.length + '건) — 탭하여 이동');
-    miss.forEach(s => {
-      let majIdx = 0;
-      CFG.checklist.forEach((m, mi) => m.items.forEach(it => it.subs.forEach(ss => { if(ss.id === s.id) majIdx = mi; })));
+    miss.forEach(({maj, sub: s}) => {
+      const majIdx = CFG.checklist.indexOf(maj);
       const r = document.createElement('div'); r.className = 'miss-item';
       r.innerHTML = '<div class="miss-dot"></div><div class="miss-txt">' + s.id + '</div><div class="miss-arr">→</div>';
       r.onclick = () => {
@@ -971,8 +1004,7 @@ function doExcel(){
   r1.push(['평가등급', gr ? gr.grade + '등급 (' + gr.label + ')' : '-', '','','','','']);
   r1.push([]);
   r1.push(['대분류','중분류(점검항목)','세부번호','평가항목','배점','선택','비고']);
-  CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
-    if(s.id === '1-1-1' && S.type === '정기') return;
+  scoredEntries().forEach(({maj: m, item: it, sub: s}) => {
     const a = S.ans[s.id];
     const selIdx = (a && a.optionIdx >= 0) ? a.optionIdx : -1;
     s.options.forEach((opt, oi) => {
@@ -986,7 +1018,7 @@ function doExcel(){
         (isSel && a?.memo) ? a.memo : ''
       ]);
     });
-  })));
+  });
   r1.push(['합 계','','','', mx, cur + '점','']);
   const ws1 = XLSX.utils.aoa_to_sheet(r1);
   ws1['!cols'] = [{wch:20},{wch:44},{wch:12},{wch:48},{wch:8},{wch:6},{wch:30}];
@@ -1001,14 +1033,13 @@ function doExcel(){
     [],
     ['세부번호','대분류','선택된 평가항목','취득점수','만점','비고']
   ];
-  CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
-    if(s.id === '1-1-1' && S.type === '정기') return;
+  scoredEntries().forEach(({maj: m, sub: s}) => {
     const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
-    const mxSc = Math.max(...s.options.map(o => o.score));
+    const mxSc = subMax(s);
     if(a.score < mxSc){
       r2.push([s.id, m.name, s.options[a.optionIdx].text, a.score, mxSc, a.memo || '']);
     }
-  })));
+  });
   if(r2.length === 4) r2.push(['','','지적사항 없음','','','']);
   // Remark 추가
   if(S.remark && S.remark.trim()){
@@ -1046,33 +1077,111 @@ function escHtml(v){
   return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-function doHtmlReport(){
+/* ── 보고서 데이터 (화면 보고서와 내장 데이터 블록이 같은 결과를 쓰도록 한 곳에서 계산) ──
+   형식 설명: docs/report-data-format.md */
+const REPORT_SCHEMA = 'coating-inspection/1';
+
+function photoId(i){ return 'P' + String(i + 1).padStart(2, '0'); }
+
+async function sha256Hex(bytes){
+  if(!window.crypto?.subtle) return null;  // https가 아닌 환경에서는 계산 불가
+  const buf = await crypto.subtle.digest('SHA-256', bytes);
+  return Array.from(new Uint8Array(buf), b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function photoMeta(p, i){
+  const comma = p.dataUrl.indexOf(',');
+  const bin = atob(p.dataUrl.slice(comma + 1));
+  const bytes = new Uint8Array(bin.length);
+  for(let k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+  const img = new Image();
+  img.src = p.dataUrl;
+  try{ await img.decode(); }catch(err){}
+  return {
+    id: photoId(i),
+    file: p.name || '',
+    mime: p.dataUrl.slice(5, p.dataUrl.indexOf(';')),
+    width: img.naturalWidth || null,
+    height: img.naturalHeight || null,
+    bytes: bytes.length,
+    sha256: await sha256Hex(bytes),
+    added_at: p.addedAt || null,
+    linked_to: null
+  };
+}
+
+async function buildReportData(){
   const cur = curScore(), mx = maxScore(), norm = normScore(), gr = grade(norm);
+
+  const answers = [];
+  CFG.checklist.forEach(m => m.items.filter(isActive).forEach(it => it.subs.filter(isActive).forEach(s => {
+    const a = S.ans[s.id], max = subMax(s);
+    const excluded = isExcluded(s);
+    const answered = !excluded && !!a && a.optionIdx >= 0;
+    answers.push({
+      id: s.id,
+      major_id: m.id, major_name: m.name,
+      item_id: it.id, item_name: it.name,
+      status: excluded ? 'excluded' : answered ? 'answered' : 'unanswered',
+      selected_index: answered ? a.optionIdx : null,
+      selected_text:  answered ? s.options[a.optionIdx].text : null,
+      score: answered ? a.score : null,
+      max_score: max,
+      finding: answered && a.score < max,
+      memo: a?.memo || '',
+      options: s.options.map(o => ({text: o.text, score: o.score}))
+    });
+  })));
+
+  const majors = CFG.checklist.map(m => {
+    let score = 0, max = 0;
+    scoredEntries(m).forEach(({sub}) => { max += subMax(sub); score += S.ans[sub.id]?.score || 0; });
+    return {id: m.id, name: m.name, score, max_score: max, pct: max > 0 ? Math.round(score / max * 100) : 0};
+  });
+
+  const count = st => answers.filter(x => x.status === st).length;
+  return {
+    schema: REPORT_SCHEMA,
+    inspection_uid: S.uid || (S.uid = newUid()),
+    generated_at: localIso(),
+    checklist: {version: CFG.meta?.version || null, updated_at: CFG.meta?.updated_at || null},
+    inspection: {
+      company: {id: S.company.id || null, name: S.company.name},
+      date: S.date, type: S.type, inspector: S.inspector, remark: S.remark || ''
+    },
+    summary: {
+      raw_score: cur, max_score: mx, normalized_score: norm,
+      grade: gr ? gr.grade : null, grade_label: gr ? gr.label : null,
+      answered: count('answered'), unanswered: count('unanswered'), excluded: count('excluded'),
+      findings: answers.filter(x => x.finding).length,
+      photos: S.photos.length
+    },
+    majors,
+    answers,
+    photos: await Promise.all(S.photos.map(photoMeta))
+  };
+}
+
+async function doHtmlReport(){
+  const data = await buildReportData();
+  const sm = data.summary;
+  const cur = sm.raw_score, mx = sm.max_score, norm = sm.normalized_score, gr = grade(norm);
   const coNm = S.company.name;
   const dateStr = S.date;
   const e = escHtml;
 
-  // 지적사항 목록
-  const ngList = [];
-  CFG.checklist.forEach(maj => maj.items.forEach(it => it.subs.forEach(s => {
-    if(s.id === '1-1-1' && S.type === '정기') return;
-    const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
-    const mxSc = Math.max(...s.options.map(o => o.score));
-    if(a.score < mxSc) ngList.push({id: s.id, major: maj.name, text: s.options[a.optionIdx].text, memo: a.memo || '', score: a.score, maxSc: mxSc});
-  })));
+  // 데이터 블록: <script> 안에서 끊기지 않도록 '<'를 <로 변환.
+  // 무결성 해시는 블록 안의 텍스트(UTF-8) 그대로에 대해 계산
+  const dataText = JSON.stringify(data, null, 2).replace(/</g, '\\u003c');
+  const dataHash = await sha256Hex(new TextEncoder().encode(dataText)) || '';
 
-  // 대분류별 점수
-  const majScores = CFG.checklist.map(maj => {
-    let g = 0, m = 0;
-    maj.items.forEach(it => it.subs.forEach(s => {
-      if(s.id === '1-1-1' && S.type === '정기') return;
-      m += Math.max(...s.options.map(o => o.score));
-      g += S.ans[s.id]?.score || 0;
-    }));
-    return {name: maj.id + '. ' + maj.name, score: g, max: m, pct: m > 0 ? Math.round(g/m*100) : 0};
-  });
+  // 지적사항 목록 / 대분류별 점수 (데이터 블록과 동일한 값 사용)
+  const ngList = data.answers.filter(a => a.finding).map(a => ({
+    id: a.id, major: a.major_name, text: a.selected_text, memo: a.memo, score: a.score, maxSc: a.max_score
+  }));
+  const majScores = data.majors.map(m => ({name: m.id + '. ' + m.name, score: m.score, max: m.max_score, pct: m.pct}));
 
-  // 사진 그리드 HTML
+  // 사진 그리드 HTML (data-photo-id로 데이터 블록의 photos[].id와 연결)
   const photosHtml = S.photos.length > 0
     ? `<div style="margin-top:24px;page-break-before:always;">
         <h2 style="font-size:16px;font-weight:700;color:#0f2744;border-bottom:2px solid #0f2744;padding-bottom:6px;margin-bottom:16px;">
@@ -1081,9 +1190,9 @@ function doHtmlReport(){
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
           ${S.photos.map((p, i) => `
             <div style="border:1px solid #d1dce8;border-radius:8px;overflow:hidden;">
-              <img src="${p.dataUrl}" style="width:100%;height:200px;object-fit:cover;display:block;">
+              <img src="${p.dataUrl}" data-photo-id="${photoId(i)}" style="width:100%;height:200px;object-fit:cover;display:block;">
               <div style="padding:8px 10px;font-size:11px;color:#5a7a9a;min-height:28px;">
-                사진 ${i+1}
+                사진 ${photoId(i)}
               </div>
             </div>`).join('')}
         </div>
@@ -1093,7 +1202,10 @@ function doHtmlReport(){
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<meta name="generator" content="coating-inspection">
+<meta name="inspection-data-sha256" content="${dataHash}">
 <title>점검보고서_${e(coNm)}_${e(dateStr)}</title>
+<script type="application/json" id="inspection-data">${dataText}<\/script>
 <style>
   @page { size: A4; margin: 15mm 12mm; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1109,7 +1221,7 @@ function doHtmlReport(){
   .score-num { font-size: 56px; font-weight: 700; color: #0f2744; line-height: 1; font-family: monospace; }
   .score-sub { font-size: 13px; color: #5a7a9a; margin-top: 4px; }
   .grade-badge { display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 16px; font-weight: 700; color: #fff; }
-  .g-A { background: #1e8449; } .g-B { background: #d68910; } .g-C { background: #c0392b; } .g-none { background: #718096; }
+  .g-A { background: #1e8449; } .g-B { background: #d68910; } .g-C { background: #c0392b; } .g-D { background: #7b241c; } .g-none { background: #718096; }
   h2 { font-size: 14px; font-weight: 700; color: #0f2744; border-bottom: 2px solid #0f2744; padding-bottom: 6px; margin: 20px 0 12px; }
   table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
   th { background: #0f2744; color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; }
@@ -1222,6 +1334,7 @@ ${photosHtml}
   }
   document.body.appendChild(a);
   a.click();
+  clearDraft();
   setTimeout(() => {
     document.body.removeChild(a);
     URL.revokeObjectURL(blobUrl);
@@ -1237,18 +1350,15 @@ function doMail(){
   const rd = new Date(S.date); rd.setDate(rd.getDate() + (CFG.meta?.reply_days || 7));
   const rdStr = rd.toISOString().slice(0, 10).replace(/-/g, '.');
   const ngLines = [];
-  CFG.checklist.forEach(m => m.items.forEach(it => it.subs.forEach(s => {
-    if(s.id === '1-1-1' && S.type === '정기') return;
+  scoredEntries().forEach(({sub: s}) => {
     const a = S.ans[s.id]; if(!a || a.optionIdx < 0) return;
-    const mxSc = Math.max(...s.options.map(o => o.score));
-    if(a.score < mxSc) ngLines.push(' - [' + s.id + '] ' + s.options[a.optionIdx].text);
-  })));
+    if(a.score < subMax(s)) ngLines.push(' - [' + s.id + '] ' + s.options[a.optionIdx].text);
+  });
   const majLines = CFG.checklist.map(m => {
     let g = 0, mx2 = 0;
-    m.items.forEach(it => it.subs.forEach(s => {
-      if(s.id === '1-1-1' && S.type === '정기') return;
-      mx2 += Math.max(...s.options.map(o => o.score)); g += S.ans[s.id]?.score || 0;
-    }));
+    scoredEntries(m).forEach(({sub: s}) => {
+      mx2 += subMax(s); g += S.ans[s.id]?.score || 0;
+    });
     return ' ' + m.id + '. ' + m.name + ': ' + g + '/' + mx2 + '점';
   });
   const subj = encodeURIComponent('[도장품질점검] ' + S.company.name + '_' + S.date.replace(/-/g, '.') + '_' + S.type + '_' + norm + '점(' + (gr ? gr.grade + '등급' : '-') + ')');
@@ -1281,7 +1391,7 @@ function doSave(){
   try{
     // 사진은 용량이 크므로 별도 키에 저장
     localStorage.setItem(DRAFT_KEY, JSON.stringify({
-      company: S.company, date: S.date, type: S.type, inspector: S.inspector,
+      uid: S.uid, company: S.company, date: S.date, type: S.type, inspector: S.inspector,
       majIdx: S.majIdx, ans: S.ans, savedAt: new Date().toISOString(),
       photoCount: S.photos.length, remark: S.remark
     }));
@@ -1315,6 +1425,7 @@ function checkDraft(){
       S.company   = d.company; S.date = d.date; S.type = d.type;
       S.inspector = d.inspector; S.majIdx = d.majIdx || 0; S.ans = d.ans || {};
       S.remark    = d.remark || '';
+      S.uid       = d.uid || newUid();
       // 사진 복구
       try{
         const photoRaw = localStorage.getItem(DRAFT_KEY + '_photos');
@@ -1341,6 +1452,15 @@ function checkDraft(){
    유틸
 ════════════════════════════════════════════════════════ */
 function today(){ return new Date().toISOString().slice(0, 10); }
+function newUid(){
+  return window.crypto?.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
+// 현지 시간대 포함 ISO 문자열 (예: 2026-10-06T14:30:00+09:00)
+function localIso(d = new Date()){
+  const p = n => String(Math.floor(Math.abs(n))).padStart(2, '0'), off = -d.getTimezoneOffset();
+  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds())
+    + (off >= 0 ? '+' : '-') + p(off / 60) + ':' + p(off % 60);
+}
 function isKakao(){ const ua = navigator.userAgent.toLowerCase(); return ua.includes('kakaotalk') || ua.includes('kakao'); }
 function showKakaoBanner(){
   const b = document.createElement('div'); b.className = 'kakao-banner';
